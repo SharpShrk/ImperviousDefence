@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float rotationSpeed = 720f;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float rotationSpeed;
     [SerializeField] private Camera mainCamera;
 
     private IMovable _movable;
@@ -82,50 +82,5 @@ public class Rotatable : IRotatable
 
         Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
         _transform.rotation = Quaternion.RotateTowards(_transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
-    }
-}
-
-public class PlayerInputHandler
-{
-    private InputSystem _inputActions;
-    private Vector2 _moveInput;
-    private Camera _mainCamera;
-
-    public PlayerInputHandler(Camera mainCamera)
-    {
-        _inputActions = new InputSystem();
-        _mainCamera = mainCamera;
-
-        _inputActions.Player.Move.performed += ctx => _moveInput = ctx.ReadValue<Vector2>();
-        _inputActions.Player.Move.canceled += ctx => _moveInput = Vector2.zero;
-    }
-
-    public void Enable()
-    {
-        _inputActions.Enable();
-    }
-
-    public void Disable()
-    {
-        _inputActions.Disable();
-    }
-
-    public Vector3 GetMoveDirection()
-    {
-        return new Vector3(_moveInput.x, 0, _moveInput.y);
-    }
-
-    public Vector3 GetMouseWorldPosition()
-    {
-        Vector2 screenPosition = _inputActions.Player.MousePosition.ReadValue<Vector2>();
-        Ray ray = _mainCamera.ScreenPointToRay(screenPosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
-        {
-            return hit.point;
-        }
-
-        return Vector3.zero;
     }
 }
