@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Vector3 _size = new Vector3(0.5f, 0.18f, 0.20f);
 
-    // Update is called once per frame
-    void Update()
+    public int BlockIndex { get; private set; }
+
+    public Vector3 BrickSize => _size;
+
+    public void SetBlockIndex(int index)
     {
-        
+        BlockIndex = index;
     }
 }

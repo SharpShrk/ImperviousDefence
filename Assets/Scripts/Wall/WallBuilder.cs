@@ -37,7 +37,7 @@ public class WallBuilder : MonoBehaviour
                 Vector3 startPosition = new Vector3(xPos, yPos + _spawnHeight, 0);
                 block.transform.localPosition = startPosition;
 
-                //block.GetComponent<WallBlock>().SetBlockIndex(blockIndex);
+                block.GetComponent<Brick>().SetBlockIndex(blockIndex);
 
                 _wallBlocks.Add(block);
 
