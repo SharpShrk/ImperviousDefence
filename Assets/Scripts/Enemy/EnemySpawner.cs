@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float _spawnZoneWidth;
     [SerializeField] private float _spawnZoneLength;
     [SerializeField] private Vector3 _spawnZoneCenter;
+    [SerializeField] private GameObject _enemyContainer;
 
     private List<GameObject> _enemyPool;
     private Waves _waves;
@@ -37,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
         {
             GameObject enemy = Instantiate(_enemyPrefab);
             enemy.SetActive(false);
+            enemy.transform.SetParent(_enemyContainer.transform);
             _enemyPool.Add(enemy);
         }
     }
@@ -53,6 +55,7 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject newEnemy = Instantiate(_enemyPrefab);
         newEnemy.gameObject.SetActive(false);
+        newEnemy.transform.SetParent(_enemyContainer.transform);
         _enemyPool.Add(newEnemy);
         return newEnemy;
     }

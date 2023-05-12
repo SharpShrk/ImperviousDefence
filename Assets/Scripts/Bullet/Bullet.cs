@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _speed = 10f;
     [SerializeField] private float _lifetime = 3f;
+    [SerializeField] private int _damage = 10;
 
     private Rigidbody _rigidbody;
 
@@ -25,6 +26,13 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        var damageable = collision.gameObject.GetComponent<IDamageable>();
+
+        if (damageable != null)
+        {
+            damageable.TakeDamage(_damage);
+        }
+
         ReturnToPool();
     }
 

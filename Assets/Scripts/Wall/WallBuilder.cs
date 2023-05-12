@@ -16,9 +16,11 @@ public class WallBuilder : MonoBehaviour
     [SerializeField] private float _dropDuration = 0.05f;
 
     private List<GameObject> _wallBlocks = new List<GameObject>();
+    private Wall _wall;
 
     private void Start()
     {
+        _wall = GetComponent<Wall>();
         StartCoroutine(BuildWall());
     }
 
@@ -38,6 +40,8 @@ public class WallBuilder : MonoBehaviour
                 block.transform.localPosition = startPosition;
 
                 block.GetComponent<Brick>().SetBlockIndex(blockIndex);
+                Vector3 endPosition = new Vector3(xPos, yPos, 0);
+                block.GetComponent<Brick>().SetInitialPosition(endPosition);
 
                 _wallBlocks.Add(block);
 
@@ -48,6 +52,8 @@ public class WallBuilder : MonoBehaviour
                 yield return new WaitForSeconds(_spawnDelay);
             }
         }
+
+        _wall.SetBlocks(_wallBlocks);
     }
 
     private IEnumerator DropBlock(GameObject block, Vector3 startPosition, Vector3 endPosition, float duration)

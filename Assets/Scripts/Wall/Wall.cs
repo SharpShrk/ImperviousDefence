@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform[] AttackPoints;
+
+    private List<GameObject> _wallBlocks = new List<GameObject>();
+
+    public void SetBlocks(List<GameObject> blocks)
     {
-        
+        _wallBlocks = blocks;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(int damage)
     {
-        
+        if (_wallBlocks.Count > 0)
+        {
+            GameObject maxIndexBlock = _wallBlocks[0];
+
+            foreach (GameObject block in _wallBlocks)
+            {
+                if (block.GetComponent<Brick>().BlockIndex > maxIndexBlock.GetComponent<Brick>().BlockIndex)
+                {
+                    maxIndexBlock = block;
+                }
+            }
+
+            maxIndexBlock.GetComponent<Brick>().TakeDamage(damage);
+
+            if (!maxIndexBlock.activeSelf) //не забыть сделать добавление в список при ремонте блока
+            {
+                _wallBlocks.Remove(maxIndexBlock);
+            }
+        }
     }
+
 }

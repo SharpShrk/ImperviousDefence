@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private Transform _gunTransform;
-    [SerializeField] private float _fireRate = 0.5f;
+    [SerializeField] private float _fireRate = 0.2f;
 
     private PlayerInputHandler _inputHandler;
     private bool _canShoot = true;

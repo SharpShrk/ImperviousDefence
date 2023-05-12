@@ -10,7 +10,13 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private float _attackRange = 1.5f;
 
     private Wall _targetWall;
+    private Enemy _enemy;
     private Coroutine _attackCoroutine;
+
+    private void Start()
+    {
+        _enemy = GetComponent<Enemy>();
+    }
 
     public void SetTargetWall(Wall targetWall)
     {
@@ -24,32 +30,35 @@ public class EnemyAttack : MonoBehaviour
 
     private IEnumerator CheckAttackRange()
     {
-        while (true)
+        while (true) //заменить тру
         {
             if (_targetWall != null)
             {
                 float distance = Vector3.Distance(transform.position, _targetWall.transform.position);
+
                 if (distance <= _attackRange)
                 {
                     if (_attackCoroutine != null)
                     {
                         StopCoroutine(_attackCoroutine);
                     }
-                    _attackCoroutine = StartCoroutine(AttackWall(_targetWall));
+
+                    _attackCoroutine = StartCoroutine(AttackWall(_targetWall, _enemy));
                     GetComponent<EnemyMovement>().StopMoving();
                     break;
                 }
             }
+
             yield return new WaitForSeconds(0.1f);
         }
     }
 
-    private IEnumerator AttackWall(Wall wall)
+    private IEnumerator AttackWall(Wall wall, Enemy enemy)
     {
         while (true)
         {
             yield return new WaitForSeconds(_attackDelay);
-            //wall.TakeDamage(Enemy.Damage);
+            wall.TakeDamage(enemy.Damage);
         }
     }
 }

@@ -5,6 +5,7 @@ public class BulletPool : MonoBehaviour
 {
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private int _initialPoolSize = 10;
+    [SerializeField] private GameObject _bulletContainer;
 
     private Queue<GameObject> _bulletPool;
 
@@ -33,6 +34,7 @@ public class BulletPool : MonoBehaviour
         {
             GameObject bullet = Instantiate(_bulletPrefab);
             bullet.SetActive(false);
+            bullet.transform.SetParent(_bulletContainer.transform);
             _bulletPool.Enqueue(bullet);
         }
     }
@@ -43,6 +45,7 @@ public class BulletPool : MonoBehaviour
         {
             GameObject bullet = _bulletPool.Dequeue();
             bullet.SetActive(true);
+            bullet.transform.SetParent(_bulletContainer.transform);
             return bullet;
         }
 
