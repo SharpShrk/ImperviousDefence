@@ -1,12 +1,14 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     private int _health;
     private int _damage;
-
     private EnemyMovement _enemyMovement;
     private EnemyAttack _enemyAttack;
+
+    public static event Action OnDeath;
 
     public int Health => _health;
     public int Damage => _damage;
@@ -37,6 +39,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if (_health <= 0)
         {
             Die();
+            OnDeath?.Invoke();
         }
     }
 

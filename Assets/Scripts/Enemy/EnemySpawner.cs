@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private int _initialPoolSize = 20;
-    [SerializeField] private float _waveDelay = 15.0f;
+    [SerializeField] private float _waveDelay = 5.0f;
     [SerializeField] private float _spawnZoneWidth;
     [SerializeField] private float _spawnZoneLength;
     [SerializeField] private Vector3 _spawnZoneCenter;
@@ -17,6 +17,7 @@ public class EnemySpawner : MonoBehaviour
     private List<GameObject> _enemyPool;
     private Waves _waves;
     private bool _gameOver = false;
+    private int _activeEnemies = 0;
     //private int _currentWave = 1;
 
     private void Awake()
@@ -28,6 +29,21 @@ public class EnemySpawner : MonoBehaviour
     {
         InitializeEnemyPool();
         StartCoroutine(SpawnWaves());
+    }
+
+    private void OnEnable()
+    {
+        Enemy.OnDeath += HandleEnemyDeath;
+    }
+
+    private void OnDisable()
+    {
+        Enemy.OnDeath -= HandleEnemyDeath;
+    }
+
+    private void HandleEnemyDeath()
+    {
+        _activeEnemies--;
     }
 
     private void InitializeEnemyPool()
@@ -65,6 +81,9 @@ public class EnemySpawner : MonoBehaviour
         while (_gameOver == false) //добавить проверку на геймовер
         {
             SpawnEnemyWave();
+            _activeEnemies += _waves.GetEnemyCount();
+            Debug.Log(_activeEnemies);
+            yield return new WaitUntil(() => _activeEnemies <= 0);
 
             yield return new WaitForSeconds(_waveDelay);
         }
@@ -82,6 +101,7 @@ public class EnemySpawner : MonoBehaviour
             if (enemy != null)
             {
                 enemy.GetComponent<Enemy>().Initialize(enemyHealth, enemyAttack);
+                enemy.GetComponent<EnemyMovement>().StartMoving();
                 enemy.transform.position = GetRandomSpawnPoint();
                 enemy.SetActive(true);
             }

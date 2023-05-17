@@ -28,6 +28,14 @@ public class EnemyMovement : MonoBehaviour
         _targetAttackPoint = GetNearestAttackPoint(targetWall);
     }
 
+    public void StartMoving()
+    {
+        _isMoving = true;
+        _isBlocked = false;
+        _rigidbody.isKinematic = false;
+        SetTargetWall(_targetWall);
+    }
+
     public void StopMoving()
     {
         _isMoving = false;
@@ -45,7 +53,7 @@ public class EnemyMovement : MonoBehaviour
             _timeUntilCheck = 0.5f;
         }
 
-        if (_isMoving && _targetWall != null && !_isBlocked)
+        if (_isMoving && _targetWall != null && _isBlocked == false)
         {
             MoveTowardsTargetWall();
         }
