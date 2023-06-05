@@ -5,6 +5,7 @@ public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private Transform _gunTransform;
     [SerializeField] private float _fireRate = 0.2f;
+    [SerializeField] private BulletPool _bulletPool;
 
     private PlayerInputHandler _inputHandler;
     private bool _canShoot = true;
@@ -29,7 +30,7 @@ public class PlayerShooting : MonoBehaviour
             return;
         }
 
-        GameObject bullet = BulletPool.Instance.GetBullet();
+        GameObject bullet = _bulletPool.GetBullet();
         bullet.transform.position = _gunTransform.position;
         bullet.transform.rotation = _gunTransform.rotation;
 

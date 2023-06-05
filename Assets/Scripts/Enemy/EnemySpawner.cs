@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private int _initialPoolSize = 20;
-    [SerializeField] private float _waveDelay = 5.0f;
+    [SerializeField] private float _waveDelay = 3.0f;
     [SerializeField] private float _spawnZoneWidth;
     [SerializeField] private float _spawnZoneLength;
     [SerializeField] private Vector3 _spawnZoneCenter;
@@ -18,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
     private Waves _waves;
     private bool _gameOver = false;
     private int _activeEnemies = 0;
+    private Coroutine _enemySpawnCoroutine;
     //private int _currentWave = 1;
 
     private void Awake()
@@ -28,7 +29,8 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         InitializeEnemyPool();
-        StartCoroutine(SpawnWaves());
+        _enemySpawnCoroutine = StartCoroutine(SpawnWaves());
+        _activeEnemies = _enemyPool.FindAll(enemy => enemy.activeSelf).Count;
     }
 
     private void OnEnable()
@@ -41,9 +43,22 @@ public class EnemySpawner : MonoBehaviour
         Enemy.OnDeath -= HandleEnemyDeath;
     }
 
-    private void HandleEnemyDeath()
+    private void HandleEnemyDeath() //не всегда прилетает событие
     {
         _activeEnemies--;
+        Debug.Log("Враг умер. Осталось активных врагов: " + _activeEnemies);
+
+        if (_activeEnemies <= 0 && _gameOver == false)
+        {
+            _enemySpawnCoroutine = StartCoroutine(SpawnWaves());
+        }
+        else
+        {
+            if (_enemySpawnCoroutine != null)
+            {
+                StopCoroutine(_enemySpawnCoroutine);
+            }
+        }
     }
 
     private void InitializeEnemyPool()
@@ -78,26 +93,25 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnWaves()
     {
-        while (_gameOver == false) //добавить проверку на геймовер
-        {
-            SpawnEnemyWave();
-            _activeEnemies += _waves.GetEnemyCount();
-            Debug.Log(_activeEnemies);
-            yield return new WaitUntil(() => _activeEnemies <= 0);
+        yield return new WaitForSeconds(_waveDelay);
 
-            yield return new WaitForSeconds(_waveDelay);
-        }
+        SpawnEnemyWave();
+
+        yield break;
     }
 
     private void SpawnEnemyWave()
-    {
+    {        
         int enemyCount = _waves.GetEnemyCount();
         int enemyHealth = _waves.GetEnemyHealth();
         int enemyAttack = _waves.GetEnemyAttack();
 
+        _waves.AdvanceToNextWave();
+
         for (int i = 0; i < enemyCount; i++)
         {
             GameObject enemy = GetEnemyFromPool();
+
             if (enemy != null)
             {
                 enemy.GetComponent<Enemy>().Initialize(enemyHealth, enemyAttack);
@@ -107,7 +121,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        _waves.AdvanceToNextWave();
+        _activeEnemies = _enemyPool.FindAll(enemy => enemy.activeSelf).Count;
     }
 
     private Vector3 GetRandomSpawnPoint()
@@ -118,7 +132,7 @@ public class EnemySpawner : MonoBehaviour
         return new Vector3(x, _spawnZoneCenter.y, z);
     }
 
-    private void StopEnemySpawn() //добавить чек события гейм овера
+    private void GameOver() //добавить чек события гейм овера
     {
         _gameOver = true;
     }    

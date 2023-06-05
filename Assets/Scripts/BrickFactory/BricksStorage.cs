@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class BricksStorage : MonoBehaviour
 {
     [SerializeField] private Transform _brickSlotsParent;
     [SerializeField] private float _gapBetweenBricks = 0.005f;
+
+    public event Action OnStorageFull;
 
     private Vector3 _brickSize;
     private int _brickCountInLayer = 9;
@@ -17,6 +20,7 @@ public class BricksStorage : MonoBehaviour
         if (_currentBrickIndex >= _brickCountInLayer * _layersCount)
         {
             Debug.Log("Склад заполнен");
+            OnStorageFull?.Invoke();
             return;
         }
 

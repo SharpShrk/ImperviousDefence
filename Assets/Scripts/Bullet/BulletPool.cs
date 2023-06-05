@@ -9,20 +9,8 @@ public class BulletPool : MonoBehaviour
 
     private Queue<GameObject> _bulletPool;
 
-    public static BulletPool Instance { get; private set; }
-
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         InitializePool();
     }
 
@@ -33,6 +21,7 @@ public class BulletPool : MonoBehaviour
         for (int i = 0; i < _initialPoolSize; i++)
         {
             GameObject bullet = Instantiate(_bulletPrefab);
+            bullet.GetComponent<Bullet>().Init(this);
             bullet.SetActive(false);
             bullet.transform.SetParent(_bulletContainer.transform);
             _bulletPool.Enqueue(bullet);

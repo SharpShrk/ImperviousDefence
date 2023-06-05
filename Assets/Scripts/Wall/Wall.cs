@@ -27,7 +27,10 @@ public class Wall : MonoBehaviour
                 }
             }
 
+            if(maxIndexBlock.activeInHierarchy)
+            {
             maxIndexBlock.GetComponent<Brick>().TakeDamage(damage);
+            }
 
             if (!maxIndexBlock.activeSelf) //не забыть сделать добавление в список при ремонте блока
             {

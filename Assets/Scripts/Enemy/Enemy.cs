@@ -35,11 +35,13 @@ public class Enemy : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         _health -= damage;
+        Debug.Log(gameObject.name + " текущее здоровье: " + _health);
 
         if (_health <= 0)
         {
-            Die();
             OnDeath?.Invoke();
+            Debug.Log("Враг умер");
+            Die();
         }
     }
 

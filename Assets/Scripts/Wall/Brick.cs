@@ -1,13 +1,18 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Brick : MonoBehaviour
 {
-    [SerializeField] private Vector3 _size = new Vector3(0.5f, 0.18f, 0.20f);
-    [SerializeField] private int _healthPoints = 2;
-    [SerializeField] private float _ejectionSpeed = 5f;
-    [SerializeField] private float _rotationSpeed = 360f;
-    [SerializeField] private float _deactivationDelay = 0.7f;
+    [SerializeField] private Vector3 _size = new Vector3();
+    [SerializeField] private int _healthPoints;
+    [SerializeField] private float _ejectionSpeed;
+    [SerializeField] private float _rotationSpeed;
+    [SerializeField] private float _deactivationDelay;
+
+
+    //public static event Action OnBrickDestroyed;
 
     public int BlockIndex { get; private set; }
     public Vector3 InitialPosition { get; private set; }
@@ -27,9 +32,10 @@ public class Brick : MonoBehaviour
     {
         _healthPoints -= damage;
 
-        if (_healthPoints <= 0)
+        if (_healthPoints <= 0 && gameObject.activeInHierarchy)
         {
             DestroyBrick();
+            //OnBrickDestroyed?.Invoke();
         }
     }
 

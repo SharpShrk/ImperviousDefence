@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int _damage = 10;
 
     private Rigidbody _rigidbody;
+    private BulletPool _bulletPool;
 
     private void Awake()
     {
@@ -36,6 +37,11 @@ public class Bullet : MonoBehaviour
         ReturnToPool();
     }
 
+    public void Init(BulletPool bulletPool)
+    {
+        _bulletPool = bulletPool;
+    }
+
     private IEnumerator DisableBulletAfterTime()
     {
         yield return new WaitForSeconds(_lifetime);
@@ -44,6 +50,6 @@ public class Bullet : MonoBehaviour
 
     private void ReturnToPool()
     {
-        BulletPool.Instance.ReturnBullet(gameObject);
+        _bulletPool.ReturnBullet(gameObject);
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] private int _damage = 1;
     [SerializeField] private float _attackDelay = 1.5f;
     [SerializeField] private float _attackRange = 1.5f;
 

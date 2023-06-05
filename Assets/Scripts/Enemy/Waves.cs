@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Waves : MonoBehaviour
 {
-    public int CurrentWave { get; private set; } = 1;
+    public int CurrentWave { get; private set; } = 0;
 
     [SerializeField] private int _initialHealth = 100;
     [SerializeField] private int _initialAttack = 1;
@@ -25,41 +25,37 @@ public class Waves : MonoBehaviour
     public void AdvanceToNextWave()
     {
         CurrentWave++;
+
+        if (CurrentWave % 2 == 0)
+        {
+            _currentHealth += _healthIncrease;
+        }
+
+        if (CurrentWave % 4 == 0)
+        {
+            _currentAttack += _attackIncrease;
+        }
+
+        if (CurrentWave % 3 == 0)
+        {
+            _currentEnemyCount += _countIncrease;
+        }
+
+        Debug.Log("Номер волны:" + CurrentWave);
     }
 
     public int GetEnemyHealth()
     {
-        if (CurrentWave % 2 == 0)
-        {
-            return _currentHealth += _healthIncrease;
-        }
-        else
-        {
-            return _currentHealth;
-        }
+        return _currentHealth;
     }
 
     public int GetEnemyAttack()
     {
-        if (CurrentWave % 4 == 0)
-        {
-            return _currentAttack += _initialAttack;
-        }
-        else
-        {
-            return _currentAttack;
-        }
+        return _currentAttack;
     }
 
     public int GetEnemyCount()
     {
-        if (CurrentWave % 3 == 0)
-        {
-            return _currentEnemyCount += _initialEnemyCount;
-        }
-        else
-        {
-            return _currentEnemyCount;
-        }
+        return _currentEnemyCount;
     }
 }
