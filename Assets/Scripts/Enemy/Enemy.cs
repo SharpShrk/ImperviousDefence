@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private EnemyMovement _enemyMovement;
     private EnemyAttack _enemyAttack;
 
-    public static event Action OnDeath;
+    public static event Action OnDeath; //нигде не используется
 
     public int Health => _health;
     public int Damage => _damage;
@@ -35,12 +35,12 @@ public class Enemy : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         _health -= damage;
-        Debug.Log(gameObject.name + " текущее здоровье: " + _health);
+        //Debug.Log(gameObject.name + " текущее здоровье: " + _health);
 
         if (_health <= 0)
         {
             OnDeath?.Invoke();
-            Debug.Log("Враг умер");
+            //Debug.Log("Враг умер");
             Die();
         }
     }

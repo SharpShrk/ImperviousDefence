@@ -13,15 +13,6 @@ public class Turret : MonoBehaviour
     private BulletPool _bulletPool;
     private GameObject _target;
 
-    //private List<GameObject> _enemiesInAttackRange = new List<GameObject>();
-
-    /*
-     Поиск цели
-    Атакуем цель
-    Если цель умерла ищем новую
-    Каждый кулдаун чекаем цель в радиусе. Выбираем ближайшую, доворачиваем пушку, стреляем
-     */
-
     private void Start()
     {       
         StartCoroutine(Attack());
@@ -61,9 +52,8 @@ public class Turret : MonoBehaviour
     {
         float _rotationSpeed = 500f;
 
-        //поворот по горизонтали
         Vector3 targetDirection = target.transform.position - _rotatingPlatform.transform.position;
-        targetDirection.y = 0; //?
+        targetDirection.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         Quaternion currentRotation = _rotatingPlatform.transform.rotation;
         Vector3 currentRotationEuler = currentRotation.eulerAngles;
@@ -72,7 +62,6 @@ public class Turret : MonoBehaviour
         Quaternion newTargetRotation = Quaternion.Euler(newRotationEuler);
         _rotatingPlatform.transform.rotation = Quaternion.Lerp(currentRotation, newTargetRotation, Time.deltaTime * _rotationSpeed);
 
-        //поворот по вертикали
         Vector3 directionToTarget = target.transform.position - _gun.transform.position;
         float yDifference = directionToTarget.y;
         float distanceToTarget = directionToTarget.magnitude;

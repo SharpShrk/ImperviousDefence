@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -9,16 +10,22 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float _checkRadius = 1.5f;
     [SerializeField] private LayerMask _obstacleLayer;
 
+    public bool IsMoving => _isMoving;
+    public Transform TargetAttackPoint => _targetAttackPoint;
+    public event Action MovementStoppedAction;
+
     private Wall _targetWall;
     private bool _isMoving = true;
     private Rigidbody _rigidbody;
     private bool _isBlocked = false;
     private float _timeUntilCheck = 0.5f;
     private Transform _targetAttackPoint;
+    private EnemyAttack _enemyAttack;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _enemyAttack = GetComponent<EnemyAttack>();
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
@@ -62,6 +69,9 @@ public class EnemyMovement : MonoBehaviour
     private void CheckForObstacles()
     {
         _isBlocked = Physics.CheckSphere(transform.position, _checkRadius, _obstacleLayer);
+        //чекнуть этот момент
+        Debug.Log(gameObject.name + " _isBlocked = " + _isBlocked);
+        _isBlocked = false;
     }
 
     private void MoveTowardsTargetWall()
@@ -73,6 +83,17 @@ public class EnemyMovement : MonoBehaviour
 
         Vector3 lookDirection = new Vector3(direction.x, 0, direction.z);
         transform.rotation = Quaternion.LookRotation(lookDirection);
+
+        float distance = Vector3.Distance(transform.position, _targetAttackPoint.transform.position);
+
+        if (distance <= _enemyAttack.AttackRange)
+        {
+            Debug.Log(gameObject.name + " в зоне атаки. Дистанция " + distance);
+
+            StopMoving();
+            MovementStoppedAction?.Invoke();
+            Debug.Log(gameObject.name + "stop moving");
+        }
     }
 
     private Transform GetNearestAttackPoint(Wall wall)
@@ -83,6 +104,7 @@ public class EnemyMovement : MonoBehaviour
         foreach (var point in wall.AttackPoints)
         {
             float distance = Vector3.Distance(transform.position, point.position);
+
             if (distance < minDistance)
             {
                 nearestPoint = point;
@@ -93,11 +115,12 @@ public class EnemyMovement : MonoBehaviour
         return nearestPoint;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<Wall>() != null)
         {
+            Debug.Log(gameObject.name + " столкнулся со стеной");
             StopMoving();
         }
-    }
+    }*/
 }

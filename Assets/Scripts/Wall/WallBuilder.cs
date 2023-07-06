@@ -53,7 +53,7 @@ public class WallBuilder : MonoBehaviour
             }
         }
 
-        _wall.SetBlocks(_wallBlocks);
+        _wall.SetBricks(_wallBlocks);
     }
 
     private IEnumerator DropBlock(GameObject block, Vector3 startPosition, Vector3 endPosition, float duration)

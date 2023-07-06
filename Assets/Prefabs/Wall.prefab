@@ -165,8 +165,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackPoints:
-  - {fileID: 8359941283102285133}
-  - {fileID: 8359941282708912474}
   - {fileID: 8359941283044060755}
 --- !u!65 &8359941283196273670
 BoxCollider:

@@ -55,7 +55,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Use"",
+                    ""name"": ""PickBrick"",
                     ""type"": ""Button"",
                     ""id"": ""d09eb6c7-d8ae-445c-81fb-e727474f22b6"",
                     ""expectedControlType"": ""Button"",
@@ -149,7 +149,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and mouse"",
-                    ""action"": ""Use"",
+                    ""action"": ""PickBrick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -180,7 +180,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
-        m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
+        m_Player_PickBrick = m_Player.FindAction("PickBrick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -243,7 +243,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_Shoot;
-    private readonly InputAction m_Player_Use;
+    private readonly InputAction m_Player_PickBrick;
     public struct PlayerActions
     {
         private @InputSystem m_Wrapper;
@@ -251,7 +251,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
-        public InputAction @Use => m_Wrapper.m_Player_Use;
+        public InputAction @PickBrick => m_Wrapper.m_Player_PickBrick;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -270,9 +270,9 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
-                @Use.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
-                @Use.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
-                @Use.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
+                @PickBrick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickBrick;
+                @PickBrick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickBrick;
+                @PickBrick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickBrick;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -286,9 +286,9 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
-                @Use.started += instance.OnUse;
-                @Use.performed += instance.OnUse;
-                @Use.canceled += instance.OnUse;
+                @PickBrick.started += instance.OnPickBrick;
+                @PickBrick.performed += instance.OnPickBrick;
+                @PickBrick.canceled += instance.OnPickBrick;
             }
         }
     }
@@ -307,6 +307,6 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnUse(InputAction.CallbackContext context);
+        void OnPickBrick(InputAction.CallbackContext context);
     }
 }

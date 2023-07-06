@@ -11,8 +11,7 @@ public class Brick : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _deactivationDelay;
 
-
-    //public static event Action OnBrickDestroyed;
+    public event Action<Brick> OnBrickDestroyed;
 
     public int BlockIndex { get; private set; }
     public Vector3 InitialPosition { get; private set; }
@@ -34,15 +33,15 @@ public class Brick : MonoBehaviour
 
         if (_healthPoints <= 0 && gameObject.activeInHierarchy)
         {
-            DestroyBrick();
-            //OnBrickDestroyed?.Invoke();
+            DestroyBrick();            
         }
     }
 
-    private void Eject()
+    private void DestroyBrick()
     {
         Vector3 randomDirection = Random.insideUnitSphere;
         StartCoroutine(Ejection(randomDirection));
+        OnBrickDestroyed?.Invoke(this);
     }
 
     private IEnumerator Ejection(Vector3 direction)
@@ -59,10 +58,5 @@ public class Brick : MonoBehaviour
         }
 
         gameObject.SetActive(false);
-    }
-
-    private void DestroyBrick()
-    {
-        Eject();
     }
 }

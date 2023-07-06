@@ -342,7 +342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 021c0d238c518584f90ed385b4d15209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 2
   _attackDelay: 1.5
   _attackRange: 1.5
 --- !u!114 &-7295911276214762339
@@ -370,7 +369,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4796431719231917972}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.0887787, y: 1.7780071, z: 1.2587543}
