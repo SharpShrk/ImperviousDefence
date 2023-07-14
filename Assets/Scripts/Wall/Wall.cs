@@ -4,28 +4,23 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    public Transform[] AttackPoints; //убрать паблик сделать геттер
-
+    public Transform[] AttackPoints; //убрать паблик сделать гет приватный сет
+    
+    private BrickPool _brickPool;
     private List<GameObject> _wallBlocks = new List<GameObject>();
 
-    private void OnDisable()
+    public List<GameObject> DestroyedBricks { get; private set; } = new List<GameObject>();
+
+    public int RequiredBrickCount => _wallBlocks.Count;
+
+    private void Start()
     {
-        foreach (GameObject brickObject in _wallBlocks)
-        {
-            Brick brick = brickObject.GetComponent<Brick>();
-            brick.OnBrickDestroyed -= HandleBrickDestroyed;
-        }
+        _brickPool = FindObjectOfType<BrickPool>();
     }
 
     public void SetBricks(List<GameObject> bricks)
     {
         _wallBlocks = bricks;
-
-        foreach (GameObject brickObject in _wallBlocks)
-        {
-            Brick brick = brickObject.GetComponent<Brick>();
-            brick.OnBrickDestroyed += HandleBrickDestroyed;
-        }
     }
 
     public void TakeDamage(int damage)
@@ -41,23 +36,41 @@ public class Wall : MonoBehaviour
         }
     }
 
+    public void SetRepairedBrick(GameObject brick)
+    {
+        _wallBlocks.Add(brick);
+        brick.GetComponent<Brick>().ResetHealtPoints();
+    }
+
+    public void BrickDestroy(Brick brick)
+    {
+        _wallBlocks.Remove(brick.gameObject);
+        DestroyedBricks.Add(brick.gameObject);
+
+        EjectionDuplicateBrick(brick);
+    }
+
     private GameObject GetMaxIndexBrick()
     {
         GameObject maxIndexBlock = _wallBlocks[0];
 
         foreach (GameObject block in _wallBlocks)
         {
-            if (block.GetComponent<Brick>().BlockIndex > maxIndexBlock.GetComponent<Brick>().BlockIndex)
+            if (block.GetComponent<Brick>().BrickIndex > maxIndexBlock.GetComponent<Brick>().BrickIndex)
             {
                 maxIndexBlock = block;
             }
         }
 
         return maxIndexBlock;
-    }
+    }   
 
-    private void HandleBrickDestroyed(Brick brick)
-    {
-        _wallBlocks.Remove(brick.gameObject);
+    private void EjectionDuplicateBrick(Brick brick)
+    {        
+        GameObject duplicateBrick = _brickPool.GetBrick();
+        duplicateBrick.transform.position = brick.gameObject.transform.position;
+        duplicateBrick.GetComponent<Brick>().EjectionDuplicate();
+
+        //вернуть кирпич в пул
     }
 }

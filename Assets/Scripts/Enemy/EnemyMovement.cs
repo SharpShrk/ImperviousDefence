@@ -70,7 +70,7 @@ public class EnemyMovement : MonoBehaviour
     {
         _isBlocked = Physics.CheckSphere(transform.position, _checkRadius, _obstacleLayer);
         //чекнуть этот момент
-        Debug.Log(gameObject.name + " _isBlocked = " + _isBlocked);
+        //Debug.Log(gameObject.name + " _isBlocked = " + _isBlocked);
         _isBlocked = false;
     }
 
@@ -88,11 +88,8 @@ public class EnemyMovement : MonoBehaviour
 
         if (distance <= _enemyAttack.AttackRange)
         {
-            Debug.Log(gameObject.name + " в зоне атаки. Дистанция " + distance);
-
             StopMoving();
             MovementStoppedAction?.Invoke();
-            Debug.Log(gameObject.name + "stop moving");
         }
     }
 

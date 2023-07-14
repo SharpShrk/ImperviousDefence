@@ -36,7 +36,7 @@ public class BricksStorage : MonoBehaviour
         newBrick.transform.localPosition = brickPosition;
         newBrick.SetActive(true);
         _bricks.Add(newBrick);
-        newBrick.GetComponent<Brick>().SetBlockIndex(_currentBrickIndex);
+        newBrick.GetComponent<Brick>().SetBrickIndex(_currentBrickIndex);
 
         _currentBrickIndex++;
     }

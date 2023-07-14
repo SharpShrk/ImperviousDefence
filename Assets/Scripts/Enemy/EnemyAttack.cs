@@ -25,7 +25,6 @@ public class EnemyAttack : MonoBehaviour
     private void OnEnable()
     {
         _movement.MovementStoppedAction += StartAttackCoroutine;
-        Debug.Log(gameObject.name + "событие старта атаки");
     }
 
     private void OnDisable()
@@ -44,8 +43,6 @@ public class EnemyAttack : MonoBehaviour
         {
             yield return new WaitForSeconds(_attackDelay);
             wall.TakeDamage(enemy.Damage);
-
-            Debug.Log(gameObject.name + "јтака");
         }
     }
 
@@ -59,7 +56,7 @@ public class EnemyAttack : MonoBehaviour
         _attackCoroutine = StartCoroutine(AttackWall(_targetWall, _enemy));
     }
 
-    private void StopCheckAttackRange()
+    private void StopCheckAttackRange() //не используетс€ пока
     {
         if (_checkAttackRangeCoroutine != null)
         {

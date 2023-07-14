@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PickBrick",
+                    "name": "Use",
                     "type": "Button",
                     "id": "d09eb6c7-d8ae-445c-81fb-e727474f22b6",
                     "expectedControlType": "Button",
@@ -127,7 +127,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and mouse",
-                    "action": "PickBrick",
+                    "action": "Use",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

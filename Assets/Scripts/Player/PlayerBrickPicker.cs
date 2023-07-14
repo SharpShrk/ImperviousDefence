@@ -15,7 +15,7 @@ public class PlayerBrickPicker : MonoBehaviour
         _inputHandler = new PlayerInputHandler(Camera.main);
         _inputHandler.Enable();
 
-        _inputHandler.InputActions.Player.PickBrick.performed += ctx => PickBrick();
+        _inputHandler.InputActions.Player.Use.performed += ctx => PickBrick();
     }
 
     private void OnTriggerEnter(Collider other) 

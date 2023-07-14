@@ -15,8 +15,11 @@ public class WallBuilder : MonoBehaviour
     [SerializeField] private float _spawnHeight = 1.5f;
     [SerializeField] private float _dropDuration = 0.05f;
 
+    private int _maxBricksInWall;
     private List<GameObject> _wallBlocks = new List<GameObject>();
     private Wall _wall;
+
+    public int MaxBricksInWall => _maxBricksInWall;
 
     private void Start()
     {
@@ -39,9 +42,10 @@ public class WallBuilder : MonoBehaviour
                 Vector3 startPosition = new Vector3(xPos, yPos + _spawnHeight, 0);
                 block.transform.localPosition = startPosition;
 
-                block.GetComponent<Brick>().SetBlockIndex(blockIndex);
+                block.GetComponent<Brick>().SetBrickIndex(blockIndex);
                 Vector3 endPosition = new Vector3(xPos, yPos, 0);
                 block.GetComponent<Brick>().SetInitialPosition(endPosition);
+                block.GetComponent<Brick>().SetInitWall(_wall);
 
                 _wallBlocks.Add(block);
 
@@ -53,6 +57,7 @@ public class WallBuilder : MonoBehaviour
             }
         }
 
+        _maxBricksInWall = _wallBlocks.Count;
         _wall.SetBricks(_wallBlocks);
     }
 
