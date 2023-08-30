@@ -17,11 +17,6 @@ public class WallRepair : MonoBehaviour
         _wall = GetComponent<Wall>();
     }
 
-    private void Update()
-    {
-        Debug.Log(ElapsedTime);
-    }
-
     public int GetRequiredBrickCount()
     {
         return _wall.RequiredBrickCount;

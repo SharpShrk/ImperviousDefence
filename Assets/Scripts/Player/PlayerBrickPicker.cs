@@ -51,6 +51,7 @@ public class PlayerBrickPicker : MonoBehaviour
         }
 
         int bricksNeeded = _brickBag.AvailableCapacity;
+
         if (_bricksStorage.BrickCount < bricksNeeded)
         {
             Debug.Log("Недостаточно кирпичей в хранилище!");

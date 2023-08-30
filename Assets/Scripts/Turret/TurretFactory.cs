@@ -1,25 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TurretFactory : MonoBehaviour
 {
     [SerializeField] private BulletPool turretBulletPool;
-    [SerializeField] private GameObject turretPrefab;
-    [SerializeField] private Transform[] _spawnTurretPonts;
-    [SerializeField] private Transform _turretContainer;
+    [SerializeField] private List<GameObject> _turrets;
 
     private void Start()
     {
-        CreateTurret();
+        InitTurretsBulletPool();
+        DeactivateTurrets();
     }
 
-    private void CreateTurret()
+    private void InitTurretsBulletPool()
     {
-        for(int i = 0; i < _spawnTurretPonts.Length; i++)
+        for(int i = 0; i < _turrets.Count - 1; i++)
         {
-            GameObject turretObject = Instantiate(turretPrefab, _spawnTurretPonts[i].position, Quaternion.identity);
-            turretObject.transform.SetParent(_turretContainer.transform);
-            Turret turret = turretObject.GetComponent<Turret>();
-            turret.Init(turretBulletPool);
+            _turrets[i].GetComponent<Turret>().Init(turretBulletPool);
         }        
+    }
+
+    private void DeactivateTurrets()
+    {
+        for (int i = 0; i < _turrets.Count - 1; i++)
+        {
+            _turrets[i].SetActive(false);
+        }
     }
 }

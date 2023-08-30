@@ -8,7 +8,7 @@ public class PlayerRepairing : MonoBehaviour
     [SerializeField] private PlayerBricksBag _bricksBag;
 
     private PlayerInputHandler _inputHandler;
-    [SerializeField] private WallRepair _currentWallRepair;
+    private WallRepair _currentWallRepair;
 
     private void OnEnable()
     {
