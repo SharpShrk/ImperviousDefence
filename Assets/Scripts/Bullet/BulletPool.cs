@@ -35,6 +35,7 @@ public class BulletPool : MonoBehaviour
             GameObject bullet = _bulletPool.Dequeue();
             bullet.SetActive(true);
             bullet.transform.SetParent(_bulletContainer.transform);
+
             return bullet;
         }
 

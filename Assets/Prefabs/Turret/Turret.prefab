@@ -5123,6 +5123,8 @@ GameObject:
   - component: {fileID: 4595654756050798}
   - component: {fileID: 6158626324601365305}
   - component: {fileID: 243703832}
+  - component: {fileID: -2328354655091889071}
+  - component: {fileID: 8664645411748615253}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -5178,6 +5180,38 @@ MonoBehaviour:
   _rotatingPlatform: {fileID: 1543343654471068}
   _gun: {fileID: 1454602631919742}
   _shootPoint: {fileID: 4703932692914808}
+--- !u!114 &-2328354655091889071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875090778556656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f2b889e695e3124e90e8bc776f58ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartCost: 100
+  CostForLevel: 50
+  StartValue: 20
+  UpdateValue: 5
+--- !u!114 &8664645411748615253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875090778556656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efdf0ab733ed9214e90b2ac1ad5ecef9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartCost: 100
+  CostForLevel: 50
+  StartValue: 1
+  UpdateValue: 0.05
 --- !u!1 &1931211189434318
 GameObject:
   m_ObjectHideFlags: 0
