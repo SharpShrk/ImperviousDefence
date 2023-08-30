@@ -11,9 +11,7 @@ public class PlaceTurretView : MonoBehaviour
     [SerializeField] private TMP_Text _costText;
     [SerializeField] private int _costValue;   
 
-    private Turret _turret;
-
-    public event UnityAction TurretBuyed;
+    public event UnityAction ButtonTurretBuyPressed;
 
     private void OnEnable()
     {
@@ -22,7 +20,6 @@ public class PlaceTurretView : MonoBehaviour
 
     private void OnButtonClick()
     {
-        //нужно как то передать какую турель апгрейдили
-        TurretBuyed?.Invoke();
+        ButtonTurretBuyPressed?.Invoke();
     }
 }

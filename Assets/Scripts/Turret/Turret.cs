@@ -17,8 +17,7 @@ public class Turret : MonoBehaviour
     public int UpgradeLevel { get; private set; }
 
     private void Start()
-    {       
-        StartCoroutine(Attack());
+    {              
         UpgradeLevel = 0;
         IsPlaced = false;
     }
@@ -29,7 +28,9 @@ public class Turret : MonoBehaviour
     }
     public void PlaceTurret()
     {
-        IsPlaced = true;        
+        IsPlaced = true;  
+        gameObject.SetActive(true);
+        StartCoroutine(Attack());
     }
 
     public void Upgrade()

@@ -14,7 +14,7 @@ public class TurretFactory : MonoBehaviour
 
     private void InitTurretsBulletPool()
     {
-        for(int i = 0; i < _turrets.Count - 1; i++)
+        for(int i = 0; i < _turrets.Count; i++)
         {
             _turrets[i].GetComponent<Turret>().Init(turretBulletPool);
         }        
@@ -22,7 +22,7 @@ public class TurretFactory : MonoBehaviour
 
     private void DeactivateTurrets()
     {
-        for (int i = 0; i < _turrets.Count - 1; i++)
+        for (int i = 0; i < _turrets.Count; i++)
         {
             _turrets[i].SetActive(false);
         }

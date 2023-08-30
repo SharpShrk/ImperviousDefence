@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3858204483320867462}
   - component: {fileID: 3858204483320867706}
-  - component: {fileID: 3858204483320867704}
   m_Layer: 0
   m_Name: bang icon
   m_TagString: Untagged
@@ -85,19 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &3858204483320867704
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3858204483320867463}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.74500036, y: 0.7450002, z: 0.20000005}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3858204484058365734
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,10 +178,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3858204484058365734}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &3858204484058365725

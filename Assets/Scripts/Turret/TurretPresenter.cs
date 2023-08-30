@@ -9,13 +9,16 @@ public class TurretPresenter : MonoBehaviour
     [SerializeField] private TurretDamage _turretDamage;
     [SerializeField] private ColorChangeButtonUpgrade _colorChanger;
     [SerializeField] private TurretUpgradeView _upgradeMenu;
-    [SerializeField] private PlaceTurretView _placeTurretView;
     [SerializeField] private TurretFactory _turretFactory;
 
     private void OnEnable()
     {
         _colorChanger.ButtonFullPressed += OpenShop;
-        //_placeTurretView.TurretBuyed += InitTurretPlace; //определить какую турель апгрейдили
+    }
+
+    private void OnDisable()
+    {
+        _colorChanger.ButtonFullPressed -= OpenShop;
     }
 
     //запросить у турели текущие уровни апгрейдов и установлена ли она
@@ -26,18 +29,21 @@ public class TurretPresenter : MonoBehaviour
     private void OpenShop() //переименовать
     {
         if(_turret.IsPlaced)
-        {
-            //сообщить окну текущие уровни, нельзя передавать саму турель
+        {           
+            _upgradeMenu.OpenUpgradeTurretMenu(this);
         }
         else
         {
-            //открыть окно с покупкой турели? как узнать что ее купили?
-            _upgradeMenu.OpenBuyTurretMenu();
+            _upgradeMenu.OpenBuyTurretMenu(this);
         }
     }
 
-    private void InitTurretPlace()
+    public void TurretPlace()
     {
+        if (_turret.IsPlaced == true)
+            return;
 
+        Debug.Log("Турель куплена, момент, ща установим.");
+        _turret.PlaceTurret();        
     }
 }
