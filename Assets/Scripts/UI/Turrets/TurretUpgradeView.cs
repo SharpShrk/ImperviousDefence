@@ -8,34 +8,42 @@ using UnityEngine.UI;
 public class TurretUpgradeView : MonoBehaviour
 {
     [SerializeField] private Button _exitButton;
-    [SerializeField] private GameObject _upgradeMenu;
-    [SerializeField] private GameObject _panelAttackSpeed;
-    [SerializeField] private GameObject _panelDamage;
-    [SerializeField] private GameObject _panelPlaceTurret;
+    [SerializeField] private GameObject _upgradeMenuObject;
+    [SerializeField] private GameObject _panelAttackSpeedObject;
+    [SerializeField] private GameObject _panelDamageObject;
+    [SerializeField] private GameObject _panelPlaceTurretObject;
+    [SerializeField] private UpgradeService _upgradeService;
 
     private TurretPresenter _currentTurretPresenter;
     private PlaceTurretView _placeTurretView;
-
-    //сообщить презентеру, что нажата кнопка. Как сделать так, чтобы об этом узнал нужный презентер?
-    //просто но тупо - создать 4 окна апдейтов. Даже не думать об этом. Очень тупо.
-
+    TurretButtonUpgradeAttackSpeed _panelAttackSpeed;
+    TurretButtonUpgradeDamage _panelDamage;
 
     private void OnEnable()
     {
-        _placeTurretView = _panelPlaceTurret.GetComponent<PlaceTurretView>();
+        _placeTurretView = _panelPlaceTurretObject.GetComponent<PlaceTurretView>();
+        _panelAttackSpeed = _panelAttackSpeedObject.GetComponent<TurretButtonUpgradeAttackSpeed>();
+        _panelDamage = _panelDamageObject.GetComponent<TurretButtonUpgradeDamage>();
+
         _placeTurretView.ButtonTurretBuyPressed += TryBuyTurret;
+        _upgradeService.AttackSpeedUpgraded += SetValuesInPanelAttackSpeed;
+        _upgradeService.DamageUpgraded += SetValuesInPanelDamage;
 
         _exitButton.onClick.AddListener(DeactivateUpgradeMenu);
 
-        _upgradeMenu.SetActive(false);
-        _panelAttackSpeed.SetActive(false);
-        _panelDamage.SetActive(false);
-        _panelPlaceTurret.SetActive(false);
+        _upgradeMenuObject.SetActive(false);
+        _panelAttackSpeedObject.SetActive(false);
+        _panelDamageObject.SetActive(false);
+        _panelPlaceTurretObject.SetActive(false);
     }
 
     private void OnDisable()
     {
         _placeTurretView.ButtonTurretBuyPressed -= TryBuyTurret;
+        _upgradeService.AttackSpeedUpgraded -= SetValuesInPanelAttackSpeed;
+        _upgradeService.DamageUpgraded -= SetValuesInPanelDamage;
+
+        _exitButton?.onClick.RemoveListener(DeactivateUpgradeMenu);
     }
 
     public void OpenBuyTurretMenu(TurretPresenter turretPresenter)
@@ -46,9 +54,9 @@ public class TurretUpgradeView : MonoBehaviour
         _currentTurretPresenter = turretPresenter;
 
         ActivateUpgradeMenu();
-        _panelDamage.SetActive(false);
-        _panelAttackSpeed.SetActive(false);
-        _panelPlaceTurret.SetActive(true);      
+        _panelDamageObject.SetActive(false);
+        _panelAttackSpeedObject.SetActive(false);
+        _panelPlaceTurretObject.SetActive(true);      
     }
 
     public void OpenUpgradeTurretMenu(TurretPresenter turretPresenter)
@@ -59,14 +67,17 @@ public class TurretUpgradeView : MonoBehaviour
         _currentTurretPresenter = turretPresenter;
 
         ActivateUpgradeMenu();
-        _panelPlaceTurret.SetActive(false);
-        _panelDamage.SetActive(true);
-        _panelAttackSpeed.SetActive(true);
+        _panelPlaceTurretObject.SetActive(false);
+        _panelDamageObject.SetActive(true);
+        _panelAttackSpeedObject.SetActive(true);
+
+        SetValuesInPanelAttackSpeed();
+        SetValuesInPanelDamage();
     }
 
     private void ActivateUpgradeMenu()
     {
-        _upgradeMenu.SetActive(true);
+        _upgradeMenuObject.SetActive(true);
         Time.timeScale = 0;
     }
 
@@ -74,13 +85,32 @@ public class TurretUpgradeView : MonoBehaviour
     {
         _currentTurretPresenter = null;
 
-        _upgradeMenu.SetActive(false);
+        _upgradeMenuObject.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    private void SetValuesInPanelAttackSpeed()
+    {
+        int level = _currentTurretPresenter.GetLevelAttackSpeed();
+        int cost = _upgradeService.GetCostUpgrade(level);
+
+        _panelAttackSpeed.SetCostValue(cost);
+        _panelAttackSpeed.SetLevelValue(level);
+    }
+
+    private void SetValuesInPanelDamage()
+    {
+        int level = _currentTurretPresenter.GetLevelDamage();
+        int cost = _upgradeService.GetCostUpgrade(level);
+
+        _panelDamage.SetCostValue(cost);
+        _panelDamage.SetLevelValue(level);
     }
 
     private void TryBuyTurret()
     {
         //оформить покупку. Если все оки, ставим турель
+        //перенести в апгрейд сервис или создать еще один метод? уфффф
 
         _currentTurretPresenter.TurretPlace();
         DeactivateUpgradeMenu();

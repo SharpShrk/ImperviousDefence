@@ -9,7 +9,7 @@ public class TurretPresenter : MonoBehaviour
     [SerializeField] private TurretDamage _turretDamage;
     [SerializeField] private ColorChangeButtonUpgrade _colorChanger;
     [SerializeField] private TurretUpgradeView _upgradeMenu;
-    [SerializeField] private TurretFactory _turretFactory;
+    [SerializeField] private UpgradeService _upgradeService;
 
     private void OnEnable()
     {
@@ -31,6 +31,7 @@ public class TurretPresenter : MonoBehaviour
         if(_turret.IsPlaced)
         {           
             _upgradeMenu.OpenUpgradeTurretMenu(this);
+            _upgradeService.SetCurrentTurretUpdates(this);
         }
         else
         {
@@ -45,5 +46,25 @@ public class TurretPresenter : MonoBehaviour
 
         Debug.Log("Турель куплена, момент, ща установим.");
         _turret.PlaceTurret();        
+    }
+
+    public int GetLevelAttackSpeed()
+    {
+        return _turretAttackSpeed.GetLevel();
+    }
+
+    public int GetLevelDamage()
+    {
+        return _turretDamage.GetLevel();
+    }
+
+    public void UpgradeAttackSpeed() //подписаться на событие, что апгрейд произведен
+    {
+        _turretAttackSpeed.Upgrade();
+    }
+
+    public void UpgradeDamage() //подписаться на событие, что апгрейд произведен
+    {
+        _turretDamage.Upgrade();
     }
 }

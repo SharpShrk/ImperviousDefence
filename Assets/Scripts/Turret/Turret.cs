@@ -12,14 +12,14 @@ public class Turret : MonoBehaviour
 
     private BulletPool _bulletPool;
     private GameObject _target;
+    private float _currentAttackCooldown;
 
     public bool IsPlaced { get; private set; }
-    public int UpgradeLevel { get; private set; }
 
     private void Start()
     {              
-        UpgradeLevel = 0;
         IsPlaced = false;
+        _currentAttackCooldown = _attackCooldown;
     }
 
     public void Init(BulletPool bulletPool)
@@ -33,9 +33,9 @@ public class Turret : MonoBehaviour
         StartCoroutine(Attack());
     }
 
-    public void Upgrade()
+    public void SetAttackSpeed(float attackSpeedMultiplier)
     {
-        UpgradeLevel++;
+        _currentAttackCooldown = _attackCooldown * attackSpeedMultiplier;
     }
 
     private GameObject SearchAttackTarget()
@@ -86,12 +86,11 @@ public class Turret : MonoBehaviour
         _gun.transform.localRotation = Quaternion.Euler(-angleToTarget, 0, 0);
     }
 
-    private IEnumerator Attack() //изменять аттак кулдаун
-    {
-        var attackCooldown = new WaitForSeconds(_attackCooldown);
-
+    private IEnumerator Attack()
+    {       
         while(true)
         {
+            var attackCooldown = new WaitForSeconds(_currentAttackCooldown);
             GameObject target = SearchAttackTarget();
 
             if (target != null)

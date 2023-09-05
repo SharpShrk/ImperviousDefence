@@ -174,10 +174,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _exitButton: {fileID: 1465732314}
-  _upgradeMenu: {fileID: 1227396764}
-  _panelAttackSpeed: {fileID: 0}
-  _panelDamage: {fileID: 0}
-  _panelPlaceTurret: {fileID: 0}
+  _upgradeMenuObject: {fileID: 1227396764}
+  _panelAttackSpeedObject: {fileID: 19093601}
+  _panelDamageObject: {fileID: 159538243}
+  _panelPlaceTurretObject: {fileID: 358838932}
+  _upgradeService: {fileID: 701977725}
 --- !u!1 &19093601
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,10 +811,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c397a40403650f949a185997ca6b8441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonUpgrade: {fileID: 0}
-  CostText: {fileID: 0}
-  LevelText: {fileID: 0}
-  UpgradePanel: {fileID: 0}
+  ButtonUpgrade: {fileID: 197510676}
+  CostText: {fileID: 656856622}
+  LevelText: {fileID: 1265459941}
+  UpgradePanel: {fileID: 159538243}
 --- !u!1 &164717597
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,8 +1366,7 @@ MonoBehaviour:
   _turretDamage: {fileID: 666488056}
   _colorChanger: {fileID: 1386982099}
   _upgradeMenu: {fileID: 9671506}
-  _placeTurretView: {fileID: 0}
-  _turretFactory: {fileID: 0}
+  _upgradeService: {fileID: 701977725}
 --- !u!4 &284769859 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3858204484507893497, guid: bfcb6bc92d5f84749b41f5a48fdf345b, type: 3}
@@ -2929,6 +2929,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fdd29926d0c90640a96e3f6522d6901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &701977724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 701977726}
+  - component: {fileID: 701977725}
+  m_Layer: 0
+  m_Name: TurretUpgradeService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &701977725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701977724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9f0443ec62b584388ecc5fa6da8194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startCost: 100
+  _costForLevel: 50
+  _maxLevelUpgrade: 10
+  _buttonUpgradeAttackSpeed: {fileID: 19093603}
+  _buttonUpgradeDamage: {fileID: 159538245}
+--- !u!4 &701977726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701977724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.3463297, y: 1.1264596, z: -0.8059864}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3078,8 +3127,7 @@ MonoBehaviour:
   _turretDamage: {fileID: 682453539}
   _colorChanger: {fileID: 1743852540}
   _upgradeMenu: {fileID: 9671506}
-  _placeTurretView: {fileID: 0}
-  _turretFactory: {fileID: 0}
+  _upgradeService: {fileID: 701977725}
 --- !u!1 &796337396
 GameObject:
   m_ObjectHideFlags: 0
@@ -3721,7 +3769,7 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 0}
   m_Animations:
-  - {fileID: 7400000, guid: 1df95d4c582c580418e7e45bca8e400d, type: 2}
+  - {fileID: 7400000, guid: 7e8b0bcf4a5044d489ddcbdfbcee27c5, type: 2}
   - {fileID: 7400000, guid: be29741c87d91a04cb77c07eea4e8e18, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
@@ -6658,8 +6706,7 @@ MonoBehaviour:
   _turretDamage: {fileID: 897059500}
   _colorChanger: {fileID: 1838506316}
   _upgradeMenu: {fileID: 9671506}
-  _placeTurretView: {fileID: 0}
-  _turretFactory: {fileID: 0}
+  _upgradeService: {fileID: 701977725}
 --- !u!1 &1912856147
 GameObject:
   m_ObjectHideFlags: 0
@@ -7169,8 +7216,7 @@ MonoBehaviour:
   _turretDamage: {fileID: 1623644089}
   _colorChanger: {fileID: 1069249613}
   _upgradeMenu: {fileID: 9671506}
-  _placeTurretView: {fileID: 0}
-  _turretFactory: {fileID: 0}
+  _upgradeService: {fileID: 701977725}
 --- !u!4 &2137540042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3858204484507893497, guid: bfcb6bc92d5f84749b41f5a48fdf345b, type: 3}

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TurretButtonUpgrade : MonoBehaviour
+public abstract class TurretButtonUpgrade : MonoBehaviour
 {
     [SerializeField] protected Button ButtonUpgrade;
     [SerializeField] protected TMP_Text CostText;
@@ -14,6 +14,11 @@ public class TurretButtonUpgrade : MonoBehaviour
     protected void OnEnable()
     {
         ButtonUpgrade.onClick.AddListener(OnButtonClick);        
+    }
+
+    protected void OnDisable()
+    {
+        ButtonUpgrade?.onClick.RemoveListener(OnButtonClick);
     }
 
     public void SetCostValue(int value) //подписаться на событие
@@ -26,10 +31,7 @@ public class TurretButtonUpgrade : MonoBehaviour
         LevelText.text = value.ToString();
     }
 
-    protected void OnButtonClick()
-    {
-        //сообщить презентеру что кнопка нажата
-    }
+    protected abstract void OnButtonClick();
 
     protected void ActivateUpgradeMenu()
     {
