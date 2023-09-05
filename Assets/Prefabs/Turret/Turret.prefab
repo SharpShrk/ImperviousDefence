@@ -5192,9 +5192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2b889e695e3124e90e8bc776f58ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartCost: 100
-  CostForLevel: 50
-  StartValue: 20
+  StartValue: 10
   UpdateValue: 5
 --- !u!114 &8664645411748615253
 MonoBehaviour:
@@ -5208,8 +5206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efdf0ab733ed9214e90b2ac1ad5ecef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartCost: 100
-  CostForLevel: 50
   StartValue: 1
   UpdateValue: 0.05
 --- !u!1 &1931211189434318

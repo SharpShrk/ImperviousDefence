@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class TurretDamage : TurretStats
 {
+    private Turret _turret;
+
     public bool IsMaxLevel { get; private set; }
 
     private void OnEnable()
     {
         IsMaxLevel = false;
+        _turret = GetComponent<Turret>();
     }
 
     public override void Upgrade()
@@ -16,9 +19,9 @@ public class TurretDamage : TurretStats
         Value += UpdateValue;
         Level++;
 
-        Debug.Log(gameObject.name + "Апгрейд урона. Текущий урон: " + Value + ", текущий левел: " + Level);
+        _turret.SetUpgradeDamage(Value);
 
-        if(Level == MaxLevel)
+        if (Level == MaxLevel)
         {
             IsMaxLevel = true;
         }

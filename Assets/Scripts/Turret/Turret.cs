@@ -9,16 +9,19 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject _rotatingPlatform;
     [SerializeField] private GameObject _gun;
     [SerializeField] private Transform _shootPoint;
+    [SerializeField] private float _startDamage = 10f;
 
     private BulletPool _bulletPool;
     private GameObject _target;
     private float _currentAttackCooldown;
+    private float _damage;
 
     public bool IsPlaced { get; private set; }
 
     private void Start()
     {              
         IsPlaced = false;
+        _damage = _startDamage;
         _currentAttackCooldown = _attackCooldown;
     }
 
@@ -36,6 +39,11 @@ public class Turret : MonoBehaviour
     public void SetAttackSpeed(float attackSpeedMultiplier)
     {
         _currentAttackCooldown = _attackCooldown * attackSpeedMultiplier;
+    }
+
+    public void SetUpgradeDamage(float damage)
+    {
+        _damage = damage;
     }
 
     private GameObject SearchAttackTarget()
@@ -108,5 +116,8 @@ public class Turret : MonoBehaviour
         GameObject bullet = _bulletPool.GetBullet();
         bullet.transform.position = _shootPoint.position;
         bullet.transform.rotation = _shootPoint.rotation;
+
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.SetDamage((int)(_damage));
     }
 }
