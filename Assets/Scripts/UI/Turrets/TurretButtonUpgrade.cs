@@ -21,7 +21,7 @@ public abstract class TurretButtonUpgrade : MonoBehaviour
         ButtonUpgrade?.onClick.RemoveListener(OnButtonClick);
     }
 
-    public void SetCostValue(int value) //подписаться на событие
+    public void SetCostValue(int value)
     {        
         CostText.text = value.ToString();
     }

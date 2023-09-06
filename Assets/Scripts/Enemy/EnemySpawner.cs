@@ -13,8 +13,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float _spawnZoneLength;
     [SerializeField] private Vector3 _spawnZoneCenter;
     [SerializeField] private GameObject _enemyContainer;
+    [SerializeField] private RewardCollector _rewardCollector;
 
     private List<GameObject> _enemyPool;
+    private List<Enemy> _enemies;
     private Waves _waves;
     private bool _gameOver = false;
     private int _activeEnemies = 0;
@@ -33,17 +35,15 @@ public class EnemySpawner : MonoBehaviour
         _activeEnemies = _enemyPool.FindAll(enemy => enemy.activeSelf).Count;
     }
 
-    private void OnEnable()
-    {
-        Enemy.OnDeath += HandleEnemyDeath;
-    }
-
     private void OnDisable()
     {
-        Enemy.OnDeath -= HandleEnemyDeath;
+        foreach(var enemy in _enemies)
+        {
+            enemy.OnEnemyDied -= OnEnemyDied;
+        }
     }
 
-    private void HandleEnemyDeath() //не всегда прилетает событие
+    private void CheckSpawnedEnemy()
     {
         _activeEnemies--;
         Debug.Log("Враг умер. Осталось активных врагов: " + _activeEnemies);
@@ -64,10 +64,16 @@ public class EnemySpawner : MonoBehaviour
     private void InitializeEnemyPool()
     {
         _enemyPool = new List<GameObject>();
+        _enemies = new List<Enemy>();
 
         for (int i = 0; i < _initialPoolSize; i++)
         {
             GameObject enemy = Instantiate(_enemyPrefab);
+
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            enemyScript.OnEnemyDied += OnEnemyDied;
+            _enemies.Add(enemyScript);
+
             enemy.SetActive(false);
             enemy.transform.SetParent(_enemyContainer.transform);
             _enemyPool.Add(enemy);
@@ -88,6 +94,7 @@ public class EnemySpawner : MonoBehaviour
         newEnemy.gameObject.SetActive(false);
         newEnemy.transform.SetParent(_enemyContainer.transform);
         _enemyPool.Add(newEnemy);
+        _enemies.Add(newEnemy.GetComponent<Enemy>());
         return newEnemy;
     }
 
@@ -141,5 +148,11 @@ public class EnemySpawner : MonoBehaviour
     {
         Gizmos.color = new Color(1, 0, 0, 0.5f);
         Gizmos.DrawCube(_spawnZoneCenter, new Vector3(_spawnZoneWidth, 0, _spawnZoneLength));
+    }
+
+    private void OnEnemyDied(int rewardMoney, int rewardScore)
+    {
+        CheckSpawnedEnemy();
+        _rewardCollector.TakeReward(rewardMoney, rewardScore);
     }
 }

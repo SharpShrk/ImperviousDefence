@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
+    [SerializeField] private int _rewardMoney;
+    [SerializeField] private int _rewardScore;
+
     private int _health;
     private int _damage;
     private EnemyMovement _enemyMovement;
     private EnemyAttack _enemyAttack;
 
-    public static event Action OnDeath; //нигде не используетс€
+    public event Action<int, int> OnEnemyDied;
 
     public int Health => _health;
     public int Damage => _damage;
@@ -35,18 +38,16 @@ public class Enemy : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         _health -= damage;
-        //Debug.Log(gameObject.name + " текущее здоровье: " + _health);
 
         if (_health <= 0)
         {
-            OnDeath?.Invoke();
-            //Debug.Log("¬раг умер");
+            OnEnemyDied?.Invoke(_rewardMoney, _rewardScore);
             Die();
         }
     }
 
     private void Die()
-    {
+    {        
         gameObject.SetActive(false);
     }
 
