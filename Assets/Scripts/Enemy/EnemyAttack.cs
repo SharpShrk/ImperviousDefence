@@ -15,11 +15,13 @@ public class EnemyAttack : MonoBehaviour
     private EnemyMovement _movement;
     private Coroutine _checkAttackRangeCoroutine;
     private Coroutine _attackCoroutine;
+    private Animator _animator;
 
     private void Awake()
     {
         _enemy = GetComponent<Enemy>();
         _movement = GetComponent<EnemyMovement>();
+        _animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -40,7 +42,8 @@ public class EnemyAttack : MonoBehaviour
     private IEnumerator AttackWall(Wall wall, Enemy enemy)
     {
         while (true)
-        {
+        {           
+            _animator.SetTrigger("attack");
             yield return new WaitForSeconds(_attackDelay);
             wall.TakeDamage(enemy.Damage);
         }

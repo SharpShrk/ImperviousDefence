@@ -21,12 +21,15 @@ public class EnemyMovement : MonoBehaviour
     private float _timeUntilCheck = 0.5f;
     private Transform _targetAttackPoint;
     private EnemyAttack _enemyAttack;
+    private Animator _animator;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _enemyAttack = GetComponent<EnemyAttack>();
+        _animator = GetComponent<Animator>();
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        _animator.SetBool("isRunning", true);
     }
 
     public void SetTargetWall(Wall targetWall)
@@ -46,6 +49,7 @@ public class EnemyMovement : MonoBehaviour
     public void StopMoving()
     {
         _isMoving = false;
+        _animator.SetBool("isRunning", false);
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.isKinematic = true;
     }
