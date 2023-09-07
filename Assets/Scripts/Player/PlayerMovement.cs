@@ -10,9 +10,11 @@ public class PlayerMovement : MonoBehaviour
     private IMovable _movable;
     private IRotatable _rotatable;
     private PlayerInputHandler _inputHandler;
+    private Animator _animator;
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         _movable = new Movable(transform, moveSpeed);
         _rotatable = new Rotatable(transform, rotationSpeed);
         _inputHandler = new PlayerInputHandler(mainCamera);
@@ -31,8 +33,48 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Vector3 direction = _inputHandler.GetMoveDirection();
+        Vector3 lookDirection = _inputHandler.GetLookDirection(transform.position);
+
         _movable.Move(direction);
         _rotatable.Rotate(_inputHandler.GetMouseWorldPosition());
+
+        _animator.SetBool("isRunningForward", false);
+        _animator.SetBool("isRunningBackward", false);
+        _animator.SetBool("isRunningRight", false);
+        _animator.SetBool("isRunningLeft", false);
+
+        float angle = Vector3.Angle(direction, lookDirection);
+        float crossProduct = Vector3.Cross(direction, lookDirection).y;
+
+        if (direction.magnitude > 0.1f)
+        {
+            if (angle < 45)
+            {
+                _animator.SetBool("isRunningForward", true);
+            }
+            else if (angle > 135)
+            {
+                _animator.SetBool("isRunningBackward", true);
+            }
+            else
+            {
+                if (crossProduct > 0)
+                {
+                    _animator.SetBool("isRunningRight", true);
+                }
+                else
+                {
+                    _animator.SetBool("isRunningLeft", true);
+                }
+            }
+        }
+        else
+        {
+            _animator.SetBool("isRunningForward", false);
+            _animator.SetBool("isRunningBackward", false);
+            _animator.SetBool("isRunningRight", false);
+            _animator.SetBool("isRunningLeft", false);
+        }
     }
 }
 

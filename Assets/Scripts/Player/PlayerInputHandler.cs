@@ -34,6 +34,11 @@ public class PlayerInputHandler
         return new Vector3(_moveInput.x, 0, _moveInput.y);
     }
 
+    public Vector3 GetLookDirection(Vector3 playerPosition)
+    {
+        return GetMouseWorldPosition() - playerPosition;
+    }
+
     public Vector3 GetMouseWorldPosition()
     {
         Vector2 screenPosition = InputActions.Player.MousePosition.ReadValue<Vector2>();
