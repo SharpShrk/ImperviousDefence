@@ -13,6 +13,7 @@ public class TurretUpgradeView : MonoBehaviour
     [SerializeField] private GameObject _panelDamageObject;
     [SerializeField] private GameObject _panelPlaceTurretObject;
     [SerializeField] private UpgradeService _upgradeService;
+    [SerializeField] private Wallet _wallet;
 
     private TurretPresenter _currentTurretPresenter;
     private PlaceTurretView _placeTurretView;
@@ -109,10 +110,16 @@ public class TurretUpgradeView : MonoBehaviour
 
     private void TryBuyTurret()
     {
-        //оформить покупку. Если все оки, ставим турель
-        //перенести в апгрейд сервис или создать еще один метод? уфффф
+        bool success = _wallet.SpendMoney(_placeTurretView.CostValue);
 
-        _currentTurretPresenter.TurretPlace();
-        DeactivateUpgradeMenu();
+        if (success)
+        {
+            _currentTurretPresenter.TurretPlace();
+            DeactivateUpgradeMenu();
+        }
+        else
+        {
+            Debug.Log("Не хватило денюшков"); //вывести в UI
+        } 
     }
 }

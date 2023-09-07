@@ -10,6 +10,7 @@ public class UpgradeService : MonoBehaviour
     [SerializeField] private int _maxLevelUpgrade;
     [SerializeField] private TurretButtonUpgradeAttackSpeed _buttonUpgradeAttackSpeed;
     [SerializeField] private TurretButtonUpgradeDamage _buttonUpgradeDamage;
+    [SerializeField] private Wallet _wallet;
 
     private TurretPresenter _currentTurretPresenter;
 
@@ -33,47 +34,53 @@ public class UpgradeService : MonoBehaviour
         _currentTurretPresenter = turretPresenter;
     }
 
-    private void TryUpdgradeDamage() //подписаться на кнопку апгрейда
+    private void TryUpdgradeDamage()
     {
-        //списать деньги, если удачно, то апдейтимся
-
         if (_currentTurretPresenter.GetLevelDamage() >= _maxLevelUpgrade)
         {
             //кинуть ошибку
             return;
         }
 
-        UpgradeDamage();
+        int cost = GetCostUpgrade(_currentTurretPresenter.GetLevelDamage());
+        bool success = _wallet.SpendMoney(cost);
+
+        if (success)
+        {
+            _currentTurretPresenter.UpgradeDamage();
+            DamageUpgraded?.Invoke();
+        }
+        else
+        {
+            Debug.Log("Не хватило денюшков"); //вывести в UI
+        }   
     }
 
-    private void TryUpdgradeAttackSpeed() //подписаться на кнопку апгрейда
+    private void TryUpdgradeAttackSpeed()
     {
-        //списать деньги, если удачно, то апдейтимся
-
         if (_currentTurretPresenter.GetLevelAttackSpeed() >= _maxLevelUpgrade)
         {
-            //кинуть ошибку
+            //кинуть ошибку или сделать кнопку неактивной
             return;
         }
 
-        UpgradeAttackSpeed();
+        int cost = GetCostUpgrade(_currentTurretPresenter.GetLevelAttackSpeed());
+        bool success = _wallet.SpendMoney(cost);
+
+        if (success)
+        {
+            _currentTurretPresenter.UpgradeAttackSpeed();
+            AttackSpeedUpgraded?.Invoke();
+        }
+        else
+        {
+            Debug.Log("Не хватило денюшков"); //вывести в UI
+        } 
     }
 
-    public int GetCostUpgrade(int level) //эта хуйня явно работает через жопу
+    public int GetCostUpgrade(int level)
     {
         int cost = _startCost + _costForLevel * level;
         return cost;
-    }
-
-    private void UpgradeDamage()
-    {
-        _currentTurretPresenter.UpgradeDamage();
-        DamageUpgraded?.Invoke();
-    }
-
-    private void UpgradeAttackSpeed()
-    {
-        _currentTurretPresenter.UpgradeAttackSpeed();
-        AttackSpeedUpgraded?.Invoke();
     }
 }
