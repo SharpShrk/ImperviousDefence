@@ -10,6 +10,7 @@ public class PlayerBricksBag : MonoBehaviour
 
     public int AvailableCapacity => _maxBrickCapacity - _currentBrickCount;
     public int CurrentBrickCount => _currentBrickCount;
+    public int MaxBrickCapacity => _maxBrickCapacity;
 
     public event Action<int> OnBrickCountChanged;
 
@@ -19,7 +20,7 @@ public class PlayerBricksBag : MonoBehaviour
         if (_currentBrickCount + count <= _maxBrickCapacity)
         {
             _currentBrickCount += count;
-            OnBrickCountChanged?.Invoke(_currentBrickCount); //передать в ЮИ
+            OnBrickCountChanged?.Invoke(_currentBrickCount);
             Debug.Log("Кирпчей в сумке: " + _currentBrickCount + ". Взято кирпичей: " + count);
             return true;
         }
@@ -35,7 +36,7 @@ public class PlayerBricksBag : MonoBehaviour
         if (_currentBrickCount - count >= 0)
         {
             _currentBrickCount -= count;
-            OnBrickCountChanged?.Invoke(_currentBrickCount); //передать в ЮИ
+            OnBrickCountChanged?.Invoke(_currentBrickCount);
             return true;
         }
         else

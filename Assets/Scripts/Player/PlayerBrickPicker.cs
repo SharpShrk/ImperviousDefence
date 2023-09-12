@@ -52,15 +52,17 @@ public class PlayerBrickPicker : MonoBehaviour
 
         int bricksNeeded = _brickBag.AvailableCapacity;
 
-        if (_bricksStorage.BrickCount < bricksNeeded)
+        int actualBricksToPick = Mathf.Min(_bricksStorage.BrickCount, bricksNeeded);
+
+        if (actualBricksToPick == 0)
         {
-            Debug.Log("Недостаточно кирпичей в хранилище!");
+            Debug.Log("Недостаточно кирпичей в хранилище или сумка полна!");
             return;
         }
 
-        _bricksStorage.RemoveBricks(bricksNeeded);
+        _bricksStorage.RemoveBricks(actualBricksToPick);
 
-        if (!_brickBag.AddBricks(bricksNeeded))
+        if (!_brickBag.AddBricks(actualBricksToPick))
         {
             Debug.Log("Ошибка при добавлении кирпича в сумку");
             return;
