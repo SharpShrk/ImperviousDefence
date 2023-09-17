@@ -13,7 +13,7 @@ public class EnemyAttack : MonoBehaviour
     private Wall _targetWall;
     private Enemy _enemy;
     private EnemyMovement _movement;
-    private Coroutine _checkAttackRangeCoroutine;
+    //private Coroutine _checkAttackRangeCoroutine;
     private Coroutine _attackCoroutine;
     private Animator _animator;
 
@@ -36,15 +36,32 @@ public class EnemyAttack : MonoBehaviour
 
     public void SetTargetWall(Wall targetWall)
     {
+        if (targetWall == null)
+        {
+            Debug.LogError("Target Wall is null");
+            return;
+        }
+
         _targetWall = targetWall;
     }
 
-    private IEnumerator AttackWall(Wall wall, Enemy enemy)
+    /*private IEnumerator AttackWall(Wall wall, Enemy enemy)
     {
         while (true)
         {           
             _animator.SetTrigger("attack");
             yield return new WaitForSeconds(_attackDelay);
+            wall.TakeDamage(enemy.Damage);
+        }
+    }*/
+
+    private IEnumerator AttackWall(Wall wall, Enemy enemy)
+    {
+        while (true)
+        {
+            _animator.SetTrigger("attack");
+            yield return new WaitForSeconds(_attackDelay);
+
             wall.TakeDamage(enemy.Damage);
         }
     }
@@ -56,14 +73,29 @@ public class EnemyAttack : MonoBehaviour
             StopCoroutine(_attackCoroutine);
         }
 
-        _attackCoroutine = StartCoroutine(AttackWall(_targetWall, _enemy));
+        WallAttackPoint attackPoint = _movement.TargetAttackPoint.GetComponent<WallAttackPoint>();
+
+        if (attackPoint != null)
+        {
+            _attackCoroutine = StartCoroutine(AttackWall(_targetWall, _enemy));
+        }
     }
 
-    private void StopCheckAttackRange() //не используется пока
+    /*private void StartAttackCoroutine()
+    {
+        if (_attackCoroutine != null)
+        {
+            StopCoroutine(_attackCoroutine);
+        }
+
+        _attackCoroutine = StartCoroutine(AttackWall(_targetWall, _enemy));
+    }*/
+
+    /*private void StopCheckAttackRange() //не используется пока
     {
         if (_checkAttackRangeCoroutine != null)
         {
             StopCoroutine(_checkAttackRangeCoroutine);
         }
-    }
+    }*/
 }

@@ -6,41 +6,39 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemyPrefab;
-    [SerializeField] private int _initialPoolSize = 20;
     [SerializeField] private float _waveDelay = 3.0f;
     [SerializeField] private float _spawnZoneWidth;
     [SerializeField] private float _spawnZoneLength;
     [SerializeField] private Vector3 _spawnZoneCenter;
-    [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private RewardCollector _rewardCollector;
+    [SerializeField] private EnemyPool _enemyPool;
 
-    private List<GameObject> _enemyPool;
-    private List<Enemy> _enemies;
     private Waves _waves;
     private bool _gameOver = false;
     private int _activeEnemies = 0;
     private Coroutine _enemySpawnCoroutine;
-    //private int _currentWave = 1;
+    private FreeAttackPointChecker _attackPointChecker;
+
+    public int ActiveEnemies => _activeEnemies;
+
+
+    //добавить такой функционал. Если врагов спавнится больше, чем занято точек, то враги должны ожидать своей очереди на спавен
+    //подумать над исполнением, как это лучше реализовать. Может добавлять их в какой то лист и после каждой смерти врага проверять сколько осталось их в листе
+    //еще есть другая проблема. Когда врагов спавнится больше 3 на одну стену, то свободных точек для них нет, возможно стоит предложить им пойти к другой точке другой стены
+    //Но из этого тоже может выкатиться проблема, что враг с одного края пойдет к другому концу карты и может зацепиться за двери или за башни или вообще криво встанет
 
     private void Awake()
     {        
         _waves = GetComponent<Waves>();
+        _attackPointChecker = GetComponent<FreeAttackPointChecker>();
     }
 
     private void Start()
     {
-        InitializeEnemyPool();
+        _enemyPool.InitializeEnemyPool();
         _enemySpawnCoroutine = StartCoroutine(SpawnWaves());
-        _activeEnemies = _enemyPool.FindAll(enemy => enemy.activeSelf).Count;
-    }
-
-    private void OnDisable()
-    {
-        foreach(var enemy in _enemies)
-        {
-            enemy.OnEnemyDied -= OnEnemyDied;
-        }
+        _activeEnemies = _enemyPool.GetCountActiveEnemies();
+        
     }
 
     private void CheckSpawnedEnemy()
@@ -59,43 +57,6 @@ public class EnemySpawner : MonoBehaviour
                 StopCoroutine(_enemySpawnCoroutine);
             }
         }
-    }
-
-    private void InitializeEnemyPool()
-    {
-        _enemyPool = new List<GameObject>();
-        _enemies = new List<Enemy>();
-
-        for (int i = 0; i < _initialPoolSize; i++)
-        {
-            GameObject enemy = Instantiate(_enemyPrefab);
-
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.OnEnemyDied += OnEnemyDied;
-            _enemies.Add(enemyScript);
-
-            enemy.SetActive(false);
-            enemy.transform.SetParent(_enemyContainer.transform);
-            _enemyPool.Add(enemy);
-        }
-    }
-
-    private GameObject GetEnemyFromPool()
-    {
-        foreach (GameObject enemy in _enemyPool)
-        {
-            if (!enemy.gameObject.activeInHierarchy)
-            {
-                return enemy;
-            }
-        }
-
-        GameObject newEnemy = Instantiate(_enemyPrefab);
-        newEnemy.gameObject.SetActive(false);
-        newEnemy.transform.SetParent(_enemyContainer.transform);
-        _enemyPool.Add(newEnemy);
-        _enemies.Add(newEnemy.GetComponent<Enemy>());
-        return newEnemy;
     }
 
     private IEnumerator SpawnWaves()
@@ -117,18 +78,26 @@ public class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < enemyCount; i++)
         {
-            GameObject enemy = GetEnemyFromPool();
+            GameObject enemy = _enemyPool.GetEnemyFromPool();
 
             if (enemy != null)
             {
-                enemy.GetComponent<Enemy>().Initialize(enemyHealth, enemyAttack);
+                Enemy enemyScript = enemy.GetComponent<Enemy>();
+
+                if (enemyScript != null)
+                {
+                    enemyScript.OnEnemyDied += OnEnemyDied;
+                }
+
+                enemyScript.Initialize(enemyHealth, enemyAttack);
                 enemy.GetComponent<EnemyMovement>().StartMoving();
                 enemy.transform.position = GetRandomSpawnPoint();
                 enemy.SetActive(true);
+                enemyScript.Activate();
             }
         }
 
-        _activeEnemies = _enemyPool.FindAll(enemy => enemy.activeSelf).Count;
+        _activeEnemies = _enemyPool.GetCountActiveEnemies();
     }
 
     private Vector3 GetRandomSpawnPoint()
@@ -139,7 +108,7 @@ public class EnemySpawner : MonoBehaviour
         return new Vector3(x, _spawnZoneCenter.y, z);
     }
 
-    private void GameOver() //добавить чек события гейм овера
+    private void GameOver() //добавить чек события гейм овера? 
     {
         _gameOver = true;
     }    
@@ -150,9 +119,11 @@ public class EnemySpawner : MonoBehaviour
         Gizmos.DrawCube(_spawnZoneCenter, new Vector3(_spawnZoneWidth, 0, _spawnZoneLength));
     }
 
-    private void OnEnemyDied(int rewardMoney, int rewardScore)
+    private void OnEnemyDied(int rewardMoney, int rewardScore, Enemy enemy)
     {
         CheckSpawnedEnemy();
         _rewardCollector.TakeReward(rewardMoney, rewardScore);
+
+        enemy.OnEnemyDied -= OnEnemyDied;
     }
 }

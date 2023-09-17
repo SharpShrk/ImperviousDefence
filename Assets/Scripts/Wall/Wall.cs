@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    public Transform[] AttackPoints; //убрать паблик сделать гет приватный сет
+    public List<Transform> AttackPoints = new(); //убрать паблик сделать гет приватный сет
     
     private BrickPool _brickPool;
     private List<GameObject> _wallBlocks = new List<GameObject>();
@@ -13,9 +13,15 @@ public class Wall : MonoBehaviour
 
     public int RequiredBrickCount => _wallBlocks.Count;
 
-    private void Start()
+    private void Awake()
     {
         _brickPool = FindObjectOfType<BrickPool>();
+
+        //стереть это потом
+        foreach(var point in AttackPoints)
+        {
+            Debug.Log($"Стена {gameObject.name} включает в себя точку {point.name}");
+        }
     }
 
     public void SetBricks(List<GameObject> bricks)

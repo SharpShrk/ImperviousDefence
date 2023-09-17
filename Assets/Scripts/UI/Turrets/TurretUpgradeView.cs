@@ -17,8 +17,8 @@ public class TurretUpgradeView : MonoBehaviour
 
     private TurretPresenter _currentTurretPresenter;
     private PlaceTurretView _placeTurretView;
-    TurretButtonUpgradeAttackSpeed _panelAttackSpeed;
-    TurretButtonUpgradeDamage _panelDamage;
+    private TurretButtonUpgradeAttackSpeed _panelAttackSpeed;
+    private TurretButtonUpgradeDamage _panelDamage;
 
     private void OnEnable()
     {

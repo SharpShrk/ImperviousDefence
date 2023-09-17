@@ -20,6 +20,11 @@ public class PlaceTurretView : MonoBehaviour
         _buttonUpgrade.onClick.AddListener(OnButtonClick);
     }
 
+    private void OnDisable()
+    {
+        _buttonUpgrade.onClick.RemoveListener(OnButtonClick);
+    }
+
     private void OnButtonClick()
     {
         ButtonTurretBuyPressed?.Invoke();
