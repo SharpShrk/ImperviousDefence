@@ -13,6 +13,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private RewardCollector _rewardCollector;
     [SerializeField] private EnemyPool _enemyPool;
 
+    private AttackPointQueue _attackPointQueue;
     private Waves _waves;
     private bool _gameOver = false;
     private int _activeEnemies = 0;
@@ -28,7 +29,8 @@ public class EnemySpawner : MonoBehaviour
     //Но из этого тоже может выкатиться проблема, что враг с одного края пойдет к другому концу карты и может зацепиться за двери или за башни или вообще криво встанет
 
     private void Awake()
-    {        
+    {
+        _attackPointQueue = GetComponent<AttackPointQueue>();
         _waves = GetComponent<Waves>();
         _attackPointChecker = GetComponent<FreeAttackPointChecker>();
     }
@@ -69,6 +71,31 @@ public class EnemySpawner : MonoBehaviour
     }
 
     private void SpawnEnemyWave()
+    {
+        int enemyCount = _waves.GetEnemyCount();
+        int enemyHealth = _waves.GetEnemyHealth();
+        int enemyAttack = _waves.GetEnemyAttack();
+
+        _waves.AdvanceToNextWave();
+
+        for (int i = 0; i < enemyCount; i++)
+        {
+            GameObject enemy = _enemyPool.GetEnemyFromPool();
+            if (enemy != null)
+            {
+                Enemy enemyScript = enemy.GetComponent<Enemy>();
+                enemyScript.OnEnemyDied += OnEnemyDied;
+                enemyScript.Initialize(enemyHealth, enemyAttack);
+                enemy.transform.position = GetRandomSpawnPoint();
+                enemy.SetActive(true);
+                _attackPointQueue.AddEnemyToQueue(enemyScript);
+            }
+        }
+
+        _activeEnemies = _enemyPool.GetCountActiveEnemies();
+    }
+
+    /*private void SpawnEnemyWave()
     {        
         int enemyCount = _waves.GetEnemyCount();
         int enemyHealth = _waves.GetEnemyHealth();
@@ -98,7 +125,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         _activeEnemies = _enemyPool.GetCountActiveEnemies();
-    }
+    }*/
 
     private Vector3 GetRandomSpawnPoint()
     {

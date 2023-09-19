@@ -32,8 +32,14 @@ public class Enemy : MonoBehaviour, IDamageable
     public void Activate()
     {
         Wall targetWall = FindClosestWall();
-        _enemyMovement.SetupAttackPoint(targetWall);
+        //_enemyMovement.SetupAttackPoint(targetWall);
         _enemyAttack.SetTargetWall(targetWall);
+    }
+
+    public void AssignAttackPoint(WallAttackPoint point)
+    {
+        _enemyMovement.SetupAttackPoint(point);
+        _enemyAttack.SetTargetWall(point.GetComponentInParent<Wall>());
     }
 
     public void TakeDamage(int damage)

@@ -30,7 +30,18 @@ public class EnemyMovement : MonoBehaviour
         _animator.SetBool("isRunning", true);
     }
 
-    public void SetupAttackPoint(Wall targetWall)
+    public void SetupAttackPoint(WallAttackPoint target)
+    {
+        _targetAttackPoint = target.transform;
+
+        if (_isEnougthAttackPoint == false)
+        {
+            target.SetOccupied(gameObject.GetComponent<Enemy>());
+            _isEnougthAttackPoint = true;
+        }
+    }
+
+    /*public void SetupAttackPoint(Wall targetWall)
     {
         _targetAttackPoint = targetWall.AttackPoints[0];
         _targetAttackPoint = GetNearestAttackPoint(targetWall);
@@ -45,7 +56,7 @@ public class EnemyMovement : MonoBehaviour
                 _isEnougthAttackPoint = true;
             }
         }
-    }
+    }*/
 
     public void StartMoving()
     {

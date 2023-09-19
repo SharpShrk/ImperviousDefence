@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerShooting : MonoBehaviour
     private PlayerInputHandler _inputHandler;
     private Animator _animator;
     private bool _canShoot = true;
+    private Coroutine _shootingCoroutine;
 
     private void Start()
     {
@@ -17,7 +19,8 @@ public class PlayerShooting : MonoBehaviour
         _inputHandler.Enable();
         _animator = GetComponent<Animator>();
 
-        _inputHandler.InputActions.Player.Shoot.performed += ctx => Shoot();
+        _inputHandler.InputActions.Player.Shoot.performed += ctx => StartShooting();
+        _inputHandler.InputActions.Player.Shoot.canceled += ctx => StopShooting();
     }
 
     private void OnDestroy()
@@ -25,13 +28,37 @@ public class PlayerShooting : MonoBehaviour
         _inputHandler.Disable();
     }
 
+    private void StartShooting()
+    {
+        if (_shootingCoroutine == null)
+        {
+            _shootingCoroutine = StartCoroutine(ShootingRoutine());
+        }
+    }
+
+    private void StopShooting()
+    {
+        if (_shootingCoroutine != null)
+        {
+            StopCoroutine(_shootingCoroutine);
+            _shootingCoroutine = null;
+        }
+    }
+
+    private IEnumerator ShootingRoutine()
+    {
+        while (true)
+        {
+            if (_canShoot)
+            {
+                Shoot();
+            }
+            yield return new WaitForSeconds(_fireRate);
+        }
+    }
+
     private void Shoot()
     {
-        if (_canShoot == false)
-        {
-            return;
-        }
-
         GameObject bullet = _bulletPool.GetBullet();
         bullet.transform.position = _gunTransform.position;
         bullet.transform.rotation = _gunTransform.rotation;

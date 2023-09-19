@@ -11,6 +11,7 @@ public class UpgradeService : MonoBehaviour
     [SerializeField] private TurretButtonUpgradeAttackSpeed _buttonUpgradeAttackSpeed;
     [SerializeField] private TurretButtonUpgradeDamage _buttonUpgradeDamage;
     [SerializeField] private Wallet _wallet;
+    [SerializeField] private InfoMessagePanel _infoMessagePanel;
 
     private TurretPresenter _currentTurretPresenter;
 
@@ -38,7 +39,9 @@ public class UpgradeService : MonoBehaviour
     {
         if (_currentTurretPresenter.GetLevelDamage() >= _maxLevelUpgrade)
         {
-            //кинуть ошибку
+            string message = "Уровень турели максимальный!";
+            _infoMessagePanel.OpenMessagePanel(message);
+
             return;
         }
 
@@ -52,7 +55,8 @@ public class UpgradeService : MonoBehaviour
         }
         else
         {
-            Debug.Log("Не хватило денюшков"); //вывести в UI
+            string message = "Не достаточно денег для улучшения турели!";
+            _infoMessagePanel.OpenMessagePanel(message);
         }   
     }
 
@@ -60,7 +64,9 @@ public class UpgradeService : MonoBehaviour
     {
         if (_currentTurretPresenter.GetLevelAttackSpeed() >= _maxLevelUpgrade)
         {
-            //кинуть ошибку или сделать кнопку неактивной
+            string message = "Уровень турели максимальный!";
+            _infoMessagePanel.OpenMessagePanel(message);
+
             return;
         }
 
@@ -74,7 +80,8 @@ public class UpgradeService : MonoBehaviour
         }
         else
         {
-            Debug.Log("Не хватило денюшков"); //вывести в UI
+            string message = "Не достаточно денег для улучшения турели!";
+            _infoMessagePanel.OpenMessagePanel(message);
         } 
     }
 

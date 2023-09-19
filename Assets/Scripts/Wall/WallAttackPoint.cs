@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class WallAttackPoint : MonoBehaviour
 {
+    private AttackPointQueue _attackPointQueue;
     private bool _isOccupied = false;
     private Enemy _occupyingEnemy;
 
     public bool IsOccupied => _isOccupied;
+
+    private void Start()
+    {
+        _attackPointQueue = FindObjectOfType<AttackPointQueue>();
+    }
 
     private void OnEnable()
     {
@@ -37,18 +43,26 @@ public class WallAttackPoint : MonoBehaviour
 
     public void SetOccupied(Enemy enemy)
     {
-        //UnsubscribeFromEvents();
+        UnsubscribeFromEvents();
         _isOccupied = true;
         _occupyingEnemy = enemy;
-        //SubscribeToEvents();
+        SubscribeToEvents();
     }
 
     private void ReleasePoint()
     {
         _isOccupied = false;
+        UnsubscribeFromEvents();
+        _attackPointQueue.ReleaseAttackPoint(this);
+        _occupyingEnemy = null;
+    }    
+
+    /*private void ReleasePoint()
+    {
+        _isOccupied = false;
         //UnsubscribeFromEvents();
         _occupyingEnemy = null;
-    }
+    }*/
 }
 
 /*public class WallAttackPoint : MonoBehaviour

@@ -14,6 +14,7 @@ public class TurretUpgradeView : MonoBehaviour
     [SerializeField] private GameObject _panelPlaceTurretObject;
     [SerializeField] private UpgradeService _upgradeService;
     [SerializeField] private Wallet _wallet;
+    [SerializeField] private InfoMessagePanel _infoMessagePanel;
 
     private TurretPresenter _currentTurretPresenter;
     private PlaceTurretView _placeTurretView;
@@ -119,7 +120,8 @@ public class TurretUpgradeView : MonoBehaviour
         }
         else
         {
-            Debug.Log("Не хватило денюшков"); //вывести в UI
+            string message = "Не достаточно денег для покупки турели!";
+            _infoMessagePanel.OpenMessagePanel(message);
         } 
     }
 }

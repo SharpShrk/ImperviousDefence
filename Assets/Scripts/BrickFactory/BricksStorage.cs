@@ -45,7 +45,6 @@ public class BricksStorage : MonoBehaviour
     {
         if (_currentBrickIndex <= 0)
         {
-            Debug.Log("Кирпичей на складе больше нет");
             return;
         }
 
@@ -53,7 +52,6 @@ public class BricksStorage : MonoBehaviour
         {
             if (_currentBrickIndex <= 0)
             {
-                Debug.Log("Кирпичей на складе больше нет");
                 break;
             }
 
@@ -62,7 +60,6 @@ public class BricksStorage : MonoBehaviour
             Destroy(brickToRemove);
             _currentBrickIndex--;
         }
-        Debug.Log("Кирпичи взяты");
     }
 
     private Vector3 CalculateBrickPosition(int positionIndex, int layerIndex)
