@@ -5,8 +5,10 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private int _rewardMoney;
     [SerializeField] private int _rewardScore;
+    [SerializeField] private EnemyHealthBar _enemyHealthBar;
 
     private int _health;
+    private int _maxHealth;
     private int _damage;
     private EnemyMovement _enemyMovement;
     private EnemyAttack _enemyAttack;
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public void Initialize(int health, int damage)
     {
         _health = health;
+        _maxHealth = health;
         _damage = damage;
     }
 
@@ -45,6 +48,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         _health -= damage;
+        _enemyHealthBar.UpdateHealthBar(_health, _maxHealth);
 
         if (_health <= 0)
         {
