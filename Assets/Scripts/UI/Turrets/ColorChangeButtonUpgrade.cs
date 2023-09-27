@@ -26,7 +26,6 @@ public class ColorChangeButtonUpgrade : MonoBehaviour
     {
         if (other.GetComponent<Player>())
         {
-            Debug.Log("Игрок наступил на кнопку");
 
             if (_changeColorCoroutine != null)
             {
@@ -38,7 +37,7 @@ public class ColorChangeButtonUpgrade : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other) //работает более менее как надо. Поработать только над визуалом
+    private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<Player>())
         {

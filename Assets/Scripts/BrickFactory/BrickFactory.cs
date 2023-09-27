@@ -1,59 +1,66 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
-[RequireComponent(typeof(BricksStorage))]
 
 public class BrickFactory : MonoBehaviour
 {
     [SerializeField] private GameObject _brickPrefab;
     [SerializeField] private BricksStorage _bricksStorage;
     [SerializeField] private bool _hasResources = true;
-    [SerializeField] private float _productionTime = 2.0f;
+    [SerializeField] private float _productionTime;
+    [SerializeField] private GameObject _factoryObject;
 
+    private Animator _animator;
     private Vector3 _brickSize;
-    private Coroutine _produceBrickCoroutine;
+    private Queue<int> _productionQueue = new Queue<int>();
 
-    public event Action<float> OnProductionUpdate;
     public float ProductionTime => _productionTime;
 
     private void Start()
     {
         _brickSize = _brickPrefab.GetComponent<Brick>().BrickSize;
-        _produceBrickCoroutine = StartCoroutine(ProduceBricks());
+        _animator = _factoryObject.GetComponent<Animator>();
+        _animator.speed = 0;
+        StartCoroutine(ProduceBricks());
     }
 
-    private void OnEnable()
+    public void AddToProductionQueue(int amount)
     {
-        _bricksStorage.OnStorageFull += StopProduceBricks;
-    }
-
-    private void OnDisable()
-    {
-        _bricksStorage.OnStorageFull -= StopProduceBricks;
+        _productionQueue.Enqueue(amount);
     }
 
     private IEnumerator ProduceBricks()
     {
         while (_hasResources)
         {
-            float elapsedTime = 0f;
-            while (elapsedTime < _productionTime)
+            if (_productionQueue.Count > 0 && _bricksStorage.IsStorageFull == false)
             {
-                elapsedTime += Time.deltaTime;
-                OnProductionUpdate?.Invoke(elapsedTime / _productionTime);
-                yield return null;
+                int bricksToProduce = _productionQueue.Dequeue();
+                _animator.speed = 1;
+
+                for (int i = 0; i < bricksToProduce; i++)
+                {
+                    if (_bricksStorage.IsStorageFull)
+                    {
+                        _productionQueue.Enqueue(bricksToProduce - i + 1);
+                        break;
+                    }
+
+                    float elapsedTime = 0f;
+
+                    while (elapsedTime < _productionTime)
+                    {
+                        elapsedTime += Time.deltaTime;
+                        yield return null;
+                    }
+
+                    _bricksStorage.AddBrick(_brickPrefab, _brickSize);
+                }
             }
-
-            _bricksStorage.AddBrick(_brickPrefab, _brickSize);
-        }
-    }
-
-    private void StopProduceBricks()
-    {
-        if(_produceBrickCoroutine != null)
-        {
-            StopCoroutine(_produceBrickCoroutine);
+            
+            _animator.speed = 0;
+            yield return null;
         }
     }
 }

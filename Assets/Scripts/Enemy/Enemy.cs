@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public int Health => _health;
     public int Damage => _damage;
 
-    private void Awake() //тут был эвейк, возможно что то сломается
+    private void Awake()
     {
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemyAttack = GetComponent<EnemyAttack>();
@@ -36,7 +36,12 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         Wall targetWall = FindClosestWall();
         //_enemyMovement.SetupAttackPoint(targetWall);
-        _enemyAttack.SetTargetWall(targetWall);
+        _enemyAttack.SetTargetWall(targetWall);       
+    }
+
+    public void HideHealthBar()
+    {
+        _enemyHealthBar.HideHealthBar();
     }
 
     public void AssignAttackPoint(WallAttackPoint point)

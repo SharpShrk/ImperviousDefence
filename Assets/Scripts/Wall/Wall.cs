@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Wall : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Wall : MonoBehaviour
     private BrickPool _brickPool;
     private List<GameObject> _wallBlocks = new List<GameObject>();
 
+    public event UnityAction WallDestroed;
+
     public List<GameObject> DestroyedBricks { get; private set; } = new List<GameObject>();
 
     public int RequiredBrickCount => _wallBlocks.Count;
@@ -16,12 +19,6 @@ public class Wall : MonoBehaviour
     private void Awake()
     {
         _brickPool = FindObjectOfType<BrickPool>();
-
-        //стереть это потом
-        foreach(var point in AttackPoints)
-        {
-            Debug.Log($"Стена {gameObject.name} включает в себя точку {point.name}");
-        }
     }
 
     public void SetBricks(List<GameObject> bricks)
@@ -39,6 +36,10 @@ public class Wall : MonoBehaviour
             {
                 maxIndexBlock.GetComponent<Brick>().TakeDamage(damage);                
             }
+        }
+        else
+        {
+            WallDestroed?.Invoke();
         }
     }
 

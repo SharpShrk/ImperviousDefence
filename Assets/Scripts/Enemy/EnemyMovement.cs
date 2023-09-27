@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5.0f;
     [SerializeField] private LayerMask _obstacleLayer;
 
-    private bool _isMoving = true;
+    private bool _isMoving = false;
     private Rigidbody _rigidbody;
     private Transform _targetAttackPoint;
     private EnemyAttack _enemyAttack;
@@ -39,6 +39,8 @@ public class EnemyMovement : MonoBehaviour
             target.SetOccupied(gameObject.GetComponent<Enemy>());
             _isEnougthAttackPoint = true;
         }
+
+        StartMoving();
     }
 
     /*public void SetupAttackPoint(Wall targetWall)
@@ -103,7 +105,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private Transform GetNearestAttackPoint(Wall wall)
+    /*private Transform GetNearestAttackPoint(Wall wall)
     {
         Transform nearestPoint = null;
         float minDistance = Mathf.Infinity;
@@ -126,5 +128,5 @@ public class EnemyMovement : MonoBehaviour
         }
 
         return nearestPoint;
-    }
+    }*/
 }

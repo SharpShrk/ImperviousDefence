@@ -7,15 +7,15 @@ public class BricksStorage : MonoBehaviour
     [SerializeField] private Transform _brickSlotsParent;
     [SerializeField] private float _gapBetweenBricks = 0.005f;
 
-    public event Action OnStorageFull;
-
-    public int BrickCount { get => _currentBrickIndex; }
-
     private Vector3 _brickSize;
     private int _brickCountInLayer = 9;
     private int _layersCount = 4;
     private int _currentBrickIndex = 0;
+    private bool _isStorageFull = false;
     private List<GameObject> _bricks = new List<GameObject>();
+
+    public int BrickCount { get => _currentBrickIndex; }
+    public bool IsStorageFull => _isStorageFull;
 
     public void AddBrick(GameObject brickPrefab, Vector3 brickSize)
     {
@@ -23,8 +23,7 @@ public class BricksStorage : MonoBehaviour
 
         if (_currentBrickIndex >= _brickCountInLayer * _layersCount)
         {
-            Debug.Log("Склад заполнен");
-            OnStorageFull?.Invoke();
+            _isStorageFull = true;
             return;
         }
 
@@ -58,8 +57,10 @@ public class BricksStorage : MonoBehaviour
             GameObject brickToRemove = _bricks[_currentBrickIndex - 1];
             _bricks.Remove(brickToRemove);
             Destroy(brickToRemove);
-            _currentBrickIndex--;
+            _currentBrickIndex--;            
         }
+
+        _isStorageFull = false;
     }
 
     private Vector3 CalculateBrickPosition(int positionIndex, int layerIndex)

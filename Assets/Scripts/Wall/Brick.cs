@@ -18,6 +18,11 @@ public class Brick : MonoBehaviour
     public Vector3 InitialPosition { get; private set; }
     public Vector3 BrickSize => _size;
 
+    private void Start()
+    {
+        _currentHealthPoints = _startHealthPoints;
+    }
+
     public void SetBrickIndex(int index)
     {
         BrickIndex = index;
@@ -44,7 +49,7 @@ public class Brick : MonoBehaviour
 
         if (_currentHealthPoints <= 0 && gameObject.activeInHierarchy)
         {
-            DestroyBrick();            
+            DestroyBrick();
         }
     }
 

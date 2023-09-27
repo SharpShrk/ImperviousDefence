@@ -45,16 +45,6 @@ public class EnemyAttack : MonoBehaviour
         _targetWall = targetWall;
     }
 
-    /*private IEnumerator AttackWall(Wall wall, Enemy enemy)
-    {
-        while (true)
-        {           
-            _animator.SetTrigger("attack");
-            yield return new WaitForSeconds(_attackDelay);
-            wall.TakeDamage(enemy.Damage);
-        }
-    }*/
-
     private IEnumerator AttackWall(Wall wall, Enemy enemy)
     {
         while (true)

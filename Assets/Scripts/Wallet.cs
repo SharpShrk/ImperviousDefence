@@ -5,33 +5,35 @@ using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
-    public event Action<int> OnMoneyChanged;
+    [SerializeField] private int _startMoney;
 
     private int _money;
+
+    public event Action<int> OnMoneyChanged;
 
     public int Money => _money;
 
     private void Start()
     {
-        _money = 0;
+        _money = _startMoney;
         OnMoneyChanged?.Invoke(_money);
     }
 
-    public void AddMoney(int amount) //rewardCollector кидает сюда бабульки
+    public void AddMoney(int amount)
     {
         _money += amount;
         OnMoneyChanged?.Invoke(_money);
     }
 
-    public bool SpendMoney(int amount) //подумать стоит ли так оставить через бул? спросить у чатика, надо ли
+    public bool SpendMoney(int amount)
     {
         if (_money < amount)
         {
-            return false;  // Недостаточно средств
+            return false; 
         }
 
         _money -= amount;
         OnMoneyChanged?.Invoke(_money);
-        return true;  // Списание успешно
+        return true;
     }
 }

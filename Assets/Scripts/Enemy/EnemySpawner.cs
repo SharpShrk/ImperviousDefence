@@ -22,12 +22,6 @@ public class EnemySpawner : MonoBehaviour
 
     public int ActiveEnemies => _activeEnemies;
 
-
-    //добавить такой функционал. Если врагов спавнится больше, чем занято точек, то враги должны ожидать своей очереди на спавен
-    //подумать над исполнением, как это лучше реализовать. Может добавлять их в какой то лист и после каждой смерти врага проверять сколько осталось их в листе
-    //еще есть другая проблема. Когда врагов спавнится больше 3 на одну стену, то свободных точек для них нет, возможно стоит предложить им пойти к другой точке другой стены
-    //Но из этого тоже может выкатиться проблема, что враг с одного края пойдет к другому концу карты и может зацепиться за двери или за башни или вообще криво встанет
-
     private void Awake()
     {
         _attackPointQueue = GetComponent<AttackPointQueue>();
@@ -46,7 +40,6 @@ public class EnemySpawner : MonoBehaviour
     private void CheckSpawnedEnemy()
     {
         _activeEnemies--;
-        Debug.Log("Враг умер. Осталось активных врагов: " + _activeEnemies);
 
         if (_activeEnemies <= 0 && _gameOver == false)
         {
@@ -81,11 +74,13 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < enemyCount; i++)
         {
             GameObject enemy = _enemyPool.GetEnemyFromPool();
+
             if (enemy != null)
             {
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.OnEnemyDied += OnEnemyDied;
                 enemyScript.Initialize(enemyHealth, enemyAttack);
+                enemyScript.HideHealthBar();
                 enemy.transform.position = GetRandomSpawnPoint();
                 enemy.SetActive(true);
                 _attackPointQueue.AddEnemyToQueue(enemyScript);
@@ -94,38 +89,6 @@ public class EnemySpawner : MonoBehaviour
 
         _activeEnemies = _enemyPool.GetCountActiveEnemies();
     }
-
-    /*private void SpawnEnemyWave()
-    {        
-        int enemyCount = _waves.GetEnemyCount();
-        int enemyHealth = _waves.GetEnemyHealth();
-        int enemyAttack = _waves.GetEnemyAttack();
-
-        _waves.AdvanceToNextWave();
-
-        for (int i = 0; i < enemyCount; i++)
-        {
-            GameObject enemy = _enemyPool.GetEnemyFromPool();
-
-            if (enemy != null)
-            {
-                Enemy enemyScript = enemy.GetComponent<Enemy>();
-
-                if (enemyScript != null)
-                {
-                    enemyScript.OnEnemyDied += OnEnemyDied;
-                }
-
-                enemyScript.Initialize(enemyHealth, enemyAttack);
-                enemy.GetComponent<EnemyMovement>().StartMoving();
-                enemy.transform.position = GetRandomSpawnPoint();
-                enemy.SetActive(true);
-                enemyScript.Activate();
-            }
-        }
-
-        _activeEnemies = _enemyPool.GetCountActiveEnemies();
-    }*/
 
     private Vector3 GetRandomSpawnPoint()
     {
