@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Waves : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Waves : MonoBehaviour
     private int _currentAttack;
     private int _currentEnemyCount;
 
+    public event UnityAction<int> OnWaveChanged;
+
     private void Awake()
     {
         _currentHealth = _initialHealth;
@@ -25,18 +28,19 @@ public class Waves : MonoBehaviour
     public void AdvanceToNextWave()
     {
         CurrentWave++;
+        OnWaveChanged?.Invoke(CurrentWave);
 
-        if (CurrentWave % 2 == 0)
+        if (CurrentWave % 3 == 0)
         {
             _currentHealth += _healthIncrease;
         }
 
-        if (CurrentWave % 4 == 0)
+        if (CurrentWave % 6 == 0)
         {
             _currentAttack += _attackIncrease;
         }
 
-        if (CurrentWave % 3 == 0)
+        if (CurrentWave % 5 == 0)
         {
             _currentEnemyCount += _countIncrease;
         }

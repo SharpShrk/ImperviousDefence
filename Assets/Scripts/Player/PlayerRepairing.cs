@@ -23,20 +23,6 @@ public class PlayerRepairing : MonoBehaviour
         _inputHandler.Disable();
     }
 
-    /*private void AttemptWallRepair()
-    {
-        if (_currentWallRepair == null) return;
-
-        int neededBricks = _currentWallRepair.GetRequiredBrickCount();
-        int availableBricks = _bricksBag.CurrentBrickCount;
-        int repairBricks = Mathf.Min(neededBricks, availableBricks);
-
-        if (_bricksBag.RemoveBricks(repairBricks))
-        {
-            _currentWallRepair.Repair(repairBricks);
-        }
-    }*/
-
     private void AttemptWallRepair()
     {
         if (_currentWallRepair == null) return;
@@ -48,10 +34,7 @@ public class PlayerRepairing : MonoBehaviour
 
         if (_bricksBag.RemoveBricks(repairBricks))
         {
-            _currentWallRepair.Repair(repairBricks, unusedBricks => {
-                // Возвращаем неиспользованные кирпичи обратно в сумку
-                _bricksBag.AddBricks(unusedBricks);
-            });
+            _currentWallRepair.Repair(repairBricks, unusedBricks => {_bricksBag.AddBricks(unusedBricks);});
         }
     }
 

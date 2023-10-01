@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private Transform _gunTransform;
+    [SerializeField] private CameraShake _cameraShake;
     [SerializeField] private float _fireRate = 0.2f;
     [SerializeField] private BulletPool _bulletPool;
 
@@ -64,6 +65,7 @@ public class PlayerShooting : MonoBehaviour
         bullet.transform.rotation = _gunTransform.rotation;
         _animator.SetLayerWeight(1, 1);
         _animator.SetTrigger("Shoot");
+        _cameraShake.Shake();
 
         _canShoot = false;
         StartCoroutine(ShootingDelay());

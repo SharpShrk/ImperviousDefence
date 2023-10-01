@@ -10,6 +10,6 @@ public class RewardCollector : MonoBehaviour
     public void TakeReward(int money, int score)
     {
         _wallet.AddMoney(money);
-        //_score.AddScorePoints(score);
+        _score.AddScore(score);
     }
 }

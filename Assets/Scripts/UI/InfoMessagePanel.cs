@@ -23,7 +23,7 @@ public class InfoMessagePanel : MonoBehaviour
 
     public void OpenMessagePanel(string message)
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         _message.text = message;
         _panel.SetActive(true);
     }
@@ -31,6 +31,6 @@ public class InfoMessagePanel : MonoBehaviour
     private void OnButtonClick()
     {
         _panel.SetActive(false);
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
     }
 }

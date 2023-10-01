@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Score : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private int _score;
+
+    public event UnityAction<int> OnScoreChanged;
+
+    public int ScorePoints => _score;
+
+    private void Start()
     {
-        
+        _score = 0;
+        OnScoreChanged?.Invoke(_score);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddScore(int amount)
     {
-        
+        _score += amount;
+        OnScoreChanged?.Invoke(_score);
     }
 }

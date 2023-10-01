@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
         _inputHandler.Disable();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Vector3 direction = _inputHandler.GetMoveDirection();
         Vector3 lookDirection = _inputHandler.GetLookDirection(transform.position);
@@ -102,7 +102,9 @@ public class Movable : IMovable
     public void Move(Vector3 direction)
     {
         direction.Normalize();
+        float originalY = _transform.position.y;
         _transform.position += direction * _moveSpeed * Time.deltaTime;
+        _transform.position = new Vector3(_transform.position.x, originalY, _transform.position.z);
     }
 }
 

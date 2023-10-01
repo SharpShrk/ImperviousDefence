@@ -8,25 +8,26 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject _startPanel;
     [SerializeField] private GameObject _optionPanel;
     [SerializeField] private Button _optionButton;
+    [SerializeField] private Button _startButton;
     [SerializeField] private Button _leaderboardButton;
-    [SerializeField] private Button _exitButton;
+    [SerializeField] private SceneSwitcher _sceneSwitcher;
 
     private void OnEnable()
     {
         _optionPanel.SetActive(false);
-        _exitButton.onClick.AddListener(OnExitClick);
+        _startButton.onClick.AddListener(OnStartClick);
         _optionButton.onClick.AddListener(OnOptionClick);
     }
 
     private void OnDisable()
     {
-        _exitButton.onClick.RemoveListener(OnExitClick);
+        _startButton.onClick.RemoveListener(OnStartClick);
         _optionButton.onClick.RemoveListener(OnOptionClick);
     }
 
-    private void OnExitClick()
+    private void OnStartClick()
     {
-        Application.Quit();
+        _sceneSwitcher.SwitchScene("Game");
     }
 
     private void OnOptionClick()

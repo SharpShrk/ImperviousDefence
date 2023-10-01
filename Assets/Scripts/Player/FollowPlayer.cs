@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private Vector3 offset;
+    [SerializeField] private Transform _playerTransform;
+    [SerializeField] private Vector3 _offset;
+    [SerializeField] private float _lerpSpeed;
 
-    private void Update()
+    private void LateUpdate()
     {
-        transform.position = playerTransform.position + offset;
+        Vector3 targetPosition = _playerTransform.position + _offset;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, _lerpSpeed);
     }
 }

@@ -7,11 +7,13 @@ using UnityEngine.UI;
 
 public class TurretUpgradeView : MonoBehaviour
 {
-    [SerializeField] private Button _exitButton;
+    [SerializeField] private Button _exitButtonPanelUpgrade;
+    [SerializeField] private Button _exitButtonPanelBuyTurret;
     [SerializeField] private GameObject _upgradeMenuObject;
     [SerializeField] private GameObject _panelAttackSpeedObject;
     [SerializeField] private GameObject _panelDamageObject;
     [SerializeField] private GameObject _panelPlaceTurretObject;
+    [SerializeField] private GameObject _panelUpgrade;
     [SerializeField] private UpgradeService _upgradeService;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private InfoMessagePanel _infoMessagePanel;
@@ -31,11 +33,11 @@ public class TurretUpgradeView : MonoBehaviour
         _upgradeService.AttackSpeedUpgraded += SetValuesInPanelAttackSpeed;
         _upgradeService.DamageUpgraded += SetValuesInPanelDamage;
 
-        _exitButton.onClick.AddListener(DeactivateUpgradeMenu);
+        _exitButtonPanelUpgrade.onClick.AddListener(DeactivateUpgradeMenu);
+        _exitButtonPanelBuyTurret.onClick.AddListener(DeactivateUpgradeMenu);
 
         _upgradeMenuObject.SetActive(false);
-        _panelAttackSpeedObject.SetActive(false);
-        _panelDamageObject.SetActive(false);
+        _panelUpgrade.SetActive(false);
         _panelPlaceTurretObject.SetActive(false);
     }
 
@@ -45,7 +47,8 @@ public class TurretUpgradeView : MonoBehaviour
         _upgradeService.AttackSpeedUpgraded -= SetValuesInPanelAttackSpeed;
         _upgradeService.DamageUpgraded -= SetValuesInPanelDamage;
 
-        _exitButton?.onClick.RemoveListener(DeactivateUpgradeMenu);
+        _exitButtonPanelUpgrade.onClick.RemoveListener(DeactivateUpgradeMenu);
+        _exitButtonPanelBuyTurret.onClick.RemoveListener(DeactivateUpgradeMenu);
     }
 
     public void OpenBuyTurretMenu(TurretPresenter turretPresenter)
@@ -56,8 +59,7 @@ public class TurretUpgradeView : MonoBehaviour
         _currentTurretPresenter = turretPresenter;
 
         ActivateUpgradeMenu();
-        _panelDamageObject.SetActive(false);
-        _panelAttackSpeedObject.SetActive(false);
+        _panelUpgrade.SetActive(false);
         _panelPlaceTurretObject.SetActive(true);      
     }
 
@@ -70,8 +72,7 @@ public class TurretUpgradeView : MonoBehaviour
 
         ActivateUpgradeMenu();
         _panelPlaceTurretObject.SetActive(false);
-        _panelDamageObject.SetActive(true);
-        _panelAttackSpeedObject.SetActive(true);
+        _panelUpgrade.SetActive(true);
 
         SetValuesInPanelAttackSpeed();
         SetValuesInPanelDamage();

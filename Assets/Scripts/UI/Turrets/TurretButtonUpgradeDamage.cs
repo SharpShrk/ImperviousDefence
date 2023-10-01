@@ -10,5 +10,6 @@ public class TurretButtonUpgradeDamage : TurretButtonUpgrade
     protected override void OnButtonClick()
     {
         ButtonUpgradeDamagePressed?.Invoke();
+        print("Damage click");
     }
 }
