@@ -7,15 +7,16 @@ public class EnemyAttack : MonoBehaviour
 {
     [SerializeField] private float _attackDelay = 1.5f;
     [SerializeField] private float _attackRange = 1.5f;
-
-    public float AttackRange => _attackRange;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip[] _punchSounds;
 
     private Wall _targetWall;
     private Enemy _enemy;
     private EnemyMovement _movement;
-    //private Coroutine _checkAttackRangeCoroutine;
     private Coroutine _attackCoroutine;
     private Animator _animator;
+
+    public float AttackRange => _attackRange;
 
     private void Awake()
     {
@@ -45,6 +46,13 @@ public class EnemyAttack : MonoBehaviour
         _targetWall = targetWall;
     }
 
+    public void PlayRandomPunchSound() //starts from the animator event
+    {
+        AudioClip sound;
+        sound = _punchSounds[Random.Range(0, _punchSounds.Length)];
+        _audioSource.PlayOneShot(sound);
+    }
+
     private IEnumerator AttackWall(Wall wall, Enemy enemy)
     {
         while (true)
@@ -70,22 +78,4 @@ public class EnemyAttack : MonoBehaviour
             _attackCoroutine = StartCoroutine(AttackWall(_targetWall, _enemy));
         }
     }
-
-    /*private void StartAttackCoroutine()
-    {
-        if (_attackCoroutine != null)
-        {
-            StopCoroutine(_attackCoroutine);
-        }
-
-        _attackCoroutine = StartCoroutine(AttackWall(_targetWall, _enemy));
-    }*/
-
-    /*private void StopCheckAttackRange() //не используется пока
-    {
-        if (_checkAttackRangeCoroutine != null)
-        {
-            StopCoroutine(_checkAttackRangeCoroutine);
-        }
-    }*/
 }

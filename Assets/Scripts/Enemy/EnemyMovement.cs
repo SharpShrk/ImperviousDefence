@@ -43,23 +43,6 @@ public class EnemyMovement : MonoBehaviour
         StartMoving();
     }
 
-    /*public void SetupAttackPoint(Wall targetWall)
-    {
-        _targetAttackPoint = targetWall.AttackPoints[0];
-        _targetAttackPoint = GetNearestAttackPoint(targetWall);
-
-        if (_targetAttackPoint != null && _isEnougthAttackPoint == false)
-        {
-            WallAttackPoint target = _targetAttackPoint.GetComponent<WallAttackPoint>();
-
-            if(_isEnougthAttackPoint == false)
-            {
-                target.SetOccupied(gameObject.GetComponent<Enemy>());
-                _isEnougthAttackPoint = true;
-            }
-        }
-    }*/
-
     public void StartMoving()
     {
         _isMoving = true;

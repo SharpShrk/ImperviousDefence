@@ -10,6 +10,7 @@ public class BrickFactory : MonoBehaviour
     [SerializeField] private bool _hasResources = true;
     [SerializeField] private float _productionTime;
     [SerializeField] private GameObject _factoryObject;
+    [SerializeField] private AudioSource _audioSource;
 
     private Animator _animator;
     private Vector3 _brickSize;
@@ -38,6 +39,7 @@ public class BrickFactory : MonoBehaviour
             {
                 int bricksToProduce = _productionQueue.Dequeue();
                 _animator.speed = 1;
+                _audioSource.Play();
 
                 for (int i = 0; i < bricksToProduce; i++)
                 {
@@ -60,6 +62,8 @@ public class BrickFactory : MonoBehaviour
             }
             
             _animator.speed = 0;
+            _audioSource.Stop();
+
             yield return null;
         }
     }

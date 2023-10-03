@@ -5180,6 +5180,7 @@ MonoBehaviour:
   _rotatingPlatform: {fileID: 1543343654471068}
   _gun: {fileID: 1454602631919742}
   _shootPoint: {fileID: 4703932692914808}
+  _startDamage: 10
 --- !u!114 &-2328354655091889071
 MonoBehaviour:
   m_ObjectHideFlags: 0

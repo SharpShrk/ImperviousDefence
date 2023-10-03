@@ -27,7 +27,7 @@ public class ButtonControlProdaction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Player>() && other is BoxCollider)
+        if (other.GetComponent<Player>() && other is SphereCollider)
         {
             OnButtonPressed();
         }

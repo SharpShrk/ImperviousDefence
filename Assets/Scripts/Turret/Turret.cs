@@ -111,7 +111,7 @@ public class Turret : MonoBehaviour
         }
     }
 
-    private void Shoot() //присвоить пуле урон
+    private void Shoot()
     {
         GameObject bullet = _bulletPool.GetBullet();
         bullet.transform.position = _shootPoint.position;

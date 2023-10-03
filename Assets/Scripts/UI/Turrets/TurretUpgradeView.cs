@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+using Lean.Localization;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TurretUpgradeView : MonoBehaviour
@@ -121,8 +118,8 @@ public class TurretUpgradeView : MonoBehaviour
         }
         else
         {
-            string message = "Не достаточно денег для покупки турели!";
-            _infoMessagePanel.OpenMessagePanel(message);
+            string message = LeanLocalization.GetTranslationText("Not_enough_money_to_buy_turret");
+            _infoMessagePanel.OpenMessagePanel(message);            
         } 
     }
 }

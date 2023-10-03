@@ -8,6 +8,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private CameraShake _cameraShake;
     [SerializeField] private float _fireRate = 0.2f;
     [SerializeField] private BulletPool _bulletPool;
+    [SerializeField] private AudioSource _audioSource;
 
     private PlayerInputHandler _inputHandler;
     private Animator _animator;
@@ -50,10 +51,11 @@ public class PlayerShooting : MonoBehaviour
     {
         while (true)
         {
-            if (_canShoot)
+            if (_canShoot && Time.timeScale != 0)
             {
                 Shoot();
             }
+
             yield return new WaitForSeconds(_fireRate);
         }
     }
@@ -66,6 +68,7 @@ public class PlayerShooting : MonoBehaviour
         _animator.SetLayerWeight(1, 1);
         _animator.SetTrigger("Shoot");
         _cameraShake.Shake();
+        _audioSource.Play();
 
         _canShoot = false;
         StartCoroutine(ShootingDelay());

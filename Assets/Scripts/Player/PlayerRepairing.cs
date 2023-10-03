@@ -7,21 +7,21 @@ public class PlayerRepairing : MonoBehaviour
 {
     [SerializeField] private PlayerBricksBag _bricksBag;
 
-    private PlayerInputHandler _inputHandler;
+    //private PlayerInputHandler _inputHandler;
     private WallRepair _currentWallRepair;
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         _inputHandler = new PlayerInputHandler(Camera.main);
         _inputHandler.Enable();
 
         _inputHandler.InputActions.Player.Use.performed += ctx => AttemptWallRepair();
-    }
+    }*/
 
-    private void OnDisable()
+    /*private void OnDisable()
     {
         _inputHandler.Disable();
-    }
+    }*/
 
     private void AttemptWallRepair()
     {
@@ -38,21 +38,20 @@ public class PlayerRepairing : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<WallRepair>(out WallRepair wallRepair))
+        if (other.TryGetComponent<ExportZone>(out ExportZone exportZone))
         {
-            _currentWallRepair = wallRepair;
-            Debug.Log("Рядом стена " + _currentWallRepair.name);
+            _currentWallRepair = exportZone.GetWallRepairComponent();
+            AttemptWallRepair();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<WallRepair>(out WallRepair wallRepair))
+        if (other.GetComponent<ExportZone>())
         {
             _currentWallRepair = null;
-            Debug.Log("Рядом нет стены");
         }
     }
 }

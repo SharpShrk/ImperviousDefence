@@ -38,6 +38,134 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &4633893775140871499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8935991873183619321}
+  - component: {fileID: 3689642053512003278}
+  m_Layer: 6
+  m_Name: Audio_Punches
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8935991873183619321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4633893775140871499}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4796431719231886324}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &3689642053512003278
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4633893775140871499}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 6389153884802065476, guid: 0ca9a4f2b272a53468979e113c6b9c91, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4796431719231917952
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,9 +438,9 @@ GameObject:
   - component: {fileID: -7026104132709692353}
   - component: {fileID: 3532085705064393812}
   - component: {fileID: -7295911276214762339}
+  - component: {fileID: 4706977392115915353}
   - component: {fileID: 731802358516569329}
   - component: {fileID: 2199466928522621410}
-  - component: {fileID: 4706977392115915353}
   m_Layer: 6
   m_Name: Orc 1
   m_TagString: Untagged
@@ -335,6 +463,7 @@ Transform:
   - {fileID: 4796431719231886326}
   - {fileID: 4796431719231886312}
   - {fileID: 8073365600256338439}
+  - {fileID: 8935991873183619321}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -373,6 +502,7 @@ MonoBehaviour:
   _rewardMoney: 20
   _rewardScore: 50
   _enemyHealthBar: {fileID: 4706977392115915353}
+  _deathDuration: 2
 --- !u!114 &3532085705064393812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +517,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDelay: 1.5
   _attackRange: 1.5
+  _audioSource: {fileID: 3689642053512003278}
+  _punchSounds:
+  - {fileID: 8300000, guid: f8d99234102b3784f830f06af173cc35, type: 3}
+  - {fileID: 8300000, guid: 51bca898a4c8250419871c0812d24acd, type: 3}
+  - {fileID: 8300000, guid: c4b954365df717d4dad9cc06ed585779, type: 3}
+  - {fileID: 8300000, guid: 2c2ce8503ec4d9e4da33c17db17fb48f, type: 3}
+  - {fileID: 8300000, guid: aedd7e7f0e40f0b48b69dab10dd79ea8, type: 3}
+  - {fileID: 8300000, guid: e0e9fce116db33649b9e47692008f611, type: 3}
+  - {fileID: 8300000, guid: 64606d0fc7e74a3488d4fac85fa42aff, type: 3}
+  - {fileID: 8300000, guid: d99be8e24c041f143aa501337c02b2bb, type: 3}
 --- !u!114 &-7295911276214762339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,6 +543,20 @@ MonoBehaviour:
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &4706977392115915353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4796431719231917972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28cf0abbf63dccf4c974e1e8ea62dd10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBarImage: {fileID: 2129186043390902578}
+  _healthCanvas: {fileID: 407335868552567559}
 --- !u!65 &731802358516569329
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -432,20 +586,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 36
   m_CollisionDetection: 0
---- !u!114 &4706977392115915353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4796431719231917972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28cf0abbf63dccf4c974e1e8ea62dd10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthBarImage: {fileID: 2129186043390902578}
-  _healthCanvas: {fileID: 407335868552567559}
 --- !u!1 &4796431719231917974
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class ExportZone : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Wall _wall;
 
-    // Update is called once per frame
-    void Update()
+    public WallRepair GetWallRepairComponent()
     {
-        
+        WallRepair wallRepair = _wall.GetComponent<WallRepair>();
+        return wallRepair;
     }
 }

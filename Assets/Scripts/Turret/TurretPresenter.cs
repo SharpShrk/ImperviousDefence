@@ -21,11 +21,6 @@ public class TurretPresenter : MonoBehaviour
         _colorChanger.ButtonFullPressed -= OpenShop;
     }
 
-    //запросить у турели текущие уровни апгрейдов и установлена ли она
-    //передать в ЮИ о том, какая турель открыта, какие у нее текущие уровни апгрейдов
-    //получить от ЮИ информацию о том, был ли произведен апгрейд
-    //собщить турели о том, что она улучшена
-
     private void OpenShop() //переименовать
     {
         if(_turret.IsPlaced)
@@ -58,12 +53,12 @@ public class TurretPresenter : MonoBehaviour
         return _turretDamage.GetLevel();
     }
 
-    public void UpgradeAttackSpeed() //подписаться на событие, что апгрейд произведен
+    public void UpgradeAttackSpeed()
     {
         _turretAttackSpeed.Upgrade();
     }
 
-    public void UpgradeDamage() //подписаться на событие, что апгрейд произведен
+    public void UpgradeDamage()
     {
         _turretDamage.Upgrade();
     }

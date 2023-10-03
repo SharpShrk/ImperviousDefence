@@ -1,3 +1,5 @@
+using Agava.YandexGames;
+using Lean.Localization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,7 +41,8 @@ public class UpgradeService : MonoBehaviour
     {
         if (_currentTurretPresenter.GetLevelDamage() >= _maxLevelUpgrade)
         {
-            string message = "Уровень турели максимальный!";
+            string message = LeanLocalization.GetTranslationText("Turret_level_max"); //ни-ху-я
+
             _infoMessagePanel.OpenMessagePanel(message);
 
             return;
@@ -55,7 +58,7 @@ public class UpgradeService : MonoBehaviour
         }
         else
         {
-            string message = "Не достаточно денег для улучшения турели!";
+            string message = LeanLocalization.GetTranslationText("Not_enough_money_to_upgrade");
             _infoMessagePanel.OpenMessagePanel(message);
         }   
     }
@@ -64,7 +67,7 @@ public class UpgradeService : MonoBehaviour
     {
         if (_currentTurretPresenter.GetLevelAttackSpeed() >= _maxLevelUpgrade)
         {
-            string message = "Уровень турели максимальный!";
+            string message = LeanLocalization.GetTranslationText("Turret_level_max");
             _infoMessagePanel.OpenMessagePanel(message);
 
             return;
@@ -80,7 +83,7 @@ public class UpgradeService : MonoBehaviour
         }
         else
         {
-            string message = "Не достаточно денег для улучшения турели!";
+            string message = LeanLocalization.GetTranslationText("Not_enough_money_to_upgrade");
             _infoMessagePanel.OpenMessagePanel(message);
         } 
     }

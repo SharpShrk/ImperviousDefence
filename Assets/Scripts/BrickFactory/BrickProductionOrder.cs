@@ -1,3 +1,5 @@
+using Agava.YandexGames;
+using Lean.Localization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,6 +48,12 @@ public class BrickProductionOrder : MonoBehaviour
         }
     }
 
+    private void CloseProductionPanel()
+    {
+        Time.timeScale = 1;
+        _productionPanel.SetActive(false);
+    }
+
     private void OnToggleValueChanged(bool isOn)
     {
         _isProductionPanelDisable = isOn;
@@ -56,10 +64,12 @@ public class BrickProductionOrder : MonoBehaviour
         if (_wallet.SpendMoney(_costProductionBricks))
         {
             _brickFactory.AddToProductionQueue(_valueBricks);
+            CloseProductionPanel();
         }
         else
         {
-            _infoPanel.OpenMessagePanel("Недостаточно монет!");
+            string message = LeanLocalization.GetTranslationText("Not_enough_money");
+            _infoPanel.OpenMessagePanel(message);
         }
     }
 }
