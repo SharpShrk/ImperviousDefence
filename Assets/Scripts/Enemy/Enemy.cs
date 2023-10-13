@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour, IDamageable
         _maxHealth = health;
         _damage = damage;
         _isDied = false;
+        gameObject.GetComponent<Collider>().enabled = true;
     }
 
     public void Activate()
@@ -71,6 +72,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
                 OnEnemyDied?.Invoke(_rewardMoney, _rewardScore, this);
                 OnEnemyDiedForAttackPoint?.Invoke();
+
+                gameObject.GetComponent<Collider>().enabled = false;
 
                 _animator.SetTrigger("isDied");
                 StartCoroutine(WaitForDieAnimationEnd());

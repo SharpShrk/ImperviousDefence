@@ -12,6 +12,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button _leaderboardButton;
     [SerializeField] private SceneSwitcher _sceneSwitcher;
 
+    private const string _gameScene = "Game";
+
     private void OnEnable()
     {
         _optionPanel.SetActive(false);
@@ -27,7 +29,7 @@ public class MainMenu : MonoBehaviour
 
     private void OnStartClick()
     {
-        _sceneSwitcher.SwitchScene("Game");
+        _sceneSwitcher.SwitchScene(_gameScene);
     }
 
     private void OnOptionClick()

@@ -11,7 +11,7 @@ public class Turret : MonoBehaviour
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private float _startDamage = 10f;
 
-    private BulletPool _bulletPool;
+    private BulletTurretPool _bulletPool;
     private GameObject _target;
     private float _currentAttackCooldown;
     private float _damage;
@@ -25,7 +25,7 @@ public class Turret : MonoBehaviour
         _currentAttackCooldown = _attackCooldown;
     }
 
-    public void Init(BulletPool bulletPool)
+    public void Init(BulletTurretPool bulletPool)
     {
         _bulletPool = bulletPool;
     }
@@ -117,7 +117,7 @@ public class Turret : MonoBehaviour
         bullet.transform.position = _shootPoint.position;
         bullet.transform.rotation = _shootPoint.rotation;
 
-        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        BulletTurret bulletScript = bullet.GetComponent<BulletTurret>();
         bulletScript.SetDamage((int)(_damage));
     }
 }

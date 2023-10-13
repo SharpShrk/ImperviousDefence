@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TurretFactory : MonoBehaviour
 {
-    [SerializeField] private BulletPool turretBulletPool;
+    [SerializeField] private BulletTurretPool turretBulletPool;
     [SerializeField] private List<GameObject> _turrets;
 
     private void Start()

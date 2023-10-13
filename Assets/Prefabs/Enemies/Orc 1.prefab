@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rewardMoney: 20
-  _rewardScore: 50
+  _rewardScore: 1
   _enemyHealthBar: {fileID: 4706977392115915353}
   _deathDuration: 2
 --- !u!114 &3532085705064393812

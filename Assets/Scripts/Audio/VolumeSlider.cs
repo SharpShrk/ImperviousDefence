@@ -7,12 +7,12 @@ public class VolumeSlider : MonoBehaviour
 
     private void Start()
     {
-        _slider.value = AudioManager.Instance.AudioSource.volume;
-        _slider.onValueChanged.AddListener(delegate { OnValueChanged(); });
+        //_slider.value = AudioManager.Instance.AudioSource.volume;
+        //_slider.onValueChanged.AddListener(delegate { OnValueChanged(); });
     }
 
     private void OnValueChanged()
     {
-        AudioManager.Instance.ChangeVolume(_slider.value);
+        //AudioManager.Instance.ChangeVolume(_slider.value);
     }
 }

@@ -1,12 +1,17 @@
 using Lean.Localization;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LanguageSwitcher : MonoBehaviour
 {
-    private string _language;
+    private const string EnglishCode = "en";
+    private const string RussianCode = "ru";
+    private const string TurkishCode = "tr";
+    private const string EnglishNameLocalization = "English";
+    private const string RussianNameLocalization = "Russian";
+    private const string TurkishNameLocalization = "Turkish";
+
+    private string _currentLanguage;
 
     private void Awake()
     {
@@ -14,37 +19,32 @@ public class LanguageSwitcher : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public void SetEnglish()
+    public void SwitchLanguageTo(string code)
     {
-        LeanLocalization.SetCurrentLanguageAll("English");
-        _language = "English";
+        switch (code)
+        {
+            case EnglishCode:
+                ChangeLanguage(EnglishNameLocalization);
+                break;
+
+            case RussianCode:
+                ChangeLanguage(RussianNameLocalization);
+                break;
+
+            case TurkishCode:
+                ChangeLanguage(TurkishNameLocalization);
+                break;
+        }
     }
 
-    public void SetTurkish()
+    private void ChangeLanguage(string localizationName)
     {
-        LeanLocalization.SetCurrentLanguageAll("Turkish");
-        _language = "Turkish";
-    }
-
-    public void SetRussian()
-    {
-        LeanLocalization.SetCurrentLanguageAll("Russian");
-        _language = "Russian";
+        LeanLocalization.SetCurrentLanguageAll(localizationName);
+        _currentLanguage = localizationName;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        switch(_language)
-        {
-            case "English":
-                SetEnglish();
-                break;
-            case "Turkish":
-                SetTurkish();
-                break;
-            case "Russian":
-                SetRussian();
-                break;
-        }
+        ChangeLanguage(_currentLanguage);
     }
 }

@@ -22,6 +22,7 @@ public class BulletPool : MonoBehaviour
         {
             GameObject bullet = Instantiate(_bulletPrefab);
             bullet.GetComponent<Bullet>().Init(this);
+
             bullet.SetActive(false);
             bullet.transform.SetParent(_bulletContainer.transform);
             _bulletPool.Enqueue(bullet);

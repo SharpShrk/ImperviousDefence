@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Waves))]
 
@@ -20,6 +21,8 @@ public class EnemySpawner : MonoBehaviour
     private Coroutine _enemySpawnCoroutine;
     private FreeAttackPointChecker _attackPointChecker;
 
+    public event UnityAction WaveCleared;
+
     public int ActiveEnemies => _activeEnemies;
 
     private void Awake()
@@ -33,8 +36,7 @@ public class EnemySpawner : MonoBehaviour
     {
         _enemyPool.InitializeEnemyPool();
         _enemySpawnCoroutine = StartCoroutine(SpawnWaves());
-        _activeEnemies = _enemyPool.GetCountActiveEnemies();
-        
+        _activeEnemies = _enemyPool.GetCountActiveEnemies();       
     }
 
     private void CheckSpawnedEnemy()
@@ -43,6 +45,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (_activeEnemies <= 0 && _gameOver == false)
         {
+            WaveCleared?.Invoke();
             _enemySpawnCoroutine = StartCoroutine(SpawnWaves());
         }
         else

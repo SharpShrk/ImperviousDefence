@@ -8,14 +8,20 @@ public class Wallet : MonoBehaviour
     [SerializeField] private int _startMoney;
 
     private int _money;
-
+    
     public event Action<int> OnMoneyChanged;
 
     public int Money => _money;
 
     private void Start()
     {
-        _money = _startMoney;
+        //_money = _startMoney; //убрать эту строку потом
+        //OnMoneyChanged?.Invoke(_money);
+    }
+
+    public void SetStartValue(int value)
+    {
+        _money = value;
         OnMoneyChanged?.Invoke(_money);
     }
 
