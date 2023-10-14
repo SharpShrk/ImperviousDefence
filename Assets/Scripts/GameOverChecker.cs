@@ -29,13 +29,7 @@ public class GameOverChecker : MonoBehaviour
     private void GameOver()
     {
         GameOverEvent?.Invoke();
-        GameOverUI(); //удалить потом
-    }
-
-    //временный метод
-    private void GameOverUI()
-    {
-        _textGameOver.SetActive(true);
         Time.timeScale = 0;
     }
+
 }

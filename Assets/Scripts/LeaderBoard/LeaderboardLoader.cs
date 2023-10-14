@@ -16,6 +16,7 @@ public class LeaderboardLoader : MonoBehaviour
 
     [SerializeField] private Record[] _records;
     [SerializeField] private PlayerRecord _playerRecord;
+    [SerializeField] private Score _score;
 
     private string _leaderboardName = "IDLeaderboard";
     //private int _playerScore = 0;
@@ -28,6 +29,30 @@ public class LeaderboardLoader : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
         LoadYandexLeaderboard();
 #endif
+    }
+
+    public void TryRunToRegisterNewMaxScore()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        if (PlayerAccount.IsAuthorized)
+        {
+            TryRegisterNewMaxScore();
+        }
+#endif
+    }
+
+    private void TryRegisterNewMaxScore()
+    {
+        Leaderboard.GetPlayerEntry(_leaderboardName, result =>
+        {
+            if (result != null && _score.ScorePoints > result.score)
+            {
+                Leaderboard.SetScore(_leaderboardName, _score.ScorePoints);
+            }
+        }, errorMessage =>
+        {
+            Debug.LogError($"Error getting player entry: {errorMessage}");
+        });
     }
 
     private void DisableAllRecords()

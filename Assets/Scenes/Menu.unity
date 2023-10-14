@@ -653,7 +653,6 @@ GameObject:
   - component: {fileID: 84910798}
   - component: {fileID: 84910797}
   - component: {fileID: 84910796}
-  - component: {fileID: 84910795}
   - component: {fileID: 84910794}
   m_Layer: 0
   m_Name: Audio
@@ -758,19 +757,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &84910795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 84910793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948adbbd69323f74fba3b0aa3e50e19f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slider: {fileID: 0}
 --- !u!114 &84910796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -795,6 +781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44aaa09590dcf8c4b948a11f847e4a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioMixer: {fileID: 24100000, guid: 0ca9a4f2b272a53468979e113c6b9c91, type: 2}
   AudioSource: {fileID: 84910794}
   MenuClip: {fileID: 8300000, guid: 7ac328419ab37cf449ec6547a8863011, type: 3}
   GameClip: {fileID: 8300000, guid: 06c7a90fca38bee409655e81246a7420, type: 3}
@@ -3566,6 +3553,7 @@ GameObject:
   - component: {fileID: 625982014}
   - component: {fileID: 625982013}
   - component: {fileID: 625982012}
+  - component: {fileID: 625982015}
   m_Layer: 5
   m_Name: SoundScroller
   m_TagString: Untagged
@@ -3656,6 +3644,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 625982010}
   m_CullTransparentMesh: 0
+--- !u!114 &625982015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625982010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948adbbd69323f74fba3b0aa3e50e19f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slider: {fileID: 1391101759}
+  _volumeType: 1
 --- !u!1 &632476452
 GameObject:
   m_ObjectHideFlags: 0
@@ -12146,6 +12148,7 @@ GameObject:
   - component: {fileID: 1998938694}
   - component: {fileID: 1998938693}
   - component: {fileID: 1998938692}
+  - component: {fileID: 1998938695}
   m_Layer: 5
   m_Name: MusicScroller
   m_TagString: Untagged
@@ -12236,6 +12239,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1998938690}
   m_CullTransparentMesh: 0
+--- !u!114 &1998938695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998938690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948adbbd69323f74fba3b0aa3e50e19f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slider: {fileID: 725806017}
+  _volumeType: 0
 --- !u!1 &2029960075
 GameObject:
   m_ObjectHideFlags: 0

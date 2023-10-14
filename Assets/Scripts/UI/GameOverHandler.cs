@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverPanel : MonoBehaviour
+public class GameOverHandler : MonoBehaviour
 {
     private const string _menuSceneName = "Menu";
 
@@ -24,6 +24,8 @@ public class GameOverPanel : MonoBehaviour
     [SerializeField] private Waves _waves;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private GameOverChecker _gameOver;
+    [SerializeField] private AdPlayer _adPlayer;
+    [SerializeField] private LeaderboardLoader _leaderboardLoader;
 
     private int _collectedMoney;
     private int _rewardMultiplier = 2;
@@ -56,6 +58,7 @@ public class GameOverPanel : MonoBehaviour
         _wavesRecord.text = _waves.CurrentWave.ToString();
         _coinReward.text = _wallet.Money.ToString();
         _collectedMoney = _wallet.Money;
+        _leaderboardLoader.TryRunToRegisterNewMaxScore();
     }
 
     private void OnMenuButtonClick()
@@ -67,8 +70,14 @@ public class GameOverPanel : MonoBehaviour
     private void OnRewardButtonClick()
     {
         //показать рекламу, если успешно, то удвоить награду
+        //не забыть ставить мут и паузу
+        _adPlayer.ShowVideoAd();
+        _rewardButton.gameObject.SetActive(false);
+    }
+
+    private void RewardForAds() //в рекламном коде есть ивент, по хорошему вынести это в отдельный метод, а тут добавить ивент, чтоб обновить циферки
+    {
         _collectedMoney *= _rewardMultiplier;
         _coinReward.text = _collectedMoney.ToString();
-        _rewardButton.gameObject.SetActive(false);
     }
 }

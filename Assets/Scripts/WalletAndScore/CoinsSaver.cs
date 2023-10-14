@@ -8,7 +8,7 @@ public class CoinsSaver : MonoBehaviour
 
     [SerializeField] private Wallet _wallet;
     [SerializeField] private EnemySpawner _enemySpawner;
-    [SerializeField] private GameOverPanel _gameOverPanel;
+    [SerializeField] private GameOverHandler _gameOverPanel;
 
     private int _minStartMoneyValue = 100;
 

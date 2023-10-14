@@ -1,18 +1,42 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum VolumeType
+{
+    Music,
+    SFX
+}
+
 public class VolumeSlider : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
+    [SerializeField] private VolumeType _volumeType;
 
     private void Start()
     {
-        //_slider.value = AudioManager.Instance.AudioSource.volume;
-        //_slider.onValueChanged.AddListener(delegate { OnValueChanged(); });
+        switch (_volumeType)
+        {
+            case VolumeType.Music:
+                _slider.value = AudioManager.Instance.GetMusicVolume();
+                break;
+            case VolumeType.SFX:
+                _slider.value = AudioManager.Instance.GetSFXVolume();
+                break;
+        }
+
+        _slider.onValueChanged.AddListener(delegate { OnValueChanged(); });
     }
 
     private void OnValueChanged()
     {
-        //AudioManager.Instance.ChangeVolume(_slider.value);
+        switch (_volumeType)
+        {
+            case VolumeType.Music:
+                AudioManager.Instance.ChangeMusicVolume(_slider.value);
+                break;
+            case VolumeType.SFX:
+                AudioManager.Instance.ChangeSFXVolume(_slider.value);
+                break;
+        }
     }
 }
