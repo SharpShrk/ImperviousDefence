@@ -13,19 +13,20 @@ public class LeaderboardLoader : MonoBehaviour
     private const string EnglishCode = "en";
     private const string RussianCode = "ru";
     private const string TurkishCode = "tr";
+    private const string _leaderboardName = "IDLeaderboard";
 
     [SerializeField] private Record[] _records;
     [SerializeField] private PlayerRecord _playerRecord;
-    [SerializeField] private Score _score;
 
-    private string _leaderboardName = "IDLeaderboard";
-    //private int _playerScore = 0;
+    private Score _score;
 
     public string LeaderboardName => _leaderboardName;
 
     private void Start()
     {
         DisableAllRecords();
+        DontDestroyOnLoad(gameObject);
+
 #if UNITY_WEBGL && !UNITY_EDITOR
         LoadYandexLeaderboard();
 #endif
@@ -43,6 +44,8 @@ public class LeaderboardLoader : MonoBehaviour
 
     private void TryRegisterNewMaxScore()
     {
+        _score = FindObjectOfType<Score>();
+
         Leaderboard.GetPlayerEntry(_leaderboardName, result =>
         {
             if (result != null && _score.ScorePoints > result.score)

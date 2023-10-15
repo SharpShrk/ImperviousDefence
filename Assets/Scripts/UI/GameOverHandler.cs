@@ -36,9 +36,10 @@ public class GameOverHandler : MonoBehaviour
     {
         _scorePanel.SetActive(false);
 
-        _gameOver.GameOverEvent += InitGameOverPanel;
         _inMenuButton.onClick.AddListener(OnMenuButtonClick);
         _rewardButton.onClick.AddListener(OnRewardButtonClick);
+        _gameOver.GameOverEvent += InitGameOverPanel;
+        _adPlayer.VideoAdPlayed += RewardForAds;
     }
 
     private void OnDisable()
@@ -46,6 +47,7 @@ public class GameOverHandler : MonoBehaviour
         _gameOver.GameOverEvent -= InitGameOverPanel;
         _inMenuButton.onClick.RemoveListener(OnMenuButtonClick);
         _rewardButton.onClick.RemoveListener(OnRewardButtonClick);
+        _adPlayer.VideoAdPlayed -= RewardForAds;
     }
 
     private void InitGameOverPanel()
@@ -75,7 +77,7 @@ public class GameOverHandler : MonoBehaviour
         _rewardButton.gameObject.SetActive(false);
     }
 
-    private void RewardForAds() //в рекламном коде есть ивент, по хорошему вынести это в отдельный метод, а тут добавить ивент, чтоб обновить циферки
+    private void RewardForAds()
     {
         _collectedMoney *= _rewardMultiplier;
         _coinReward.text = _collectedMoney.ToString();

@@ -1,3 +1,4 @@
+using Agava.YandexGames;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,8 +38,7 @@ public class Authorization : MonoBehaviour
 
     private void OnAuthorizeSuccess()
     {
-        /*_playerData.AuthorizeBy(this);
-        _menuManager.TryOpenLeaderboard();*/
+        HideButton();
     }
 
     private void OnAuthorizeError(string error)

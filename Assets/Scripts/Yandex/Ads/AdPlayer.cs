@@ -7,28 +7,24 @@ public class AdPlayer : MonoBehaviour
     [SerializeField] private int _adLevelIndex;
     [SerializeField] private Waves _waves;
     [SerializeField] private EnemySpawner _enemySpawner;
-    //[SerializeField] private PlayerData _playerData;
-    private AudioManager _audioManager;
-
-    //узнать как запускать промежуточную рекламу
-    //сделать метод, который будет получать каждый раз после зачистки волны номер волны
-    //если номер волны каждый допустим 3 или 4, то запустить панельку, которая предупредит, что через 3, 2, 1 будет показ рекламы. 
-    //дождаться завршения корутины. Запустить просмотр рекламы
+    [SerializeField] private AdWarningPanel _adWarningPanel;
 
     private bool _adIsPlaying;
 
     public bool AdIsPlaying => _adIsPlaying;
 
-    public event UnityAction VideoAdPlayed; //ивент что реклама посмотрена
+    public event UnityAction VideoAdPlayed;
 
     private void OnEnable()
     {
         _enemySpawner.WaveCleared += TryShowInterAd;
+        _adWarningPanel.AdCountdownFinished += ShowInterstitialAd;
     }
 
     private void OnDisable()
     {
         _enemySpawner.WaveCleared -= TryShowInterAd;
+        _adWarningPanel.AdCountdownFinished -= ShowInterstitialAd;
     }
 
     private void TryShowInterAd()
@@ -53,26 +49,26 @@ public class AdPlayer : MonoBehaviour
     private void OnRewarded()
     {
         VideoAdPlayed?.Invoke();
+        AudioManager.Instance.RestorePreviousVolumeAndUnpause();
     }
 
     private void OnClosed()
     {
-        _audioManager.RestorePreviousVolumeAndUnpause();
+        AudioManager.Instance.RestorePreviousVolumeAndUnpause();
         _adIsPlaying = false;
     }
 
     private void OnPlayed()
     {
-        _audioManager.MuteAllAndPause();
+        AudioManager.Instance.MuteAllAndPause();
         _adIsPlaying = true;
     }
 
     private void PlayRegularAdIf(bool value)
     {
-        //сделать корутину, которая предупредит о рекламе
         if (value)
         {
-            ShowInterstitialAd();
+            _adWarningPanel.StartAdCountdown();            
         }
     }
 
@@ -83,7 +79,7 @@ public class AdPlayer : MonoBehaviour
 
     private void OnClosedInterstitialAd(bool value)
     {
-        _audioManager.RestorePreviousVolumeAndUnpause();
+        AudioManager.Instance.RestorePreviousVolumeAndUnpause();
         _adIsPlaying = false;
     }
 }
