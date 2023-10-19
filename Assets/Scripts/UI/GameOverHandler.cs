@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class GameOverHandler : MonoBehaviour
 {
     private const string _menuSceneName = "Menu";
+    private const int _rewardMultiplier = 2;
 
     [SerializeField] private GameObject _scorePanel;
     [SerializeField] private GameObject _bagUI;
@@ -25,10 +26,9 @@ public class GameOverHandler : MonoBehaviour
     [SerializeField] private Wallet _wallet;
     [SerializeField] private GameOverChecker _gameOver;
     [SerializeField] private AdPlayer _adPlayer;
-    [SerializeField] private LeaderboardLoader _leaderboardLoader;
 
+    private LeaderboardLoader _leaderboardLoader;
     private int _collectedMoney;
-    private int _rewardMultiplier = 2;
 
     public event UnityAction<int> GameOvered;
 
@@ -60,7 +60,11 @@ public class GameOverHandler : MonoBehaviour
         _wavesRecord.text = _waves.CurrentWave.ToString();
         _coinReward.text = _wallet.Money.ToString();
         _collectedMoney = _wallet.Money;
+
+        _leaderboardLoader = FindObjectOfType<LeaderboardLoader>();
         _leaderboardLoader.TryRunToRegisterNewMaxScore();
+
+        Debug.Log(gameObject.name + " запуск TryRunToRegisterNewMaxScore");
     }
 
     private void OnMenuButtonClick()

@@ -147,26 +147,3 @@ public class Rotatable : IRotatable
         }
     }
 }
-
-/*
-public class Rotatable : IRotatable
-{
-    private readonly Transform _transform;
-    private readonly float _rotationSpeed;
-
-    public Rotatable(Transform transform, float rotationSpeed)
-    {
-        _transform = transform;
-        _rotationSpeed = rotationSpeed;
-    }
-
-    public void Rotate(Vector3 targetPosition)
-    {
-        Vector3 direction = (targetPosition - _transform.position).normalized;
-        if (direction.magnitude < 0.1f) return;
-
-        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-        _transform.rotation = Quaternion.RotateTowards(_transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
-    }
-} 
- */

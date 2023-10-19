@@ -6,7 +6,6 @@ using UnityEngine.Events;
 public class GameOverChecker : MonoBehaviour
 {
     [SerializeField] private Wall[] _walls;
-    [SerializeField] private GameObject _textGameOver;
 
     public event UnityAction GameOverEvent;
 

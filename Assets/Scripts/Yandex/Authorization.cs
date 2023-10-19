@@ -8,7 +8,7 @@ public class Authorization : MonoBehaviour
 {
     [SerializeField] private Button _autorizeButton;
 
-    private void OnEnable()
+    private void Start()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (PlayerAccount.IsAuthorized)

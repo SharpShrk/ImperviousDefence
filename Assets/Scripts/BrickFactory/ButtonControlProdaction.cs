@@ -7,16 +7,16 @@ public class ButtonControlProdaction : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteButton;
 
-    private bool _isProductionActivate;
-    private Color _productionColor = Color.green;
-    private Color _startColor;
+    //private bool _isProductionActivate;
+    //private Color _productionColor = Color.green;
+    //private Color _startColor;
 
     public event UnityAction ButtonPressed;
 
     private void OnEnable()
     {
-        _isProductionActivate = false;
-        _startColor = _spriteButton.color;
+        //_isProductionActivate = false;
+        //_startColor = _spriteButton.color;
         //подписка на фактори, чтобы менять цвет кнопки, если производство запущено
     }
 
@@ -38,7 +38,7 @@ public class ButtonControlProdaction : MonoBehaviour
         ButtonPressed?.Invoke();
     }
 
-    private void SetProductionColor()
+    /*private void SetProductionColor()
     {
         _spriteButton.color = _productionColor;
     }
@@ -46,5 +46,5 @@ public class ButtonControlProdaction : MonoBehaviour
     private void SetStartColor()
     {
         _spriteButton.color = _startColor;
-    }
+    }*/
 }

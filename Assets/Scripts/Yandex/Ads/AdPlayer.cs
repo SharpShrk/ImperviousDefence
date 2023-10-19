@@ -10,6 +10,7 @@ public class AdPlayer : MonoBehaviour
     [SerializeField] private AdWarningPanel _adWarningPanel;
 
     private bool _adIsPlaying;
+    private AudioResources _audioResources;
 
     public bool AdIsPlaying => _adIsPlaying;
 
@@ -17,6 +18,7 @@ public class AdPlayer : MonoBehaviour
 
     private void OnEnable()
     {
+        _audioResources = FindObjectOfType<AudioResources>();
         _enemySpawner.WaveCleared += TryShowInterAd;
         _adWarningPanel.AdCountdownFinished += ShowInterstitialAd;
     }
@@ -49,18 +51,18 @@ public class AdPlayer : MonoBehaviour
     private void OnRewarded()
     {
         VideoAdPlayed?.Invoke();
-        AudioManager.Instance.RestorePreviousVolumeAndUnpause();
+        _audioResources.UnmuteAndResume();
     }
 
     private void OnClosed()
     {
-        AudioManager.Instance.RestorePreviousVolumeAndUnpause();
+        _audioResources.UnmuteAndResume();
         _adIsPlaying = false;
     }
 
     private void OnPlayed()
     {
-        AudioManager.Instance.MuteAllAndPause();
+        _audioResources.MuteAndPause();
         _adIsPlaying = true;
     }
 
@@ -79,7 +81,7 @@ public class AdPlayer : MonoBehaviour
 
     private void OnClosedInterstitialAd(bool value)
     {
-        AudioManager.Instance.RestorePreviousVolumeAndUnpause();
+        _audioResources.UnmuteAndResume();
         _adIsPlaying = false;
     }
 }

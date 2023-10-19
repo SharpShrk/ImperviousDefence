@@ -9,7 +9,7 @@ public class LeaderboardLoader : MonoBehaviour
     private const int MaxRecordsToShow = 10;
     private const string AnonymousEn = "Anonymous";
     private const string AnonymousRu = "Аноним";
-    private const string AnonymousTr = "?simsiz";
+    private const string AnonymousTr = "Anonim";
     private const string EnglishCode = "en";
     private const string RussianCode = "ru";
     private const string TurkishCode = "tr";
@@ -48,7 +48,7 @@ public class LeaderboardLoader : MonoBehaviour
 
         Leaderboard.GetPlayerEntry(_leaderboardName, result =>
         {
-            if (result != null && _score.ScorePoints > result.score)
+            if (_score.ScorePoints > result.score)
             {
                 Leaderboard.SetScore(_leaderboardName, _score.ScorePoints);
             }
@@ -70,50 +70,48 @@ public class LeaderboardLoader : MonoBehaviour
 
     private void LoadYandexLeaderboard()
     {
-        PlayerAccount.RequestPersonalProfileDataPermission();
-
-        if (PlayerAccount.IsAuthorized == false)
+        if (PlayerAccount.IsAuthorized)
         {
-            PlayerAccount.Authorize();
-        }
+            PlayerAccount.RequestPersonalProfileDataPermission();
 
-        Leaderboard.GetEntries(_leaderboardName, (result) =>
-        {
-            int recordsToShow =
-                result.entries.Length <= MaxRecordsToShow ? result.entries.Length : MaxRecordsToShow;
-
-            for (int i = 0; i < recordsToShow; i++)
+            Leaderboard.GetEntries(_leaderboardName, (result) =>
             {
-                string name = result.entries[i].player.publicName;
+                int recordsToShow =
+                    result.entries.Length <= MaxRecordsToShow ? result.entries.Length : MaxRecordsToShow;
 
-                if (string.IsNullOrEmpty(name))
+                for (int i = 0; i < recordsToShow; i++)
                 {
-                    string locale = YandexGamesSdk.Environment.i18n.lang;
+                    string name = result.entries[i].player.publicName;
 
-                    switch(locale)
+                    if (string.IsNullOrEmpty(name))
                     {
-                        case EnglishCode:
-                            name = AnonymousEn;
-                            break;
+                        string locale = YandexGamesSdk.Environment.i18n.lang;
 
-                        case RussianCode:
-                            name = AnonymousRu;
-                            break;
+                        switch (locale)
+                        {
+                            case EnglishCode:
+                                name = AnonymousEn;
+                                break;
 
-                        case TurkishCode:
-                            name = AnonymousTr;
-                            break;
-                    }                   
+                            case RussianCode:
+                                name = AnonymousRu;
+                                break;
+
+                            case TurkishCode:
+                                name = AnonymousTr;
+                                break;
+                        }
+                    }
+
+                    _records[i].SetName(name);
+                    _records[i].SetScore(result.entries[i].formattedScore);
+                    _records[i].SetRank(result.entries[i].rank);
+                    _records[i].gameObject.SetActive(true);
                 }
+            });
 
-                _records[i].SetName(name);
-                _records[i].SetScore(result.entries[i].formattedScore);
-                _records[i].SetRank(result.entries[i].rank);
-                _records[i].gameObject.SetActive(true);
-            }
-        });
-
-        LoadPlayerScore();
+            LoadPlayerScore();
+        }       
     }
 
     private void LoadPlayerScore()
