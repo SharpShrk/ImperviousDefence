@@ -5440,7 +5440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31757eb837cfb214d8e613556a8d5181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _authorizeButton: {fileID: 0}
+  _authorizeButton: {fileID: 1232682665}
   _cancelButton: {fileID: 1082689257}
   _rankButton: {fileID: 43660924}
   _warningPanel: {fileID: 923404779}

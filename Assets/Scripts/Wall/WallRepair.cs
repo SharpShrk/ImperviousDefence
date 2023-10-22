@@ -8,7 +8,7 @@ public class WallRepair : MonoBehaviour
     [SerializeField] private float _repairDelay;
     [SerializeField] private float _speedRepairBrick;
 
-    private float _elapsedTime;
+    //private float _elapsedTime;
 
     private Wall _wall;
     private bool _isRepairing = false;
@@ -53,6 +53,10 @@ public class WallRepair : MonoBehaviour
             StartCoroutine(ReturnBrick(destroyedBrick));
 
             var repairDelay = new WaitForSeconds(_repairDelay);
+
+            AudioSource audioSource = destroyedBrick.GetComponent<AudioSource>();
+            audioSource.Play();
+
             yield return repairDelay;
         }
 
@@ -65,7 +69,7 @@ public class WallRepair : MonoBehaviour
     {
         float elapsedTime = 0.0f;
 
-        Vector3 spawnHeight = new Vector3(0, 0.5f, 0);        
+        Vector3 spawnHeight = new(0, 0.5f, 0);        
         Vector3 startPosition = brick.transform.position + spawnHeight;
         Vector3 endPosition = brick.transform.position;
 
@@ -74,7 +78,7 @@ public class WallRepair : MonoBehaviour
         while (elapsedTime < _speedRepairBrick)
         {
             elapsedTime += Time.deltaTime;
-            _elapsedTime = elapsedTime;
+            //_elapsedTime = elapsedTime;
             brick.transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / _speedRepairBrick);
             yield return null;
         }

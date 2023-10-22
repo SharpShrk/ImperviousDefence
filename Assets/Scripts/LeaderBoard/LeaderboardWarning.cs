@@ -46,7 +46,7 @@ public class LeaderboardWarning : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (PlayerAccount.IsAuthorized)
         {
-            _autorizeButton.gameObject.SetActive(false);
+            _authorizeButton.gameObject.SetActive(false);
         }
 #endif
 

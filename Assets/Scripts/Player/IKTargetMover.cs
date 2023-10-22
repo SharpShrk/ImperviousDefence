@@ -5,6 +5,11 @@ public class IKTargetMover : MonoBehaviour
     [SerializeField] private float _distanceFromPlayer = 2f;
     [SerializeField] private Transform _startPosition;
 
+    private void Start()
+    {
+        transform.position = new Vector3(_startPosition.position.x + _distanceFromPlayer, _startPosition.position.y, _startPosition.position.z);
+    }
+
     void Update()
     {
         UpdatePosition();

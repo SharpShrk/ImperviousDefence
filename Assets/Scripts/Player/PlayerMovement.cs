@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Animations.Rigging;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -41,6 +42,12 @@ public class PlayerMovement : MonoBehaviour
         _movable.Move(direction);
         _rotatable.Rotate(_inputHandler.GetMouseWorldPosition());
 
+        SetRunningAnimations(direction, lookDirection);
+        
+}
+
+    private void SetRunningAnimations(Vector3 direction, Vector3 lookDirection)
+    {
         _animator.SetBool("isRunningForward", false);
         _animator.SetBool("isRunningBackward", false);
         _animator.SetBool("isRunningRight", false);
@@ -70,13 +77,6 @@ public class PlayerMovement : MonoBehaviour
                     _animator.SetBool("isRunningLeft", true);
                 }
             }
-        }
-        else
-        {
-            _animator.SetBool("isRunningForward", false);
-            _animator.SetBool("isRunningBackward", false);
-            _animator.SetBool("isRunningRight", false);
-            _animator.SetBool("isRunningLeft", false);
         }
     }
 }
@@ -147,3 +147,5 @@ public class Rotatable : IRotatable
         }
     }
 }
+
+
