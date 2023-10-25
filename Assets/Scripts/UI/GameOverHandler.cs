@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -63,8 +61,6 @@ public class GameOverHandler : MonoBehaviour
 
         _leaderboardLoader = FindObjectOfType<LeaderboardLoader>();
         _leaderboardLoader.TryRunToRegisterNewMaxScore();
-
-        Debug.Log(gameObject.name + " запуск TryRunToRegisterNewMaxScore");
     }
 
     private void OnMenuButtonClick()
@@ -75,8 +71,6 @@ public class GameOverHandler : MonoBehaviour
 
     private void OnRewardButtonClick()
     {
-        //показать рекламу, если успешно, то удвоить награду
-        //не забыть ставить мут и паузу
         _adPlayer.ShowVideoAd();
         _rewardButton.gameObject.SetActive(false);
     }

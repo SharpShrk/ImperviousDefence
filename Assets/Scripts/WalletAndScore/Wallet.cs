@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Wallet : MonoBehaviour
@@ -12,12 +10,6 @@ public class Wallet : MonoBehaviour
     public event Action<int> OnMoneyChanged;
 
     public int Money => _money;
-
-    private void Start()
-    {
-        //_money = _startMoney; //убрать эту строку потом
-        //OnMoneyChanged?.Invoke(_money);
-    }
 
     public void SetStartValue(int value)
     {

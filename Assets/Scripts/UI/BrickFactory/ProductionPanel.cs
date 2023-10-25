@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,7 +7,7 @@ public class ProductionPanel : MonoBehaviour
     [SerializeField] private Button _confirmButton;
     [SerializeField] private Button _cancelButton;
     [SerializeField] private GameObject _panel;
-    [SerializeField] private InfoMessagePanel _infoPanel; //вывести ошибку сюда, если деняк нехватает
+    [SerializeField] private InfoMessagePanel _infoPanel;
 
     public event UnityAction OnButtonConfirmProductionClicked;
 

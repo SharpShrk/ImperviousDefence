@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+[RequireComponent(typeof(Wall))]
 
 public class WallRepair : MonoBehaviour
 {
     [SerializeField] private float _repairDelay;
     [SerializeField] private float _speedRepairBrick;
-
-    //private float _elapsedTime;
 
     private Wall _wall;
     private bool _isRepairing = false;
@@ -78,7 +77,6 @@ public class WallRepair : MonoBehaviour
         while (elapsedTime < _speedRepairBrick)
         {
             elapsedTime += Time.deltaTime;
-            //_elapsedTime = elapsedTime;
             brick.transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / _speedRepairBrick);
             yield return null;
         }

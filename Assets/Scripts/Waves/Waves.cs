@@ -44,8 +44,6 @@ public class Waves : MonoBehaviour
         {
             _currentEnemyCount += _countIncrease;
         }
-
-        Debug.Log("Номер волны:" + CurrentWave);
     }
 
     public int GetEnemyHealth()

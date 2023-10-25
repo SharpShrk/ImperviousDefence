@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TurretPresenter : MonoBehaviour
@@ -21,7 +19,7 @@ public class TurretPresenter : MonoBehaviour
         _colorChanger.ButtonFullPressed -= OpenShop;
     }
 
-    private void OpenShop() //переименовать
+    private void OpenShop()
     {
         if(_turret.IsPlaced)
         {           
@@ -39,7 +37,6 @@ public class TurretPresenter : MonoBehaviour
         if (_turret.IsPlaced == true)
             return;
 
-        Debug.Log("Турель куплена, момент, ща установим.");
         _turret.PlaceTurret();        
     }
 

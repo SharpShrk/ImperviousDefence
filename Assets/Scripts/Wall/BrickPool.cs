@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,19 +12,6 @@ public class BrickPool : MonoBehaviour
     private void Awake()
     {
         InitializePool();
-    }
-
-    private void InitializePool()
-    {
-        _brickPool = new Queue<GameObject>();
-
-        for (int i = 0; i < _initialPoolSize; i++)
-        {
-            GameObject brick = Instantiate(_prefab);
-            brick.SetActive(false);
-            brick.transform.SetParent(_parent.transform);
-            _brickPool.Enqueue(brick);
-        }
     }
 
     public GameObject GetBrick()
@@ -46,5 +32,18 @@ public class BrickPool : MonoBehaviour
     {
         brick.SetActive(false);
         _brickPool.Enqueue(brick);
+    }
+
+    private void InitializePool()
+    {
+        _brickPool = new Queue<GameObject>();
+
+        for (int i = 0; i < _initialPoolSize; i++)
+        {
+            GameObject brick = Instantiate(_prefab);
+            brick.SetActive(false);
+            brick.transform.SetParent(_parent.transform);
+            _brickPool.Enqueue(brick);
+        }
     }
 }

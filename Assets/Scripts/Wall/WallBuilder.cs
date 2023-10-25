@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Wall))]
+
 public class WallBuilder : MonoBehaviour
 {
     [SerializeField] private GameObject _wallBlockPrefab;

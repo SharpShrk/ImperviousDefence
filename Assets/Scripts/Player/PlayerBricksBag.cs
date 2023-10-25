@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBricksBag : MonoBehaviour
 {
     [SerializeField] private int _maxBrickCapacity = 5;
+
     private int _currentBrickCount = 0;
 
     public int AvailableCapacity => _maxBrickCapacity - _currentBrickCount;
@@ -14,19 +13,16 @@ public class PlayerBricksBag : MonoBehaviour
 
     public event Action<int> OnBrickCountChanged;
 
-
     public bool AddBricks(int count)
     {
         if (_currentBrickCount + count <= _maxBrickCapacity)
         {
             _currentBrickCount += count;
             OnBrickCountChanged?.Invoke(_currentBrickCount);
-            Debug.Log("Кирпчей в сумке: " + _currentBrickCount + ". Взято кирпичей: " + count);
             return true;
         }
         else
         {
-            Debug.Log("Сумка полна!");
             return false;
         }
     }
@@ -41,7 +37,6 @@ public class PlayerBricksBag : MonoBehaviour
         }
         else
         {
-            Debug.Log("Недостаточно кирпичей в сумке!");
             return false;
         }
     }

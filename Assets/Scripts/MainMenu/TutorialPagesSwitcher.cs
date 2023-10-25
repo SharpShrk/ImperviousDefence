@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,7 +58,7 @@ public class TutorialPagesSwitcher : MonoBehaviour
         CheckControl();
     }
 
-    void SetArrowActive()
+    private void SetArrowActive()
     {
         _buttonPrev.gameObject.SetActive(_page > 0);
         _buttonNext.gameObject.SetActive(_page < _panels.Count - 1);

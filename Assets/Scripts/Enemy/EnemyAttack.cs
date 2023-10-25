@@ -39,14 +39,13 @@ public class EnemyAttack : MonoBehaviour
     {
         if (targetWall == null)
         {
-            Debug.LogError("Target Wall is null");
             return;
         }
 
         _targetWall = targetWall;
     }
 
-    public void PlayRandomPunchSound() //starts from the animator event
+    public void PlayRandomPunchSound()
     {
         AudioClip sound;
         sound = _punchSounds[Random.Range(0, _punchSounds.Length)];

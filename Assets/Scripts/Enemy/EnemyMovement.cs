@@ -69,7 +69,6 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_targetAttackPoint == null)
         {
-            Debug.LogError("Target attack point is null for " + gameObject.name);
             return;
         }
 
@@ -87,29 +86,4 @@ public class EnemyMovement : MonoBehaviour
             MovementStoppedAction?.Invoke();
         }
     }
-
-    /*private Transform GetNearestAttackPoint(Wall wall)
-    {
-        Transform nearestPoint = null;
-        float minDistance = Mathf.Infinity;
-
-
-        foreach (var point in wall.AttackPoints)
-        {
-            WallAttackPoint attackPoint = point.GetComponent<WallAttackPoint>();
-
-            if (attackPoint != null && attackPoint.IsOccupied == false)
-            {
-                float distance = Vector3.Distance(transform.position, point.position);
-
-                if (distance < minDistance)
-                {
-                    nearestPoint = point;
-                    minDistance = distance;
-                }
-            }
-        }
-
-        return nearestPoint;
-    }*/
 }

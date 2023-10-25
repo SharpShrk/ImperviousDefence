@@ -1,6 +1,4 @@
 using Agava.YandexGames;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,16 +22,16 @@ public class Authorization : MonoBehaviour
         _autorizeButton.onClick.RemoveListener(TryAuthorize);
     }
 
-    private void HideButton()
-    {
-        _autorizeButton.gameObject.SetActive(false);
-    }
-
     public void TryAuthorize()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
         PlayerAccount.Authorize(OnAuthorizeSuccess, OnAuthorizeError);
 #endif
+    }
+
+    private void HideButton()
+    {
+        _autorizeButton.gameObject.SetActive(false);
     }
 
     private void OnAuthorizeSuccess()

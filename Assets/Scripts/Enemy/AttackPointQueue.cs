@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,10 +20,8 @@ public class AttackPointQueue : MonoBehaviour
 
     public void ReleaseAttackPoint(WallAttackPoint point)
     {
-        // Добавьте точку обратно в список доступных точек
         _availableAttackPoints.Add(point);
 
-        // Найдите ближайшего врага к этой точке
         Enemy closestEnemy = null;
         float minDistance = float.MaxValue;
 
@@ -38,7 +35,6 @@ public class AttackPointQueue : MonoBehaviour
             }
         }
 
-        // Если нашли ближайшего врага, назначьте ему эту точку и удалите из очереди
         if (closestEnemy != null)
         {
             _waitingEnemies = new Queue<Enemy>(_waitingEnemies.Where(e => e != closestEnemy));

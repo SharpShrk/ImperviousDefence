@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Animations.Rigging;
-using System;
 
 public class PlayerMovement : MonoBehaviour
 {

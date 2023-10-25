@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Wall : MonoBehaviour
 {
-    public List<Transform> AttackPoints = new(); //убрать паблик сделать гет приватный сет
+    public List<Transform> AttackPoints = new();
     
     private BrickPool _brickPool;
     private List<GameObject> _wallBlocks = new List<GameObject>();
@@ -77,7 +76,5 @@ public class Wall : MonoBehaviour
         GameObject duplicateBrick = _brickPool.GetBrick();
         duplicateBrick.transform.position = brick.gameObject.transform.position;
         duplicateBrick.GetComponent<Brick>().EjectionDuplicate();
-
-        //вернуть кирпич в пул
     }
 }

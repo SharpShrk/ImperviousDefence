@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -101,7 +100,7 @@ public class EnemySpawner : MonoBehaviour
         return new Vector3(x, _spawnZoneCenter.y, z);
     }
 
-    private void GameOver() //добавить чек события гейм овера? 
+    private void GameOver()
     {
         _gameOver = true;
     }    

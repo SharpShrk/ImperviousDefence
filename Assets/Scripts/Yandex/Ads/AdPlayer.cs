@@ -29,17 +29,17 @@ public class AdPlayer : MonoBehaviour
         _adWarningPanel.AdCountdownFinished -= ShowInterstitialAd;
     }
 
+    public void ShowVideoAd()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        VideoAd.Show(OnPlayed, OnRewarded,OnClosed);
+#endif
+    }
+
     private void TryShowInterAd()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
         PlayRegularAdIf(ShouldPlayAd());
-#endif
-    }
-
-    public void ShowVideoAd()
-    {       
-#if UNITY_WEBGL && !UNITY_EDITOR
-        VideoAd.Show(OnPlayed, OnRewarded,OnClosed);
 #endif
     }
 

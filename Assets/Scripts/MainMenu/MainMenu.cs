@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(FirstStartTrainer))]
+
 public class MainMenu : MonoBehaviour
 {
+    private const string _gameScene = "Game";
+
     [SerializeField] private GameObject _startPanel;
     [SerializeField] private GameObject _optionPanel;
     [SerializeField] private Button _optionButton;
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _leaderboardButton;
     [SerializeField] private SceneSwitcher _sceneSwitcher;
-
-    private const string _gameScene = "Game";
 
     private void OnEnable()
     {
@@ -29,7 +29,16 @@ public class MainMenu : MonoBehaviour
 
     private void OnStartClick()
     {
-        _sceneSwitcher.SwitchScene(_gameScene);
+        FirstStartTrainer firstStartTrainer = GetComponent<FirstStartTrainer>();
+
+        if (firstStartTrainer.IsFirstStart)
+        {
+            firstStartTrainer.FirstStartTutorial();
+        }
+        else
+        {
+            _sceneSwitcher.SwitchScene(_gameScene);
+        }    
     }
 
     private void OnOptionClick()

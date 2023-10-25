@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
 
 public class TurretButtonUpgradeDamage : TurretButtonUpgrade
@@ -10,6 +7,5 @@ public class TurretButtonUpgradeDamage : TurretButtonUpgrade
     protected override void OnButtonClick()
     {
         ButtonUpgradeDamagePressed?.Invoke();
-        print("Damage click");
     }
 }

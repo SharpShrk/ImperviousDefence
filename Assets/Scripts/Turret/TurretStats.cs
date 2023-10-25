@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class TurretStats : MonoBehaviour
 {
-    
     [SerializeField] protected float StartValue;
     [SerializeField] protected float UpdateValue;
 
     protected int Level;
-    //protected int Cost;
     protected float Value;
     protected int MaxLevel = 10;
 

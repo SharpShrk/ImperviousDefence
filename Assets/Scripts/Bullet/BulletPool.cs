@@ -14,21 +14,6 @@ public class BulletPool : MonoBehaviour
         InitializePool();
     }
 
-    private void InitializePool()
-    {
-        _bulletPool = new Queue<GameObject>();
-
-        for (int i = 0; i < _initialPoolSize; i++)
-        {
-            GameObject bullet = Instantiate(_bulletPrefab);
-            bullet.GetComponent<Bullet>().Init(this);
-
-            bullet.SetActive(false);
-            bullet.transform.SetParent(_bulletContainer.transform);
-            _bulletPool.Enqueue(bullet);
-        }
-    }
-
     public GameObject GetBullet()
     {
         if (_bulletPool.Count > 0)
@@ -48,5 +33,20 @@ public class BulletPool : MonoBehaviour
     {
         bullet.SetActive(false);
         _bulletPool.Enqueue(bullet);
+    }
+
+    private void InitializePool()
+    {
+        _bulletPool = new Queue<GameObject>();
+
+        for (int i = 0; i < _initialPoolSize; i++)
+        {
+            GameObject bullet = Instantiate(_bulletPrefab);
+            bullet.GetComponent<Bullet>().Init(this);
+
+            bullet.SetActive(false);
+            bullet.transform.SetParent(_bulletContainer.transform);
+            _bulletPool.Enqueue(bullet);
+        }
     }
 }

@@ -26,7 +26,6 @@ public class MobileIKTargetMover : MonoBehaviour
         Vector3 targetDirection = _lastKnownDirection * _distanceFromPlayer;
         Vector3 targetPosition = _startPosition.position + targetDirection;
 
-        // Установка высоты и позиции
         targetPosition.y = _startPosition.position.y;
         transform.position = targetPosition;
     }

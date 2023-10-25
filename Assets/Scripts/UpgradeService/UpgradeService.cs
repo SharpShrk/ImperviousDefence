@@ -1,7 +1,5 @@
 using Agava.YandexGames;
 using Lean.Localization;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -37,11 +35,17 @@ public class UpgradeService : MonoBehaviour
         _currentTurretPresenter = turretPresenter;
     }
 
+    public int GetCostUpgrade(int level)
+    {
+        int cost = _startCost + _costForLevel * level;
+        return cost;
+    }
+
     private void TryUpdgradeDamage()
     {
         if (_currentTurretPresenter.GetLevelDamage() >= _maxLevelUpgrade)
         {
-            string message = LeanLocalization.GetTranslationText("Turret_level_max"); //νθ-υσ-ÿ
+            string message = LeanLocalization.GetTranslationText("Turret_level_max");
 
             _infoMessagePanel.OpenMessagePanel(message);
 
@@ -86,11 +90,5 @@ public class UpgradeService : MonoBehaviour
             string message = LeanLocalization.GetTranslationText("Not_enough_money_to_upgrade");
             _infoMessagePanel.OpenMessagePanel(message);
         } 
-    }
-
-    public int GetCostUpgrade(int level)
-    {
-        int cost = _startCost + _costForLevel * level;
-        return cost;
     }
 }
