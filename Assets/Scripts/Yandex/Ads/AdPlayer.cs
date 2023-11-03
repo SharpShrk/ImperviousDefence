@@ -50,8 +50,7 @@ public class AdPlayer : MonoBehaviour
 
     private void OnRewarded()
     {
-        VideoAdPlayed?.Invoke();
-        _audioResources.UnmuteAndResume();
+        VideoAdPlayed?.Invoke();        
     }
 
     private void OnClosed()

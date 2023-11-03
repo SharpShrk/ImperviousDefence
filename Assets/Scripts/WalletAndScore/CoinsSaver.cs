@@ -27,6 +27,16 @@ public class CoinsSaver : MonoBehaviour
         LoadCoins();
     }
 
+    public void SaveCoins()
+    {
+        PlayerPrefs.SetInt(COIN_KEY, _wallet.Money);
+    }
+
+    private void SaveCoins(int money)
+    {
+        PlayerPrefs.SetInt(COIN_KEY, money);
+    }
+
     private void LoadCoins()
     {
         if (PlayerPrefs.HasKey(COIN_KEY))
@@ -37,15 +47,5 @@ public class CoinsSaver : MonoBehaviour
         {
             _wallet.SetStartValue(_minStartMoneyValue);
         }
-    }
-
-    private void SaveCoins()
-    {
-        PlayerPrefs.SetInt(COIN_KEY, _wallet.Money);
-    }
-
-    private void SaveCoins(int money)
-    {
-        PlayerPrefs.SetInt(COIN_KEY, money);
     }
 }

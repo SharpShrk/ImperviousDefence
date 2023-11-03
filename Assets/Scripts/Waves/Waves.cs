@@ -20,6 +20,8 @@ public class Waves : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
+
         _currentHealth = _initialHealth;
         _currentAttack = _initialAttack;
         _currentEnemyCount = _initialEnemyCount;

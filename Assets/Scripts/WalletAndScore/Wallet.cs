@@ -4,6 +4,7 @@ using UnityEngine;
 public class Wallet : MonoBehaviour
 {
     [SerializeField] private int _startMoney;
+    [SerializeField] private CoinsSaver _coinsSaver;
 
     private int _money;
     
@@ -21,6 +22,7 @@ public class Wallet : MonoBehaviour
     {
         _money += amount;
         OnMoneyChanged?.Invoke(_money);
+        _coinsSaver.SaveCoins();
     }
 
     public bool SpendMoney(int amount)
@@ -32,6 +34,8 @@ public class Wallet : MonoBehaviour
 
         _money -= amount;
         OnMoneyChanged?.Invoke(_money);
+        _coinsSaver.SaveCoins();
+
         return true;
     }
 }

@@ -1,5 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
 
@@ -63,6 +66,11 @@ public class PlayerShooting : MonoBehaviour
 
     private void Shoot()
     {
+        if(ClickedOnButton() == true)
+        {
+            return;
+        }
+
         GameObject bullet = _bulletPool.GetBullet();
         bullet.transform.position = _gunTransform.position;
         bullet.transform.rotation = _gunTransform.rotation;
@@ -73,6 +81,27 @@ public class PlayerShooting : MonoBehaviour
 
         _canShoot = false;
         StartCoroutine(ShootingDelay());
+    }
+
+    private bool ClickedOnButton()
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.GetComponent<Button>() != null)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private IEnumerator ShootingDelay()

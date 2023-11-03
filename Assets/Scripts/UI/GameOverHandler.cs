@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public class GameOverHandler : MonoBehaviour
 {
     private const string _menuSceneName = "Menu";
-    private const int _rewardMultiplier = 2;
 
     [SerializeField] private GameObject _scorePanel;
     [SerializeField] private GameObject _bagUI;
     [SerializeField] private GameObject _upRightCornerUI;
+    [SerializeField] private GameObject _pauseButtonUI;
 
     [SerializeField] private TMP_Text _currentScore;
     [SerializeField] private TMP_Text _wavesRecord;
@@ -26,7 +26,6 @@ public class GameOverHandler : MonoBehaviour
     [SerializeField] private AdPlayer _adPlayer;
 
     private LeaderboardLoader _leaderboardLoader;
-    private int _collectedMoney;
 
     public event UnityAction<int> GameOvered;
 
@@ -50,14 +49,15 @@ public class GameOverHandler : MonoBehaviour
 
     private void InitGameOverPanel()
     {
+        Time.timeScale = 0;
         _scorePanel.SetActive(true);
         _bagUI.SetActive(false);
         _upRightCornerUI.SetActive(false);
+        _pauseButtonUI.SetActive(false);
 
         _currentScore.text = _score.ScorePoints.ToString();
         _wavesRecord.text = _waves.CurrentWave.ToString();
         _coinReward.text = _wallet.Money.ToString();
-        _collectedMoney = _wallet.Money;
 
         _leaderboardLoader = FindObjectOfType<LeaderboardLoader>();
         _leaderboardLoader.TryRunToRegisterNewMaxScore();
@@ -65,7 +65,7 @@ public class GameOverHandler : MonoBehaviour
 
     private void OnMenuButtonClick()
     {
-        GameOvered?.Invoke(_collectedMoney);
+        GameOvered?.Invoke(_wallet.Money);
         SceneManager.LoadScene(_menuSceneName);
     }
 
@@ -77,7 +77,7 @@ public class GameOverHandler : MonoBehaviour
 
     private void RewardForAds()
     {
-        _collectedMoney *= _rewardMultiplier;
-        _coinReward.text = _collectedMoney.ToString();
+        _wallet.AddMoney(_wallet.Money);
+        _coinReward.text = _wallet.Money.ToString();
     }
 }

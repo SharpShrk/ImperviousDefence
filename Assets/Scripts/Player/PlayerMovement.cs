@@ -126,6 +126,15 @@ public class Rotatable : IRotatable
 
     public void Rotate(Vector3 targetPosition)
     {
+        _multiAimConstraint.enabled = true;
+
+        if (Time.timeScale < 1)
+        {
+            _multiAimConstraint.enabled = false;
+            return;
+        }
+
+
         Vector3 direction = (targetPosition - _transform.position).normalized;
         if (direction.magnitude < 0.1f) return;
 
