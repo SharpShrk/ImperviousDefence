@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.Animations.Rigging;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,27 +14,41 @@ public class PlayerMovement : MonoBehaviour
     private IRotatable _rotatable;
     private PlayerInputHandler _inputHandler;
     private Animator _animator;
+    private GameOverChecker _gameOverChecker;
 
     private void Awake()
     {
+        EnableMultiAimConstrain();
         _animator = GetComponent<Animator>();
         _movable = new Movable(transform, _moveSpeed);
         _rotatable = new Rotatable(transform, _multiAimConstraint, _rotationSpeed, _ikRotationSpeed);
         _inputHandler = new PlayerInputHandler(_mainCamera);
+        _gameOverChecker = FindObjectOfType<GameOverChecker>();
     }
 
     private void OnEnable()
     {
         _inputHandler.Enable();
+        _gameOverChecker.GameOverEvent += DisableMultiAimConstrain;
     }
 
     private void OnDisable()
     {
         _inputHandler.Disable();
+        _gameOverChecker.GameOverEvent -= DisableMultiAimConstrain;
     }
 
     private void FixedUpdate()
     {
+        if(Time.timeScale < 1)
+        {
+            DisableMultiAimConstrain();
+        }
+        else
+        {
+            EnableMultiAimConstrain();
+        }
+
         Vector3 direction = _inputHandler.GetMoveDirection();
         Vector3 lookDirection = _inputHandler.GetLookDirection(transform.position);
 
@@ -76,6 +91,30 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void EnableMultiAimConstrain()
+    {
+        float enableWeight = 1f;
+        ChangeConstraintWeight(enableWeight);
+    }
+
+    private void DisableMultiAimConstrain()
+    {
+        float disableWeight = 0f;
+        ChangeConstraintWeight(disableWeight);
+    }
+
+    private void ChangeConstraintWeight(float newWeight)
+    {
+        int sourceIndex = 0;
+        var sourceObjects = _multiAimConstraint.data.sourceObjects;
+
+        var weightedTransform = sourceObjects[sourceIndex];
+        weightedTransform.weight = newWeight;
+
+        sourceObjects[sourceIndex] = weightedTransform;
+        _multiAimConstraint.data.sourceObjects = sourceObjects;
     }
 }
 
@@ -126,14 +165,10 @@ public class Rotatable : IRotatable
 
     public void Rotate(Vector3 targetPosition)
     {
-        _multiAimConstraint.enabled = true;
-
-        if (Time.timeScale < 1)
+        if (Time.timeScale == 0)
         {
-            _multiAimConstraint.enabled = false;
             return;
         }
-
 
         Vector3 direction = (targetPosition - _transform.position).normalized;
         if (direction.magnitude < 0.1f) return;

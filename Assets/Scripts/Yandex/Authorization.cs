@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class Authorization : MonoBehaviour
 {
     [SerializeField] private Button _autorizeButton;
+    [SerializeField] private GameObject _warningPanel;
+    [SerializeField] private GameObject _startPanel;
 
     private void Start()
     {
@@ -14,12 +16,12 @@ public class Authorization : MonoBehaviour
             HideButton();
         }
 #endif
-        _autorizeButton.onClick.AddListener(TryAuthorize);
+        _autorizeButton.onClick.AddListener(OpenWarningPanel);
     }
 
     private void OnDisable()
     {
-        _autorizeButton.onClick.RemoveListener(TryAuthorize);
+        _autorizeButton.onClick.RemoveListener(OpenWarningPanel);
     }
 
     public void TryAuthorize()
@@ -27,6 +29,12 @@ public class Authorization : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
         PlayerAccount.Authorize(OnAuthorizeSuccess, OnAuthorizeError);
 #endif
+    }
+
+    private void OpenWarningPanel()
+    {
+        _warningPanel.SetActive(true);
+        _startPanel.SetActive(false);
     }
 
     private void HideButton()
