@@ -25,7 +25,6 @@ public class ColorChangeButtonUpgrade : MonoBehaviour
     {
         if (other.GetComponent<Player>())
         {
-
             if (_changeColorCoroutine != null)
             {
                 StopCoroutine(_changeColorCoroutine);
@@ -40,7 +39,7 @@ public class ColorChangeButtonUpgrade : MonoBehaviour
     {
         if (other.GetComponent<Player>())
         {
-            if(_changeColorCoroutine != null)
+            if (_changeColorCoroutine != null)
             {
                 StopCoroutine(_changeColorCoroutine);
             }
@@ -60,7 +59,7 @@ public class ColorChangeButtonUpgrade : MonoBehaviour
             float fillPercentage = elapsedTime / _transitionDuration;
             _spriteButton.color = Color.Lerp(currentColor, _targetColor, fillPercentage);
 
-            if(Mathf.Approximately(_spriteButton.color.r, _targetColor.r) &&
+            if (Mathf.Approximately(_spriteButton.color.r, _targetColor.r) &&
                Mathf.Approximately(_spriteButton.color.g, _targetColor.g) &&
                Mathf.Approximately(_spriteButton.color.b, _targetColor.b) &&
                Mathf.Approximately(_spriteButton.color.a, _targetColor.a))

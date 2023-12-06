@@ -10,7 +10,7 @@ public class IKTargetMover : MonoBehaviour
         transform.position = new Vector3(_startPosition.position.x + _distanceFromPlayer, _startPosition.position.y, _startPosition.position.z);
     }
 
-    void Update()
+    private void Update()
     {
         UpdatePosition();
     }
@@ -27,7 +27,7 @@ public class IKTargetMover : MonoBehaviour
 
             toCursor.y = 0;
 
-            Vector3 targetPosition = _startPosition.position + toCursor.normalized * _distanceFromPlayer;
+            Vector3 targetPosition = _startPosition.position + (toCursor.normalized * _distanceFromPlayer);
 
             targetPosition.y = _startPosition.position.y;
             transform.position = targetPosition;

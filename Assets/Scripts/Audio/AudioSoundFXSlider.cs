@@ -2,7 +2,7 @@ using System;
 
 public class AudioSoundFXSlider : BaseAudioSlider
 {
-    public static event Action<float> OnSFXVolumeChanged = delegate { };
+    public static event Action<float> OnSFXVolumeChanged = volume => { };
 
     private void Start()
     {

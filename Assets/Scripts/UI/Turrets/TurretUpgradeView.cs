@@ -57,7 +57,7 @@ public class TurretUpgradeView : MonoBehaviour
 
         ActivateUpgradeMenu();
         _panelUpgrade.SetActive(false);
-        _panelPlaceTurretObject.SetActive(true);      
+        _panelPlaceTurretObject.SetActive(true);
     }
 
     public void OpenUpgradeTurretMenu(TurretPresenter turretPresenter)
@@ -119,7 +119,7 @@ public class TurretUpgradeView : MonoBehaviour
         else
         {
             string message = LeanLocalization.GetTranslationText("Not_enough_money_to_buy_turret");
-            _infoMessagePanel.OpenMessagePanel(message);            
-        } 
+            _infoMessagePanel.OpenMessagePanel(message);
+        }
     }
 }

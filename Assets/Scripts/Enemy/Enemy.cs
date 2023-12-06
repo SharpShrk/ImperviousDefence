@@ -18,9 +18,11 @@ public class Enemy : MonoBehaviour, IDamageable
     private Animator _animator;
 
     public event Action<int, int, Enemy> OnEnemyDied;
+
     public event Action OnEnemyDiedForAttackPoint;
 
     public int Health => _health;
+
     public int Damage => _damage;
 
     private void Awake()
@@ -42,7 +44,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public void Activate()
     {
         Wall targetWall = FindClosestWall();
-        _enemyAttack.SetTargetWall(targetWall);       
+        _enemyAttack.SetTargetWall(targetWall);
     }
 
     public void HideHealthBar()
@@ -58,7 +60,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
-        if(_isDied == false)
+        if (_isDied == false)
         {
             _health -= damage;
             _enemyHealthBar.UpdateHealthBar(_health, _maxHealth);
@@ -78,7 +80,7 @@ public class Enemy : MonoBehaviour, IDamageable
                 _animator.SetTrigger("isDied");
                 StartCoroutine(WaitForDieAnimationEnd());
             }
-        } 
+        }
     }
 
     private void Die()

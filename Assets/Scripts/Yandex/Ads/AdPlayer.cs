@@ -12,9 +12,9 @@ public class AdPlayer : MonoBehaviour
     private bool _adIsPlaying;
     private AudioResources _audioResources;
 
-    public bool AdIsPlaying => _adIsPlaying;
-
     public event UnityAction VideoAdPlayed;
+
+    public bool AdIsPlaying => _adIsPlaying;
 
     private void OnEnable()
     {
@@ -44,13 +44,13 @@ public class AdPlayer : MonoBehaviour
     }
 
     private void ShowInterstitialAd()
-    {        
+    {
         InterstitialAd.Show(OnPlayed, OnClosedInterstitialAd);
     }
 
     private void OnRewarded()
     {
-        VideoAdPlayed?.Invoke();        
+        VideoAdPlayed?.Invoke();
     }
 
     private void OnClosed()
@@ -69,7 +69,7 @@ public class AdPlayer : MonoBehaviour
     {
         if (value)
         {
-            _adWarningPanel.StartAdCountdown();            
+            _adWarningPanel.StartAdCountdown();
         }
     }
 

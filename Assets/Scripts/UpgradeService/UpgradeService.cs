@@ -16,6 +16,7 @@ public class UpgradeService : MonoBehaviour
     private TurretPresenter _currentTurretPresenter;
 
     public event UnityAction AttackSpeedUpgraded;
+
     public event UnityAction DamageUpgraded;
 
     private void OnEnable()
@@ -37,7 +38,7 @@ public class UpgradeService : MonoBehaviour
 
     public int GetCostUpgrade(int level)
     {
-        int cost = _startCost + _costForLevel * level;
+        int cost = _startCost + (_costForLevel * level);
         return cost;
     }
 
@@ -64,7 +65,7 @@ public class UpgradeService : MonoBehaviour
         {
             string message = LeanLocalization.GetTranslationText("Not_enough_money_to_upgrade");
             _infoMessagePanel.OpenMessagePanel(message);
-        }   
+        }
     }
 
     private void TryUpdgradeAttackSpeed()
@@ -89,6 +90,6 @@ public class UpgradeService : MonoBehaviour
         {
             string message = LeanLocalization.GetTranslationText("Not_enough_money_to_upgrade");
             _infoMessagePanel.OpenMessagePanel(message);
-        } 
+        }
     }
 }

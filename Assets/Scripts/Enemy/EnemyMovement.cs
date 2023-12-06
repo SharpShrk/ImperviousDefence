@@ -16,10 +16,11 @@ public class EnemyMovement : MonoBehaviour
     private Animator _animator;
     private bool _isEnougthAttackPoint = false;
 
-    public Transform TargetAttackPoint => _targetAttackPoint;
-    public bool IsMoving => _isMoving;
-
     public event Action MovementStoppedAction;
+
+    public Transform TargetAttackPoint => _targetAttackPoint;
+
+    public bool IsMoving => _isMoving;
 
     private void Awake()
     {

@@ -4,16 +4,22 @@ using UnityEngine.Events;
 
 public class Wall : MonoBehaviour
 {
-    public List<Transform> AttackPoints = new();
-    
+    [SerializeField] private List<Transform> _attackPoints = new ();
+
     private BrickPool _brickPool;
-    private List<GameObject> _wallBlocks = new List<GameObject>();
+    private List<GameObject> _wallBlocks = new ();
 
     public event UnityAction WallDestroed;
 
-    public List<GameObject> DestroyedBricks { get; private set; } = new List<GameObject>();
+    public List<GameObject> DestroyedBricks { get; private set; } = new ();
 
     public int RequiredBrickCount => _wallBlocks.Count;
+
+    public List<Transform> AttackPoints
+    {
+        get => _attackPoints;
+        private set => _attackPoints = value;
+    }
 
     private void Awake()
     {
@@ -33,7 +39,7 @@ public class Wall : MonoBehaviour
 
             if (maxIndexBlock.activeInHierarchy)
             {
-                maxIndexBlock.GetComponent<Brick>().TakeDamage(damage);                
+                maxIndexBlock.GetComponent<Brick>().TakeDamage(damage);
             }
         }
         else
@@ -69,10 +75,10 @@ public class Wall : MonoBehaviour
         }
 
         return maxIndexBlock;
-    }   
+    }
 
     private void EjectionDuplicateBrick(Brick brick)
-    {        
+    {
         GameObject duplicateBrick = _brickPool.GetBrick();
         duplicateBrick.transform.position = brick.gameObject.transform.position;
         duplicateBrick.GetComponent<Brick>().EjectionDuplicate();

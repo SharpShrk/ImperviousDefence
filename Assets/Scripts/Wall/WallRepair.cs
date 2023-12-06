@@ -68,7 +68,7 @@ public class WallRepair : MonoBehaviour
     {
         float elapsedTime = 0.0f;
 
-        Vector3 spawnHeight = new(0, 0.5f, 0);        
+        Vector3 spawnHeight = new (0, 0.5f, 0);
         Vector3 startPosition = brick.transform.position + spawnHeight;
         Vector3 endPosition = brick.transform.position;
 

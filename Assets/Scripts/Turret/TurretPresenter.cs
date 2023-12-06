@@ -19,25 +19,12 @@ public class TurretPresenter : MonoBehaviour
         _colorChanger.ButtonFullPressed -= OpenShop;
     }
 
-    private void OpenShop()
-    {
-        if(_turret.IsPlaced)
-        {           
-            _upgradeMenu.OpenUpgradeTurretMenu(this);
-            _upgradeService.SetCurrentTurretUpdates(this);
-        }
-        else
-        {
-            _upgradeMenu.OpenBuyTurretMenu(this);
-        }
-    }
-
     public void TurretPlace()
     {
         if (_turret.IsPlaced == true)
             return;
 
-        _turret.PlaceTurret();        
+        _turret.PlaceTurret();
     }
 
     public int GetLevelAttackSpeed()
@@ -58,5 +45,18 @@ public class TurretPresenter : MonoBehaviour
     public void UpgradeDamage()
     {
         _turretDamage.Upgrade();
+    }
+
+    private void OpenShop()
+    {
+        if (_turret.IsPlaced)
+        {
+            _upgradeMenu.OpenUpgradeTurretMenu(this);
+            _upgradeService.SetCurrentTurretUpdates(this);
+        }
+        else
+        {
+            _upgradeMenu.OpenBuyTurretMenu(this);
+        }
     }
 }

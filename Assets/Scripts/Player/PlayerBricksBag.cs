@@ -7,11 +7,13 @@ public class PlayerBricksBag : MonoBehaviour
 
     private int _currentBrickCount = 0;
 
-    public int AvailableCapacity => _maxBrickCapacity - _currentBrickCount;
-    public int CurrentBrickCount => _currentBrickCount;
-    public int MaxBrickCapacity => _maxBrickCapacity;
-
     public event Action<int> OnBrickCountChanged;
+
+    public int AvailableCapacity => _maxBrickCapacity - _currentBrickCount;
+
+    public int CurrentBrickCount => _currentBrickCount;
+
+    public int MaxBrickCapacity => _maxBrickCapacity;
 
     public bool AddBricks(int count)
     {

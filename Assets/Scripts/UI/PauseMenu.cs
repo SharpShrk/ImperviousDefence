@@ -57,7 +57,7 @@ public class PauseMenu : MonoBehaviour
 
     private void HideGUICanvas()
     {
-        foreach(var canvas in _guiCanvases)
+        foreach (var canvas in _guiCanvases)
         {
             canvas.enabled = false;
         }

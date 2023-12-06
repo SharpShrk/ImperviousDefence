@@ -14,6 +14,7 @@ public class BricksStorage : MonoBehaviour
     private List<GameObject> _bricks = new List<GameObject>();
 
     public int BrickCount { get => _currentBrickIndex; }
+
     public bool IsStorageFull => _isStorageFull;
 
     public void AddBrick(GameObject brickPrefab, Vector3 brickSize)
@@ -38,7 +39,7 @@ public class BricksStorage : MonoBehaviour
 
         _currentBrickIndex++;
     }
-    
+
     public void RemoveBricks(int count)
     {
         if (_currentBrickIndex <= 0)
@@ -56,7 +57,7 @@ public class BricksStorage : MonoBehaviour
             GameObject brickToRemove = _bricks[_currentBrickIndex - 1];
             _bricks.Remove(brickToRemove);
             Destroy(brickToRemove);
-            _currentBrickIndex--;            
+            _currentBrickIndex--;
         }
 
         _isStorageFull = false;

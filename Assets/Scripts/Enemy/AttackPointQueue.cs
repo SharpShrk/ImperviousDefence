@@ -84,7 +84,7 @@ public class AttackPointQueue : MonoBehaviour
     private List<WallAttackPoint> GetAllAvailableAttackPoints()
     {
         Wall[] walls = FindObjectsOfType<Wall>();
-        List<WallAttackPoint> availableAttackPoints = new();
+        List<WallAttackPoint> availableAttackPoints = new ();
 
         foreach (var wall in walls)
         {

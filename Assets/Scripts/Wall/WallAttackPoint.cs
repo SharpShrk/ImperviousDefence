@@ -53,5 +53,5 @@ public class WallAttackPoint : MonoBehaviour
         UnsubscribeFromEvents();
         _attackPointQueue.ReleaseAttackPoint(this);
         _occupyingEnemy = null;
-    }    
+    }
 }

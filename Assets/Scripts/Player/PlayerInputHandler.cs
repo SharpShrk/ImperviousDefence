@@ -2,29 +2,30 @@ using UnityEngine;
 
 public class PlayerInputHandler
 {
-    public InputSystem InputActions;
-
+    private InputSystem _inputActions;
     private Vector2 _moveInput;
     private Camera _mainCamera;
     private string _groundLabel = "Ground";
 
+    public InputSystem InputActions => _inputActions;
+
     public PlayerInputHandler(Camera mainCamera)
     {
-        InputActions = new InputSystem();
+        _inputActions = new InputSystem();
         _mainCamera = mainCamera;
 
-        InputActions.Player.Move.performed += ctx => _moveInput = ctx.ReadValue<Vector2>();
-        InputActions.Player.Move.canceled += ctx => _moveInput = Vector2.zero;
+        _inputActions.Player.Move.performed += ctx => _moveInput = ctx.ReadValue<Vector2>();
+        _inputActions.Player.Move.canceled += ctx => _moveInput = Vector2.zero;
     }
 
     public void Enable()
     {
-        InputActions.Enable();
+        _inputActions.Enable();
     }
 
     public void Disable()
     {
-        InputActions.Disable();
+        _inputActions.Disable();
     }
 
     public Vector3 GetMoveDirection()
@@ -39,7 +40,7 @@ public class PlayerInputHandler
 
     public Vector3 GetMouseWorldPosition()
     {
-        Vector2 screenPosition = InputActions.Player.MousePosition.ReadValue<Vector2>();
+        Vector2 screenPosition = _inputActions.Player.MousePosition.ReadValue<Vector2>();
         Ray ray = _mainCamera.ScreenPointToRay(screenPosition);
         RaycastHit hit;
 

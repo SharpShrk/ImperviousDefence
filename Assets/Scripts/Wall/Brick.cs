@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class Brick : MonoBehaviour
 {
-    [SerializeField] private Vector3 _size = new Vector3();
+    [SerializeField] private Vector3 _size;
     [SerializeField] private int _startHealthPoints;
     [SerializeField] private float _ejectionSpeed;
     [SerializeField] private float _rotationSpeed;
@@ -15,7 +15,9 @@ public class Brick : MonoBehaviour
     private Wall _wall;
 
     public int BrickIndex { get; private set; }
+
     public Vector3 InitialPosition { get; private set; }
+
     public Vector3 BrickSize => _size;
 
     private void Start()
@@ -54,20 +56,20 @@ public class Brick : MonoBehaviour
     }
 
     public void EjectionDuplicate()
-    {        
+    {
         Vector3 randomDirection = Random.insideUnitSphere;
         StartCoroutine(Ejection(randomDirection));
     }
 
     private void DestroyBrick()
-    {       
+    {
         _wall.BrickDestroy(this);
         gameObject.SetActive(false);
     }
 
     private IEnumerator Ejection(Vector3 direction)
     {
-        float elapsedTime = 0f;        
+        float elapsedTime = 0f;
 
         while (elapsedTime < _deactivationDelay)
         {

@@ -22,6 +22,6 @@ public class BagBricksUI : MonoBehaviour
 
     private void SetTextValue(int currentValue)
     {
-        _bagUIText.text = (currentValue.ToString() + " / " + _maxBrickCapacity.ToString());
+        _bagUIText.text = currentValue.ToString() + " / " + _maxBrickCapacity.ToString();
     }
 }

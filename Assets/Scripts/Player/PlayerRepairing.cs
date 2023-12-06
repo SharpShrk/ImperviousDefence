@@ -17,7 +17,7 @@ public class PlayerRepairing : MonoBehaviour
 
         if (_bricksBag.RemoveBricks(repairBricks))
         {
-            _currentWallRepair.Repair(repairBricks, unusedBricks => {_bricksBag.AddBricks(unusedBricks);});
+            _currentWallRepair.Repair(repairBricks, unusedBricks => { _bricksBag.AddBricks(unusedBricks); } );
         }
     }
 

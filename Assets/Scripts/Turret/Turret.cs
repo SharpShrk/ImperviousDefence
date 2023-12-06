@@ -14,11 +14,12 @@ public class Turret : MonoBehaviour
     private GameObject _target;
     private float _currentAttackCooldown;
     private float _damage;
+    private float _rotationSpeed = 500f;
 
     public bool IsPlaced { get; private set; }
 
     private void Start()
-    {              
+    {
         IsPlaced = false;
         _damage = _startDamage;
         _currentAttackCooldown = _attackCooldown;
@@ -28,9 +29,10 @@ public class Turret : MonoBehaviour
     {
         _bulletPool = bulletPool;
     }
+
     public void PlaceTurret()
     {
-        IsPlaced = true;  
+        IsPlaced = true;
         gameObject.SetActive(true);
         StartCoroutine(Attack());
     }
@@ -72,8 +74,6 @@ public class Turret : MonoBehaviour
 
     private void RotationGun(GameObject target)
     {
-        float _rotationSpeed = 500f;
-
         Vector3 targetDirection = target.transform.position - _rotatingPlatform.transform.position;
         targetDirection.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
@@ -94,8 +94,8 @@ public class Turret : MonoBehaviour
     }
 
     private IEnumerator Attack()
-    {       
-        while(true)
+    {
+        while (true)
         {
             var attackCooldown = new WaitForSeconds(_currentAttackCooldown);
             GameObject target = SearchAttackTarget();
@@ -117,6 +117,6 @@ public class Turret : MonoBehaviour
         bullet.transform.rotation = _shootPoint.rotation;
 
         BulletTurret bulletScript = bullet.GetComponent<BulletTurret>();
-        bulletScript.SetDamage((int)(_damage));
+        bulletScript.SetDamage((int)_damage);
     }
 }

@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
     {
         _enemyPool.InitializeEnemyPool();
         _enemySpawnCoroutine = StartCoroutine(SpawnWaves());
-        _activeEnemies = _enemyPool.GetCountActiveEnemies();       
+        _activeEnemies = _enemyPool.GetCountActiveEnemies();
     }
 
     private void CheckSpawnedEnemy()
@@ -103,7 +103,7 @@ public class EnemySpawner : MonoBehaviour
     private void GameOver()
     {
         _gameOver = true;
-    }    
+    }
 
     private void OnDrawGizmos()
     {

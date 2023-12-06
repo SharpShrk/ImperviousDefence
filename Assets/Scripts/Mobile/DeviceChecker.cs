@@ -8,7 +8,7 @@ public class DeviceChecker : MonoBehaviour
     [SerializeField] private MonoBehaviour _desktopIKTargetMover;
     [SerializeField] private MonoBehaviour _mobileIKTargetMover;
     [SerializeField] private MonoBehaviour _desktopPlayerShooting;
-    [SerializeField] private MonoBehaviour _mobilePlayerShooting;    
+    [SerializeField] private MonoBehaviour _mobilePlayerShooting;
     [SerializeField] private GameObject _sticksUI;
 
     private void Start()

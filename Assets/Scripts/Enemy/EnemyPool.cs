@@ -49,6 +49,6 @@ public class EnemyPool : MonoBehaviour
 
     public int GetCountActiveEnemies()
     {
-        return _enemiesPool.FindAll(enemy => enemy.activeSelf).Count; ;
+        return _enemiesPool.FindAll(enemy => enemy.activeSelf).Count;
     }
 }

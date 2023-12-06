@@ -5,7 +5,7 @@ public class PlayerBrickPicker : MonoBehaviour
     [SerializeField] private BricksStorage _bricksStorage;
     [SerializeField] private PlayerBricksBag _brickBag;
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<ImportZone>() != null)
         {

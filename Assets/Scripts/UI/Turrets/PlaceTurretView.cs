@@ -7,11 +7,11 @@ public class PlaceTurretView : MonoBehaviour
 {
     [SerializeField] private Button _buttonUpgrade;
     [SerializeField] private TMP_Text _costText;
-    [SerializeField] private int _costValue;  
-    
-    public int CostValue => _costValue;
+    [SerializeField] private int _costValue;
 
     public event UnityAction ButtonTurretBuyPressed;
+
+    public int CostValue => _costValue;
 
     private void OnEnable()
     {

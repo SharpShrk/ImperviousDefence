@@ -12,7 +12,7 @@ public abstract class TurretStats : MonoBehaviour
     private void OnEnable()
     {
         Value = StartValue;
-        Level = 0;       
+        Level = 0;
     }
 
     public abstract void Upgrade();
@@ -26,7 +26,4 @@ public abstract class TurretStats : MonoBehaviour
     {
         return Level;
     }
-
-    
-
 }

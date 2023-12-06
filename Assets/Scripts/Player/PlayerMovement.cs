@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Animations.Rigging;
 
 public class PlayerMovement : MonoBehaviour
@@ -40,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Time.timeScale < 1)
+        if (Time.timeScale < 1)
         {
             DisableMultiAimConstrain();
         }
@@ -56,8 +55,7 @@ public class PlayerMovement : MonoBehaviour
         _rotatable.Rotate(_inputHandler.GetMouseWorldPosition());
 
         SetRunningAnimations(direction, lookDirection);
-        
-}
+    }
 
     private void SetRunningAnimations(Vector3 direction, Vector3 lookDirection)
     {
@@ -117,77 +115,3 @@ public class PlayerMovement : MonoBehaviour
         _multiAimConstraint.data.sourceObjects = sourceObjects;
     }
 }
-
-public interface IMovable
-{
-    void Move(Vector3 direction);
-}
-
-public interface IRotatable
-{
-    void Rotate(Vector3 targetPosition);
-}
-
-public class Movable : IMovable
-{
-    private readonly Transform _transform;
-    private readonly float _moveSpeed;
-
-    public Movable(Transform transform, float moveSpeed)
-    {
-        _transform = transform;
-        _moveSpeed = moveSpeed;
-    }
-
-    public void Move(Vector3 direction)
-    {
-        direction.Normalize();
-        float originalY = _transform.position.y;
-        _transform.position += direction * _moveSpeed * Time.deltaTime;
-        _transform.position = new Vector3(_transform.position.x, originalY, _transform.position.z);
-    }
-}
-
-public class Rotatable : IRotatable
-{
-    private readonly Transform _transform;
-    private readonly MultiAimConstraint _multiAimConstraint;
-    private readonly float _rotationSpeed;
-    private readonly float _ikRotationSpeed;
-
-    public Rotatable(Transform transform, MultiAimConstraint multiAimConstraint, float rotationSpeed, float ikRotationSpeed)
-    {
-        _transform = transform;
-        _multiAimConstraint = multiAimConstraint;
-        _rotationSpeed = rotationSpeed;
-        _ikRotationSpeed = ikRotationSpeed;
-    }
-
-    public void Rotate(Vector3 targetPosition)
-    {
-        if (Time.timeScale == 0)
-        {
-            return;
-        }
-
-        Vector3 direction = (targetPosition - _transform.position).normalized;
-        if (direction.magnitude < 0.1f) return;
-
-        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-        float angleDifference = Quaternion.Angle(_transform.rotation, targetRotation);
-
-        // ≈сли угол меньше пороговых значений, используем IK
-        if (Mathf.Abs(angleDifference) < 65f)
-        {
-            _multiAimConstraint.weight = Mathf.Lerp(_multiAimConstraint.weight, 1f, Time.deltaTime * _ikRotationSpeed);
-        }
-        else
-        {
-            // »наче доворачиваем всей моделью
-            _multiAimConstraint.weight = Mathf.Lerp(_multiAimConstraint.weight, 0f, Time.deltaTime * _ikRotationSpeed);
-            _transform.rotation = Quaternion.RotateTowards(_transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
-        }
-    }
-}
-
-

@@ -38,7 +38,7 @@ public class MainMenu : MonoBehaviour
         else
         {
             _sceneSwitcher.SwitchScene(_gameScene);
-        }    
+        }
     }
 
     private void OnOptionClick()

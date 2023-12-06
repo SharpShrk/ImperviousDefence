@@ -17,7 +17,7 @@ public class CameraShake : MonoBehaviour
 
     public void Shake()
     {
-        if(Time.timeScale == 1)
+        if (Time.timeScale == 1)
         {
             StartCoroutine(ShakeCamera());
         }

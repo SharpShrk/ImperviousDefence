@@ -9,7 +9,7 @@ public class GameOverChecker : MonoBehaviour
 
     private void OnEnable()
     {
-        foreach(Wall wall in _walls)
+        foreach (Wall wall in _walls)
         {
             wall.WallDestroed += GameOver;
         }
@@ -28,5 +28,4 @@ public class GameOverChecker : MonoBehaviour
         GameOverEvent?.Invoke();
         Time.timeScale = 0;
     }
-
 }

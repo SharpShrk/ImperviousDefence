@@ -32,11 +32,11 @@ public class InfoMessagePanel : MonoBehaviour
         if (Time.timeScale == 0)
         {
             _isPaused = true;
-        }      
+        }
         else
         {
             Time.timeScale = 0;
-        } 
+        }
     }
 
     private void OnCloseButtonClick()

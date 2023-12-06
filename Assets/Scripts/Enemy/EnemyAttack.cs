@@ -32,7 +32,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnDisable()
     {
-        _movement.MovementStoppedAction -= StartAttackCoroutine;    
+        _movement.MovementStoppedAction -= StartAttackCoroutine;
     }
 
     public void SetTargetWall(Wall targetWall)

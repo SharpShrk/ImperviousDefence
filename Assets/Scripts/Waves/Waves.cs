@@ -3,8 +3,6 @@ using UnityEngine.Events;
 
 public class Waves : MonoBehaviour
 {
-    public int CurrentWave { get; private set; } = 0;
-
     [SerializeField] private int _initialHealth = 100;
     [SerializeField] private int _initialAttack = 1;
     [SerializeField] private int _initialEnemyCount = 4;
@@ -17,6 +15,8 @@ public class Waves : MonoBehaviour
     private int _currentEnemyCount;
 
     public event UnityAction<int> OnWaveChanged;
+
+    public int CurrentWave { get; private set; } = 0;
 
     private void Awake()
     {

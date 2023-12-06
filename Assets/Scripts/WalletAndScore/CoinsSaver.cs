@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CoinsSaver : MonoBehaviour
 {
-    private const string COIN_KEY = "Coins";
+    private const string CoinKey = "Coins";
 
     [SerializeField] private Wallet _wallet;
     [SerializeField] private EnemySpawner _enemySpawner;
@@ -29,19 +29,19 @@ public class CoinsSaver : MonoBehaviour
 
     public void SaveCoins()
     {
-        PlayerPrefs.SetInt(COIN_KEY, _wallet.Money);
+        PlayerPrefs.SetInt(CoinKey, _wallet.Money);
     }
 
     private void SaveCoins(int money)
     {
-        PlayerPrefs.SetInt(COIN_KEY, money);
+        PlayerPrefs.SetInt(CoinKey, money);
     }
 
     private void LoadCoins()
     {
-        if (PlayerPrefs.HasKey(COIN_KEY))
+        if (PlayerPrefs.HasKey(CoinKey))
         {
-            _wallet.SetStartValue(PlayerPrefs.GetInt(COIN_KEY));
+            _wallet.SetStartValue(PlayerPrefs.GetInt(CoinKey));
         }
         else
         {

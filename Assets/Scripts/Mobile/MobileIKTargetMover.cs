@@ -9,7 +9,7 @@ public class MobileIKTargetMover : MonoBehaviour
 
     private Vector3 _lastKnownDirection;
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         UpdatePosition();
     }

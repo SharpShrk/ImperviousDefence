@@ -2,7 +2,8 @@ using System;
 
 public class AudioMusicSlider : BaseAudioSlider
 {
-    public static event Action<float> OnMusicVolumeChanged = delegate { };
+    public static event Action<float> OnMusicVolumeChanged = volume => { };
+
 
     private void Start()
     {

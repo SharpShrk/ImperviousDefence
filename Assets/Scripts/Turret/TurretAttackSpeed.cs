@@ -12,7 +12,7 @@ public class TurretAttackSpeed : TurretStats
 
     public override void Upgrade()
     {
-        Value = 1 - Level * UpdateValue;
+        Value = 1 - (Level * UpdateValue);
         Level++;
 
         _turret.SetAttackSpeed(Value);

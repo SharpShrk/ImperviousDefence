@@ -11,7 +11,7 @@ public abstract class TurretButtonUpgrade : MonoBehaviour
 
     protected void OnEnable()
     {
-        ButtonUpgrade.onClick.AddListener(OnButtonClick);        
+        ButtonUpgrade.onClick.AddListener(OnButtonClick);
     }
 
     protected void OnDisable()
@@ -20,7 +20,7 @@ public abstract class TurretButtonUpgrade : MonoBehaviour
     }
 
     public void SetCostValue(int value)
-    {        
+    {
         CostText.text = value.ToString();
     }
 
@@ -29,15 +29,15 @@ public abstract class TurretButtonUpgrade : MonoBehaviour
         LevelText.text = value.ToString();
     }
 
+    private void DeactivateUpgradeMenu()
+    {
+        UpgradePanel.SetActive(false);
+    }
+
     protected abstract void OnButtonClick();
 
     protected void ActivateUpgradeMenu()
     {
         UpgradePanel.SetActive(true);
-    }
-
-    private void DeactivateUpgradeMenu()
-    {
-        UpgradePanel.SetActive(false);
     }
 }

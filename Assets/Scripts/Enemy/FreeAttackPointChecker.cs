@@ -4,7 +4,7 @@ using UnityEngine;
 public class FreeAttackPointChecker : MonoBehaviour
 {
     private Wall[] _walls;
-    private List<WallAttackPoint> _attackPoints = new();
+    private List<WallAttackPoint> _attackPoints = new ();
     private bool _isAllAttackPointsOccupied;
 
     private void Start()
@@ -15,7 +15,7 @@ public class FreeAttackPointChecker : MonoBehaviour
 
     public bool CheckAttackPoints(int countAliveEnemies)
     {
-        if( _attackPoints.Count == countAliveEnemies)
+        if (_attackPoints.Count == countAliveEnemies)
         {
             _isAllAttackPointsOccupied = true;
         }
@@ -33,7 +33,7 @@ public class FreeAttackPointChecker : MonoBehaviour
 
         foreach (var wall in _walls)
         {
-            for(int i = 0; i < wall.AttackPoints.Count; i++)
+            for (int i = 0; i < wall.AttackPoints.Count; i++)
             {
                 _attackPoints.Add(wall.AttackPoints[i].GetComponent<WallAttackPoint>());
             }

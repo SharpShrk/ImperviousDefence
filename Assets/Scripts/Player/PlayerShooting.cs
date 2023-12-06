@@ -66,7 +66,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void Shoot()
     {
-        if(ClickedOnButton() == true)
+        if (ClickedOnButton() == true)
         {
             return;
         }
@@ -87,7 +87,7 @@ public class PlayerShooting : MonoBehaviour
     {
         PointerEventData pointerData = new PointerEventData(EventSystem.current)
         {
-            position = Input.mousePosition
+            position = Input.mousePosition,
         };
 
         List<RaycastResult> results = new List<RaycastResult>();

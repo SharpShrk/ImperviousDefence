@@ -43,16 +43,18 @@ public class LeaderboardLoader : MonoBehaviour
     {
         _score = FindObjectOfType<Score>();
 
-        Leaderboard.GetPlayerEntry(_leaderboardName, result =>
-        {
-            if (_score.ScorePoints > result.score)
+        Leaderboard.GetPlayerEntry(_leaderboardName, 
+            result =>
             {
-                Leaderboard.SetScore(_leaderboardName, _score.ScorePoints);
-            }
-        }, errorMessage =>
-        {
-            Debug.LogError($"Error getting player entry: {errorMessage}");
-        });
+                if (_score.ScorePoints > result.score)
+                {
+                    Leaderboard.SetScore(_leaderboardName, _score.ScorePoints);
+                }
+            }, 
+            errorMessage =>
+            {
+                Debug.LogError($"Error getting player entry: {errorMessage}");
+            });
     }
 
     private void DisableAllRecords()
@@ -108,7 +110,7 @@ public class LeaderboardLoader : MonoBehaviour
             });
 
             LoadPlayerScore();
-        }       
+        }
     }
 
     private void LoadPlayerScore()

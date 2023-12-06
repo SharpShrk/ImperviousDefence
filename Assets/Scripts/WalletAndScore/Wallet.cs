@@ -7,7 +7,7 @@ public class Wallet : MonoBehaviour
     [SerializeField] private CoinsSaver _coinsSaver;
 
     private int _money;
-    
+
     public event Action<int> OnMoneyChanged;
 
     public int Money => _money;
@@ -29,7 +29,7 @@ public class Wallet : MonoBehaviour
     {
         if (_money < amount)
         {
-            return false; 
+            return false;
         }
 
         _money -= amount;

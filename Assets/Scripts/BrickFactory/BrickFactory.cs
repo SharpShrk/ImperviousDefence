@@ -59,7 +59,7 @@ public class BrickFactory : MonoBehaviour
                     _bricksStorage.AddBrick(_brickPrefab, _brickSize);
                 }
             }
-            
+
             _animator.speed = 0;
             _audioSource.Stop();
 

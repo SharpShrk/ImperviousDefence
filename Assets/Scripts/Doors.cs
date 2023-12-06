@@ -25,6 +25,7 @@ public class Doors : MonoBehaviour
             {
                 StopCoroutine(_currentCoroutine);
             }
+
             _currentCoroutine = StartCoroutine(MoveGate(_gateTransform.position, _targetPosition));
         }
     }
@@ -37,6 +38,7 @@ public class Doors : MonoBehaviour
             {
                 StopCoroutine(_currentCoroutine);
             }
+
             _currentCoroutine = StartCoroutine(MoveGate(_gateTransform.position, _initialPosition));
         }
     }
@@ -50,6 +52,7 @@ public class Doors : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
         _gateTransform.position = endPosition;
     }
 }
