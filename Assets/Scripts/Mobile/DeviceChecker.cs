@@ -1,18 +1,20 @@
 using Agava.WebUtility;
 using UnityEngine;
 
-public class DeviceChecker : MonoBehaviour
+namespace Mobile
 {
-    [SerializeField] private MonoBehaviour _desktopController;
-    [SerializeField] private MonoBehaviour _mobileController;
-    [SerializeField] private MonoBehaviour _desktopIKTargetMover;
-    [SerializeField] private MonoBehaviour _mobileIKTargetMover;
-    [SerializeField] private MonoBehaviour _desktopPlayerShooting;
-    [SerializeField] private MonoBehaviour _mobilePlayerShooting;
-    [SerializeField] private GameObject _sticksUI;
-
-    private void Start()
+    public class DeviceChecker : MonoBehaviour
     {
+        [SerializeField] private MonoBehaviour _desktopController;
+        [SerializeField] private MonoBehaviour _mobileController;
+        [SerializeField] private MonoBehaviour _desktopIKTargetMover;
+        [SerializeField] private MonoBehaviour _mobileIKTargetMover;
+        [SerializeField] private MonoBehaviour _desktopPlayerShooting;
+        [SerializeField] private MonoBehaviour _mobilePlayerShooting;
+        [SerializeField] private GameObject _sticksUI;
+
+        private void Start()
+        {
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (Device.IsMobile)
         {
@@ -41,5 +43,6 @@ public class DeviceChecker : MonoBehaviour
             _sticksUI.SetActive(false);
         }
 #endif
+        }
     }
 }

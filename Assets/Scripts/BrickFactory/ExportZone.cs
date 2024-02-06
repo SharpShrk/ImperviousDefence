@@ -1,12 +1,16 @@
 using UnityEngine;
+using Walls;
 
-public class ExportZone : MonoBehaviour
+namespace BrickFactory
 {
-    [SerializeField] private Wall _wall;
-
-    public WallRepair GetWallRepairComponent()
+    public class ExportZone : MonoBehaviour
     {
-        WallRepair wallRepair = _wall.GetComponent<WallRepair>();
-        return wallRepair;
+        [SerializeField] private Wall _wall;
+
+        public WallRepair GetWallRepairComponent()
+        {
+            WallRepair wallRepair = _wall.GetComponent<WallRepair>();
+            return wallRepair;
+        }
     }
 }

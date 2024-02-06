@@ -1,17 +1,20 @@
 using System;
 
-public class AudioSoundFXSlider : BaseAudioSlider
+namespace Audio
 {
-    public static event Action<float> OnSFXVolumeChanged = volume => { };
-
-    private void Start()
+    public class AudioSoundFXSlider : BaseAudioSlider
     {
-        AudioResources audioResources = FindObjectOfType<AudioResources>();
-        _slider.value = audioResources.GetVolume(FxVolumeGroup);
-    }
+        public static event Action<float> OnSFXVolumeChanged = volume => { };
 
-    protected override void OnValueChanged(float value)
-    {
-        OnSFXVolumeChanged.Invoke(value);
+        private void Start()
+        {
+            VolumeHandler audioResources = FindObjectOfType<VolumeHandler>();
+            _slider.value = audioResources.GetVolume(FxVolumeGroup);
+        }
+
+        protected override void OnValueChanged(float value)
+        {
+            OnSFXVolumeChanged.Invoke(value);
+        }
     }
 }

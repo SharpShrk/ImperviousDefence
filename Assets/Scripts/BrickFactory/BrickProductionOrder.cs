@@ -2,72 +2,77 @@ using Agava.YandexGames;
 using Lean.Localization;
 using UnityEngine;
 using UnityEngine.UI;
+using UserInterface;
+using WalletAndScore;
 
-public class BrickProductionOrder : MonoBehaviour
+namespace BrickFactory
 {
-    [SerializeField] private ButtonControlProdaction _buttonControlProdaction;
-    [SerializeField] private GameObject _productionPanel;
-    [SerializeField] private Toggle _toggle;
-    [SerializeField] private Wallet _wallet;
-    [SerializeField] private BrickFactory _brickFactory;
-    [SerializeField] private InfoMessagePanel _infoPanel;
-    [SerializeField] private int _costProductionBricks;
-    [SerializeField] private int _valueBricks;
-
-    private bool _isProductionPanelDisable = false;
-    private ProductionPanel _productionPanelScript;
-
-    private void OnEnable()
+    public class BrickProductionOrder : MonoBehaviour
     {
-        _buttonControlProdaction.ButtonPressed += OpenProductionPanel;
-        _toggle.isOn = false;
-        _toggle.onValueChanged.AddListener(OnToggleValueChanged);
-        _productionPanelScript = _productionPanel.transform.parent.GetComponent<ProductionPanel>();
-        _productionPanelScript.OnButtonConfirmProductionClicked += HandleConfirmProduction;
-    }
+        [SerializeField] private ButtonControlProdaction _buttonControlProdaction;
+        [SerializeField] private GameObject _productionPanel;
+        [SerializeField] private Toggle _toggle;
+        [SerializeField] private Wallet _wallet;
+        [SerializeField] private BrickFactory _brickFactory;
+        [SerializeField] private InfoMessagePanel _infoPanel;
+        [SerializeField] private int _costProductionBricks;
+        [SerializeField] private int _valueBricks;
 
-    private void OnDisable()
-    {
-        _buttonControlProdaction.ButtonPressed -= OpenProductionPanel;
-        _toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
-        _productionPanelScript.OnButtonConfirmProductionClicked -= HandleConfirmProduction;
-    }
+        private bool _isProductionPanelDisable = false;
+        private ProductionPanel _productionPanelScript;
 
-    private void OpenProductionPanel()
-    {
-        if (_isProductionPanelDisable == false)
+        private void OnEnable()
         {
-            Time.timeScale = 0;
-            _productionPanel.SetActive(true);
+            _buttonControlProdaction.ButtonPressed += OnButtonPressedOpenProductionPanel;
+            _toggle.isOn = false;
+            _toggle.onValueChanged.AddListener(OnToggleValueChanged);
+            _productionPanelScript = _productionPanel.transform.parent.GetComponent<ProductionPanel>();
+            _productionPanelScript.OnButtonConfirmProductionClick += OnButtonConfirmProductionClicked;
         }
-        else
+
+        private void OnDisable()
         {
-            HandleConfirmProduction();
+            _buttonControlProdaction.ButtonPressed -= OnButtonPressedOpenProductionPanel;
+            _toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
+            _productionPanelScript.OnButtonConfirmProductionClick -= OnButtonConfirmProductionClicked;
         }
-    }
 
-    private void CloseProductionPanel()
-    {
-        Time.timeScale = 1;
-        _productionPanel.SetActive(false);
-    }
-
-    private void OnToggleValueChanged(bool isOn)
-    {
-        _isProductionPanelDisable = isOn;
-    }
-
-    private void HandleConfirmProduction()
-    {
-        if (_wallet.SpendMoney(_costProductionBricks))
+        private void OnButtonPressedOpenProductionPanel()
         {
-            _brickFactory.AddToProductionQueue(_valueBricks);
-            CloseProductionPanel();
+            if (_isProductionPanelDisable == false)
+            {
+                Time.timeScale = 0;
+                _productionPanel.SetActive(true);
+            }
+            else
+            {
+                OnButtonConfirmProductionClicked();
+            }
         }
-        else
+
+        private void CloseProductionPanel()
         {
-            string message = LeanLocalization.GetTranslationText("Not_enough_money");
-            _infoPanel.OpenMessagePanel(message);
+            Time.timeScale = 1;
+            _productionPanel.SetActive(false);
+        }
+
+        private void OnToggleValueChanged(bool isOn)
+        {
+            _isProductionPanelDisable = isOn;
+        }
+
+        private void OnButtonConfirmProductionClicked()
+        {
+            if (_wallet.SpendMoney(_costProductionBricks))
+            {
+                _brickFactory.AddToProductionQueue(_valueBricks);
+                CloseProductionPanel();
+            }
+            else
+            {
+                string message = LeanLocalization.GetTranslationText("Not_enough_money");
+                _infoPanel.OpenMessagePanel(message);
+            }
         }
     }
 }

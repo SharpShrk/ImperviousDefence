@@ -1,46 +1,49 @@
 using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.UI;
+using Yandex;
 
-public class LeaderboardWarning : MonoBehaviour
+namespace LeaderBoard
 {
-    [SerializeField] private Button _authorizeButton;
-    [SerializeField] private Button _cancelButton;
-    [SerializeField] private Button _rankButton;
-    [SerializeField] private GameObject _warningPanel;
-    [SerializeField] private GameObject _startPanel;
-    [SerializeField] private GameObject _leaderboardPanel;
-    [SerializeField] private Authorization _authorization;
-
-    private void OnEnable()
+    public class LeaderboardWarning : MonoBehaviour
     {
-        _warningPanel.SetActive(false);
-        _authorizeButton.onClick.AddListener(OnButtonAuthorizeClick);
-        _cancelButton.onClick.AddListener(CloseWarningPanel);
-        _rankButton.onClick.AddListener(OnRankButtonClick);
-    }
+        [SerializeField] private Button _authorizeButton;
+        [SerializeField] private Button _cancelButton;
+        [SerializeField] private Button _rankButton;
+        [SerializeField] private GameObject _warningPanel;
+        [SerializeField] private GameObject _startPanel;
+        [SerializeField] private GameObject _leaderboardPanel;
+        [SerializeField] private Authorization _authorization;
 
-    private void OnDisable()
-    {
-        _authorizeButton.onClick.RemoveListener(OnButtonAuthorizeClick);
-        _cancelButton.onClick.RemoveListener(CloseWarningPanel);
-        _rankButton.onClick.RemoveListener(OnRankButtonClick);
-    }
+        private void OnEnable()
+        {
+            _warningPanel.SetActive(false);
+            _authorizeButton.onClick.AddListener(OnButtonAuthorizeClick);
+            _cancelButton.onClick.AddListener(OnCloseWarningPanel);
+            _rankButton.onClick.AddListener(OnRankButtonClick);
+        }
 
-    private void OpenWarningPanel()
-    {
-        _warningPanel.SetActive(true);
-        _startPanel.SetActive(false);
-    }
+        private void OnDisable()
+        {
+            _authorizeButton.onClick.RemoveListener(OnButtonAuthorizeClick);
+            _cancelButton.onClick.RemoveListener(OnCloseWarningPanel);
+            _rankButton.onClick.RemoveListener(OnRankButtonClick);
+        }
 
-    private void CloseWarningPanel()
-    {
-        _warningPanel.SetActive(false);
-        _startPanel.SetActive(true);
-    }
+        private void OpenWarningPanel()
+        {
+            _warningPanel.SetActive(true);
+            _startPanel.SetActive(false);
+        }
 
-    private void OnButtonAuthorizeClick()
-    {
+        private void OnCloseWarningPanel()
+        {
+            _warningPanel.SetActive(false);
+            _startPanel.SetActive(true);
+        }
+
+        private void OnButtonAuthorizeClick()
+        {
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (PlayerAccount.IsAuthorized)
         {
@@ -48,11 +51,11 @@ public class LeaderboardWarning : MonoBehaviour
         }
 #endif
 
-        _authorization.TryAuthorize();
-    }
+            _authorization.TryAuthorize();
+        }
 
-    private void OnRankButtonClick()
-    {
+        private void OnRankButtonClick()
+        {
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (PlayerAccount.IsAuthorized)
         {
@@ -64,5 +67,6 @@ public class LeaderboardWarning : MonoBehaviour
             OpenWarningPanel();
         }
 #endif
+        }
     }
 }

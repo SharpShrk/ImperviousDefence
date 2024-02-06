@@ -1,22 +1,26 @@
+using PlayerScripts;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class ButtonControlProdaction : MonoBehaviour
+namespace BrickFactory
 {
-    [SerializeField] private SpriteRenderer _spriteButton;
-
-    public event UnityAction ButtonPressed;
-
-    private void OnTriggerEnter(Collider other)
+    public class ButtonControlProdaction : MonoBehaviour
     {
-        if (other.GetComponent<Player>() && other is SphereCollider)
+        [SerializeField] private SpriteRenderer _spriteButton;
+
+        public event Action ButtonPressed;
+
+        private void OnTriggerEnter(Collider other)
         {
-            OnButtonPressed();
+            if (other.GetComponent<Player>() && other is SphereCollider)
+            {
+                OnButtonPressed();
+            }
         }
-    }
 
-    private void OnButtonPressed()
-    {
-        ButtonPressed?.Invoke();
+        private void OnButtonPressed()
+        {
+            ButtonPressed?.Invoke();
+        }
     }
 }

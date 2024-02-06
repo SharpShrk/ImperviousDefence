@@ -1,51 +1,57 @@
+using Enemies;
 using UnityEngine;
+using UserInterface;
 
-public class CoinsSaver : MonoBehaviour
+namespace WalletAndScore
 {
-    private const string CoinKey = "Coins";
-
-    [SerializeField] private Wallet _wallet;
-    [SerializeField] private EnemySpawner _enemySpawner;
-    [SerializeField] private GameOverHandler _gameOverPanel;
-
-    private int _minStartMoneyValue = 100;
-
-    private void OnEnable()
+    public class CoinsSaver : MonoBehaviour
     {
-        _enemySpawner.WaveCleared += SaveCoins;
-        _gameOverPanel.GameOvered += SaveCoins;
-    }
+        private const string CoinKey = "Coins";
 
-    private void OnDisable()
-    {
-        _enemySpawner.WaveCleared += SaveCoins;
-        _gameOverPanel.GameOvered -= SaveCoins;
-    }
+        [SerializeField] private Wallet _wallet;
+        [SerializeField] private EnemySpawner _enemySpawner;
+        [SerializeField] private GameOverHandler _gameOverPanel;
 
-    private void Start()
-    {
-        LoadCoins();
-    }
 
-    public void SaveCoins()
-    {
-        PlayerPrefs.SetInt(CoinKey, _wallet.Money);
-    }
+        private int _minStartMoneyValue = 100;
 
-    private void SaveCoins(int money)
-    {
-        PlayerPrefs.SetInt(CoinKey, money);
-    }
-
-    private void LoadCoins()
-    {
-        if (PlayerPrefs.HasKey(CoinKey))
+        private void OnEnable()
         {
-            _wallet.SetStartValue(PlayerPrefs.GetInt(CoinKey));
+            _enemySpawner.WaveCleared += OnSaveCoins;
+            _gameOverPanel.GameOvered += OnSaveCoins;
         }
-        else
+
+        private void OnDisable()
         {
-            _wallet.SetStartValue(_minStartMoneyValue);
+            _enemySpawner.WaveCleared += OnSaveCoins;
+            _gameOverPanel.GameOvered -= OnSaveCoins;
+        }
+
+        private void Start()
+        {
+            LoadCoins();
+        }
+
+        public void OnSaveCoins()
+        {
+            PlayerPrefs.SetInt(CoinKey, _wallet.Money);
+        }
+
+        private void OnSaveCoins(int money)
+        {
+            PlayerPrefs.SetInt(CoinKey, money);
+        }
+
+        private void LoadCoins()
+        {
+            if (PlayerPrefs.HasKey(CoinKey))
+            {
+                _wallet.SetStartValue(PlayerPrefs.GetInt(CoinKey));
+            }
+            else
+            {
+                _wallet.SetStartValue(_minStartMoneyValue);
+            }
         }
     }
 }

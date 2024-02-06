@@ -3,25 +3,28 @@ using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SDKInitialize : MonoBehaviour
+namespace Yandex
 {
-    private const string _menuSceneName = "Menu";
-
-    private void Awake()
+    public class SDKInitialize : MonoBehaviour
     {
-        YandexGamesSdk.CallbackLogging = true;
-    }
+        private const string _menuSceneName = "Menu";
 
-    private IEnumerator Start()
-    {
+        private void Awake()
+        {
+            YandexGamesSdk.CallbackLogging = true;
+        }
+
+        private IEnumerator Start()
+        {
 #if !UNITY_WEBGL || UNITY_EDITOR
-        yield break;
+            yield break;
 #endif
-        yield return YandexGamesSdk.Initialize(TransitionMenuScene);
-    }
+            yield return YandexGamesSdk.Initialize(TransitionMenuScene);
+        }
 
-    private void TransitionMenuScene()
-    {
-        SceneManager.LoadScene(_menuSceneName);
+        private void TransitionMenuScene()
+        {
+            SceneManager.LoadScene(_menuSceneName);
+        }
     }
 }

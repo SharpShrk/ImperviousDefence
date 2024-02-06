@@ -1,17 +1,18 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
+using Walls;
 
 public class GameOverChecker : MonoBehaviour
 {
     [SerializeField] private Wall[] _walls;
 
-    public event UnityAction GameOverEvent;
+    public event Action GameOvered;
 
     private void OnEnable()
     {
         foreach (Wall wall in _walls)
         {
-            wall.WallDestroed += GameOver;
+            wall.WallDestroed += OnGameOver;
         }
     }
 
@@ -19,13 +20,13 @@ public class GameOverChecker : MonoBehaviour
     {
         foreach (Wall wall in _walls)
         {
-            wall.WallDestroed -= GameOver;
+            wall.WallDestroed -= OnGameOver;
         }
     }
 
-    private void GameOver()
+    private void OnGameOver()
     {
-        GameOverEvent?.Invoke();
+        GameOvered?.Invoke();
         Time.timeScale = 0;
     }
 }

@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Record : MonoBehaviour
+namespace LeaderBoard
 {
-    [SerializeField] private TMP_Text _name;
-    [SerializeField] private TMP_Text _score;
-    [SerializeField] private TMP_Text _rank;
-
-    public void SetName(string name)
+    public class Record : MonoBehaviour
     {
-        _name.text = name;
-    }
+        [SerializeField] private TMP_Text _name;
+        [SerializeField] private TMP_Text _score;
+        [SerializeField] private TMP_Text _rank;
 
-    public void SetScore(string score)
-    {
-        _score.text = score;
-    }
+        public void SetName(string name)
+        {
+            _name.text = name;
+        }
 
-    public void SetRank(int rank)
-    {
-        _rank.text = rank.ToString();
+        public void SetScore(string score)
+        {
+            _score.text = score;
+        }
+
+        public void SetRank(int rank)
+        {
+            _rank.text = rank.ToString();
+        }
     }
 }

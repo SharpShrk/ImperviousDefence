@@ -1,41 +1,44 @@
 using System;
 using UnityEngine;
 
-public class Wallet : MonoBehaviour
+namespace WalletAndScore
 {
-    [SerializeField] private int _startMoney;
-    [SerializeField] private CoinsSaver _coinsSaver;
-
-    private int _money;
-
-    public event Action<int> OnMoneyChanged;
-
-    public int Money => _money;
-
-    public void SetStartValue(int value)
+    public class Wallet : MonoBehaviour
     {
-        _money = value;
-        OnMoneyChanged?.Invoke(_money);
-    }
+        [SerializeField] private int _startMoney;
+        [SerializeField] private CoinsSaver _coinsSaver;
 
-    public void AddMoney(int amount)
-    {
-        _money += amount;
-        OnMoneyChanged?.Invoke(_money);
-        _coinsSaver.SaveCoins();
-    }
+        private int _money;
 
-    public bool SpendMoney(int amount)
-    {
-        if (_money < amount)
+        public event Action<int> OnMoneyChanged;
+
+        public int Money => _money;
+
+        public void SetStartValue(int value)
         {
-            return false;
+            _money = value;
+            OnMoneyChanged?.Invoke(_money);
         }
 
-        _money -= amount;
-        OnMoneyChanged?.Invoke(_money);
-        _coinsSaver.SaveCoins();
+        public void AddMoney(int amount)
+        {
+            _money += amount;
+            OnMoneyChanged?.Invoke(_money);
+            _coinsSaver.OnSaveCoins();
+        }
 
-        return true;
+        public bool SpendMoney(int amount)
+        {
+            if (_money < amount)
+            {
+                return false;
+            }
+
+            _money -= amount;
+            OnMoneyChanged?.Invoke(_money);
+            _coinsSaver.OnSaveCoins();
+
+            return true;
+        }
     }
 }

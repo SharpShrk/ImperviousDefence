@@ -694,6 +694,8 @@ GameObject:
   - component: {fileID: 84910798}
   - component: {fileID: 84910794}
   - component: {fileID: 84910799}
+  - component: {fileID: 84910801}
+  - component: {fileID: 84910800}
   m_Layer: 0
   m_Name: AudioResources
   m_TagString: Untagged
@@ -825,6 +827,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioMixer: {fileID: 24100000, guid: 0ca9a4f2b272a53468979e113c6b9c91, type: 2}
+  _menuClip: {fileID: 8300000, guid: 7ac328419ab37cf449ec6547a8863011, type: 3}
+  _gameClip: {fileID: 8300000, guid: 06c7a90fca38bee409655e81246a7420, type: 3}
+--- !u!114 &84910800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84910793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3936cdb0a64a88442a66b0ee090a4cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioMixer: {fileID: 24100000, guid: 0ca9a4f2b272a53468979e113c6b9c91, type: 2}
+--- !u!114 &84910801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84910793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fc7f1892548b14194c7191c0eaec96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 84910794}
   _menuClip: {fileID: 8300000, guid: 7ac328419ab37cf449ec6547a8863011, type: 3}
   _gameClip: {fileID: 8300000, guid: 06c7a90fca38bee409655e81246a7420, type: 3}
 --- !u!1 &98329749
@@ -4736,7 +4766,6 @@ GameObject:
   m_Component:
   - component: {fileID: 538573577}
   - component: {fileID: 538573576}
-  - component: {fileID: 538573578}
   m_Layer: 0
   m_Name: LanguageSwitcher
   m_TagString: Untagged
@@ -4771,19 +4800,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &538573578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538573575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83e505671970ab947b9e7240ef39f319, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _languageSwitcher: {fileID: 538573576}
 --- !u!1 &548053151
 GameObject:
   m_ObjectHideFlags: 0

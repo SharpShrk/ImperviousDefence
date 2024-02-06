@@ -1,18 +1,21 @@
 using System;
 
-public class AudioMusicSlider : BaseAudioSlider
+namespace Audio
 {
-    public static event Action<float> OnMusicVolumeChanged = volume => { };
-
-
-    private void Start()
+    public class AudioMusicSlider : BaseAudioSlider
     {
-        AudioResources audioResources = FindObjectOfType<AudioResources>();
-        _slider.value = audioResources.GetVolume(MusicVolumeGroup);
-    }
+        public static event Action<float> OnMusicVolumeChanging = volume => { };
 
-    protected override void OnValueChanged(float value)
-    {
-        OnMusicVolumeChanged.Invoke(value);
+
+        private void Start()
+        {
+            VolumeHandler audioResources = FindObjectOfType<VolumeHandler>();
+            _slider.value = audioResources.GetVolume(MusicVolumeGroup);
+        }
+
+        protected override void OnValueChanged(float value)
+        {
+            OnMusicVolumeChanging.Invoke(value);
+        }
     }
 }

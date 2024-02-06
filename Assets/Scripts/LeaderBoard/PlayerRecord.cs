@@ -1,3 +1,6 @@
-public class PlayerRecord : Record
+namespace LeaderBoard
 {
+    public class PlayerRecord : Record
+    {
+    }
 }

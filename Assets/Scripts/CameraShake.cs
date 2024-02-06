@@ -15,22 +15,25 @@ public class CameraShake : MonoBehaviour
         _originalLocalEulerAngles = _cameraTransform.localEulerAngles;
     }
 
-    public void Shake()
+    public void InitiateShake()
     {
         if (Time.timeScale == 1)
         {
-            StartCoroutine(ShakeCamera());
+            StartCoroutine(ApplyShakeEffect());
         }
     }
 
-    private IEnumerator ShakeCamera()
+    private IEnumerator ApplyShakeEffect()
     {
         float elapsedTime = 0f;
 
         while (elapsedTime < shakeDuration)
         {
-            float x = Random.Range(-1f, 1f) * shakeAngle;
-            float y = Random.Range(-1f, 1f) * shakeAngle;
+            float minRandomValue = -1f;
+            float maxRandomValue = 1f;
+
+            float x = Random.Range(minRandomValue, maxRandomValue) * shakeAngle;
+            float y = Random.Range(minRandomValue, maxRandomValue) * shakeAngle;
 
             _cameraTransform.localEulerAngles = _originalLocalEulerAngles + new Vector3(x, y, 0);
             elapsedTime += Time.deltaTime;

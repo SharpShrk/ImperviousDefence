@@ -892,12 +892,16 @@ GameObject:
   m_Component:
   - component: {fileID: 5729241972752411189}
   - component: {fileID: 773980696474489627}
-  - component: {fileID: 6064549162652938653}
+  - component: {fileID: 2905163946282136066}
   - component: {fileID: 4992152024440219730}
   - component: {fileID: 9043816048964359347}
   - component: {fileID: 300903798096065594}
   - component: {fileID: 3333126596448108916}
   - component: {fileID: 8175691399834758140}
+  - component: {fileID: -866370354548505655}
+  - component: {fileID: -1505943575504652047}
+  - component: {fileID: -8826187113375050968}
+  - component: {fileID: 3365515725449745277}
   m_Layer: 6
   m_Name: Orc 1
   m_TagString: Untagged
@@ -945,7 +949,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6064549162652938653
+--- !u!114 &2905163946282136066
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -954,13 +958,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6812951636509036836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61300f90d6fa95445b44b9195730e79d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cdffe535d842054e98da02d84498a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rewardMoney: 20
-  _rewardScore: 1
+  _rewardScore: 10
   _enemyHealthBar: {fileID: 300903798096065594}
-  _deathDuration: 2
+  _deathDuration: 3
 --- !u!114 &4992152024440219730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1063,6 +1067,63 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 36
   m_CollisionDetection: 0
+--- !u!114 &-866370354548505655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812951636509036836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e19016eb06659945a620ffa31348ceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+--- !u!114 &-1505943575504652047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812951636509036836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7511139e2f503ec4484e22396bf618c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyHealthBar: {fileID: 0}
+  _deathDuration: 0
+--- !u!114 &-8826187113375050968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812951636509036836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d4ebfcbdea4e740b97be237d6598b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rewardMoney: 0
+  _rewardScore: 0
+--- !u!114 &3365515725449745277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812951636509036836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cdffe535d842054e98da02d84498a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rewardMoney: 0
+  _rewardScore: 0
+  _enemyHealthBar: {fileID: 0}
+  _deathDuration: 0
 --- !u!1 &6944202331076723603
 GameObject:
   m_ObjectHideFlags: 0

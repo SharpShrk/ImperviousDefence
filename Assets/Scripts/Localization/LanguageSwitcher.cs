@@ -2,49 +2,52 @@ using Lean.Localization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LanguageSwitcher : MonoBehaviour
+namespace Localization
 {
-    private const string EnglishCode = "en";
-    private const string RussianCode = "ru";
-    private const string TurkishCode = "tr";
-    private const string EnglishNameLocalization = "English";
-    private const string RussianNameLocalization = "Russian";
-    private const string TurkishNameLocalization = "Turkish";
-
-    private string _currentLanguage;
-
-    private void Awake()
+    public class LanguageSwitcher : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+        private const string EnglishCode = "en";
+        private const string RussianCode = "ru";
+        private const string TurkishCode = "tr";
+        private const string EnglishNameLocalization = "English";
+        private const string RussianNameLocalization = "Russian";
+        private const string TurkishNameLocalization = "Turkish";
 
-    public void SwitchLanguageTo(string code)
-    {
-        switch (code)
+        private string _currentLanguage;
+
+        private void Awake()
         {
-            case EnglishCode:
-                ChangeLanguage(EnglishNameLocalization);
-                break;
-
-            case RussianCode:
-                ChangeLanguage(RussianNameLocalization);
-                break;
-
-            case TurkishCode:
-                ChangeLanguage(TurkishNameLocalization);
-                break;
+            DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
-    }
 
-    private void ChangeLanguage(string localizationName)
-    {
-        LeanLocalization.SetCurrentLanguageAll(localizationName);
-        _currentLanguage = localizationName;
-    }
+        public void SwitchLanguageTo(string code)
+        {
+            switch (code)
+            {
+                case EnglishCode:
+                    ChangeLanguage(EnglishNameLocalization);
+                    break;
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        ChangeLanguage(_currentLanguage);
+                case RussianCode:
+                    ChangeLanguage(RussianNameLocalization);
+                    break;
+
+                case TurkishCode:
+                    ChangeLanguage(TurkishNameLocalization);
+                    break;
+            }
+        }
+
+        private void ChangeLanguage(string localizationName)
+        {
+            LeanLocalization.SetCurrentLanguageAll(localizationName);
+            _currentLanguage = localizationName;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            ChangeLanguage(_currentLanguage);
+        }
     }
 }

@@ -2,24 +2,27 @@ using System.Collections;
 using Agava.YandexGames;
 using UnityEngine;
 
-public class GameReady : MonoBehaviour
+namespace Yandex
 {
-    private void Awake()
+    public class GameReady : MonoBehaviour
     {
-#if !UNITY_WEBGL || UNITY_EDITOR
-        return;
-#endif
-        StartCoroutine(CheckGameReady());
-    }
-
-    private IEnumerator CheckGameReady()
-    {
-        while (YandexGamesSdk.IsInitialized == false)
+        private void Awake()
         {
-            yield return null;
+#if !UNITY_WEBGL || UNITY_EDITOR
+            return;
+#endif
+            StartCoroutine(CheckGameReady());
         }
 
-        YandexGamesSdk.GameReady();
-        gameObject.SetActive(false);
+        private IEnumerator CheckGameReady()
+        {
+            while (YandexGamesSdk.IsInitialized == false)
+            {
+                yield return null;
+            }
+
+            YandexGamesSdk.GameReady();
+            gameObject.SetActive(false);
+        }
     }
 }

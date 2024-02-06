@@ -1,87 +1,94 @@
+using Bullet;
+using PlayerScripts;
 using System.Collections;
 using UnityEngine;
 
-public class MobilePlayerShooting : MonoBehaviour
+namespace Mobile
 {
-    [SerializeField] private Transform _gunTransform;
-    [SerializeField] private CameraShake _cameraShake;
-    [SerializeField] private float _fireRate = 0.2f;
-    [SerializeField] private BulletPool _bulletPool;
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private RightJoystick _rightJoystick;
-    [SerializeField] private float _inputThreshold = 0.3f;
-
-    private Animator _animator;
-    private bool _canShoot = true;
-    private Coroutine _shootingCoroutine;
-
-    private void Start()
+    public class MobilePlayerShooting : MonoBehaviour
     {
-        _animator = GetComponent<Animator>();
-    }
+        [SerializeField] private Transform _gunTransform;
+        [SerializeField] private CameraShake _cameraShake;
+        [SerializeField] private float _fireRate = 0.2f;
+        [SerializeField] private BulletPool _bulletPool;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private RightJoystick _rightJoystick;
+        [SerializeField] private float _inputThreshold = 0.3f;
 
-    private void FixedUpdate()
-    {
-        Vector3 joystickInput = _rightJoystick.GetInputDirection();
+        private Animator _animator;
+        private bool _canShoot = true;
+        private Coroutine _shootingCoroutine;
+        private Player _player;
 
-        if (joystickInput.magnitude >= _inputThreshold && _shootingCoroutine == null)
+        private void Start()
         {
-            StartShooting();
+            _animator = GetComponent<Animator>();
+            _player = GetComponent<Player>();
         }
-        else if (joystickInput.magnitude < _inputThreshold && _shootingCoroutine != null)
-        {
-            StopShooting();
-        }
-    }
 
-    private void StartShooting()
-    {
-        if (_shootingCoroutine == null)
+        private void FixedUpdate()
         {
-            _shootingCoroutine = StartCoroutine(ShootingRoutine());
-        }
-    }
+            Vector3 joystickInput = _rightJoystick.GetInputDirection();
 
-    private void StopShooting()
-    {
-        if (_shootingCoroutine != null)
-        {
-            StopCoroutine(_shootingCoroutine);
-            _shootingCoroutine = null;
-        }
-    }
-
-    private IEnumerator ShootingRoutine()
-    {
-        while (true)
-        {
-            if (_canShoot && Time.timeScale != 0)
+            if (joystickInput.magnitude >= _inputThreshold && _shootingCoroutine == null)
             {
-                Shoot();
+                StartShooting();
             }
-
-            yield return new WaitForSeconds(_fireRate);
+            else if (joystickInput.magnitude < _inputThreshold && _shootingCoroutine != null)
+            {
+                StopShooting();
+            }
         }
-    }
 
-    private void Shoot()
-    {
-        GameObject bullet = _bulletPool.GetBullet();
-        bullet.transform.position = _gunTransform.position;
-        bullet.transform.rotation = _gunTransform.rotation;
-        _animator.SetLayerWeight(1, 1);
-        _animator.SetTrigger("Shoot");
-        _cameraShake.Shake();
-        _audioSource.Play();
+        private void StartShooting()
+        {
+            if (_shootingCoroutine == null)
+            {
+                _shootingCoroutine = StartCoroutine(ShootingRoutine());
+            }
+        }
 
-        _canShoot = false;
-        StartCoroutine(ShootingDelay());
-    }
+        private void StopShooting()
+        {
+            if (_shootingCoroutine != null)
+            {
+                StopCoroutine(_shootingCoroutine);
+                _shootingCoroutine = null;
+            }
+        }
 
-    private IEnumerator ShootingDelay()
-    {
-        yield return new WaitForSeconds(_fireRate);
-        _animator.SetLayerWeight(1, 0);
-        _canShoot = true;
+        private IEnumerator ShootingRoutine()
+        {
+            while (_player.enabled)
+            {
+                if (_canShoot && Time.timeScale != 0)
+                {
+                    Shoot();
+                }
+
+                yield return new WaitForSeconds(_fireRate);
+            }
+        }
+
+        private void Shoot()
+        {
+            GameObject bullet = _bulletPool.GetBullet();
+            bullet.transform.position = _gunTransform.position;
+            bullet.transform.rotation = _gunTransform.rotation;
+            _animator.SetLayerWeight(1, 1);
+            _animator.SetTrigger("Shoot");
+            _cameraShake.InitiateShake();
+            _audioSource.Play();
+
+            _canShoot = false;
+            StartCoroutine(ShootingDelay());
+        }
+
+        private IEnumerator ShootingDelay()
+        {
+            yield return new WaitForSeconds(_fireRate);
+            _animator.SetLayerWeight(1, 0);
+            _canShoot = true;
+        }
     }
 }

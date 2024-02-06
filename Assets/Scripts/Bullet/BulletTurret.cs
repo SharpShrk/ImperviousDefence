@@ -1,69 +1,73 @@
+using Enemies;
 using System.Collections;
 using UnityEngine;
 
-public class BulletTurret : MonoBehaviour
+namespace Bullet
 {
-    [SerializeField] private float _speed = 10f;
-    [SerializeField] private float _lifetime = 3f;
-    [SerializeField] private int _defaultDamage = 10;
-    
-    private int _damage;
-    private Rigidbody _rigidbody;
-    private BulletTurretPool _bulletPool;
-
-    private void Awake()
+    public class BulletTurret : MonoBehaviour
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _damage = _defaultDamage;
-    }
+        [SerializeField] private float _speed = 10f;
+        [SerializeField] private float _lifetime = 3f;
+        [SerializeField] private int _defaultDamage = 10;
 
-    private void OnEnable()
-    {
-        StartCoroutine(DisableBulletAfterTime());
-    }
+        private int _damage;
+        private Rigidbody _rigidbody;
+        private BulletTurretPool _bulletPool;
 
-    private void FixedUpdate()
-    {
-        Vector3 direction = transform.forward;
-        Vector3 movement = direction.normalized * _speed * Time.fixedDeltaTime;
-        _rigidbody.MovePosition(transform.position + movement);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        var damageable = collision.gameObject.GetComponent<IDamageable>();
-
-        if (damageable != null)
+        private void Awake()
         {
-            damageable.TakeDamage(_damage);
+            _rigidbody = GetComponent<Rigidbody>();
+            _damage = _defaultDamage;
         }
 
-        ReturnToPool();
-    }
+        private void OnEnable()
+        {
+            StartCoroutine(DisableBulletAfterTime());
+        }
 
-    public void Init(BulletTurretPool bulletPool)
-    {
-        _bulletPool = bulletPool;
-    }
+        private void FixedUpdate()
+        {
+            Vector3 direction = transform.forward;
+            Vector3 movement = direction.normalized * _speed * Time.fixedDeltaTime;
+            _rigidbody.MovePosition(transform.position + movement);
+        }
 
-    public void SetDamage(int damage)
-    {
-        _damage = damage;
-    }
+        private void OnCollisionEnter(Collision collision)
+        {
+            var damageable = collision.gameObject.GetComponent<IDamageable>();
 
-    public int GetDefaultDamage()
-    {
-        return _defaultDamage;
-    }
+            if (damageable != null)
+            {
+                damageable.TakeDamage(_damage);
+            }
 
-    private IEnumerator DisableBulletAfterTime()
-    {
-        yield return new WaitForSeconds(_lifetime);
-        ReturnToPool();
-    }
+            ReturnToPool();
+        }
 
-    private void ReturnToPool()
-    {
-        _bulletPool.ReturnBullet(gameObject);
+        public void Init(BulletTurretPool bulletPool)
+        {
+            _bulletPool = bulletPool;
+        }
+
+        public void SetDamage(int damage)
+        {
+            _damage = damage;
+        }
+
+        public int GetDefaultDamage()
+        {
+            return _defaultDamage;
+        }
+
+        private IEnumerator DisableBulletAfterTime()
+        {
+            yield return new WaitForSeconds(_lifetime);
+            ReturnToPool();
+        }
+
+        private void ReturnToPool()
+        {
+            _bulletPool.ReturnBullet(gameObject);
+        }
     }
 }

@@ -1,86 +1,92 @@
 using Agava.YandexGames;
+using Audio;
+using Enemies;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
+using Wave;
 
-public class AdPlayer : MonoBehaviour
+namespace Yandex
 {
-    [SerializeField] private int _adLevelIndex;
-    [SerializeField] private Waves _waves;
-    [SerializeField] private EnemySpawner _enemySpawner;
-    [SerializeField] private AdWarningPanel _adWarningPanel;
-
-    private bool _adIsPlaying;
-    private AudioResources _audioResources;
-
-    public event UnityAction VideoAdPlayed;
-
-    public bool AdIsPlaying => _adIsPlaying;
-
-    private void OnEnable()
+    public class AdPlayer : MonoBehaviour
     {
-        _audioResources = FindObjectOfType<AudioResources>();
-        _enemySpawner.WaveCleared += TryShowInterAd;
-        _adWarningPanel.AdCountdownFinished += ShowInterstitialAd;
-    }
+        [SerializeField] private int _adLevelIndex;
+        [SerializeField] private Waves _waves;
+        [SerializeField] private EnemySpawner _enemySpawner;
+        [SerializeField] private AdWarningPanel _adWarningPanel;
 
-    private void OnDisable()
-    {
-        _enemySpawner.WaveCleared -= TryShowInterAd;
-        _adWarningPanel.AdCountdownFinished -= ShowInterstitialAd;
-    }
+        private bool _adIsPlaying;
+        private VolumeHandler _audioResources;
 
-    public void ShowVideoAd()
-    {
+        public event Action VideoAdPlayed;
+
+        public bool AdIsPlaying => _adIsPlaying;
+
+        private void OnEnable()
+        {
+            _audioResources = FindObjectOfType<VolumeHandler>();
+            _enemySpawner.WaveCleared += OnTryShowInterAd;
+            _adWarningPanel.AdCountdownFinished += OnShowInterstitialAd;
+        }
+
+        private void OnDisable()
+        {
+            _enemySpawner.WaveCleared -= OnTryShowInterAd;
+            _adWarningPanel.AdCountdownFinished -= OnShowInterstitialAd;
+        }
+
+        public void ShowVideoAd()
+        {
 #if UNITY_WEBGL && !UNITY_EDITOR
         VideoAd.Show(OnPlayed, OnRewarded,OnClosed);
 #endif
-    }
+        }
 
-    private void TryShowInterAd()
-    {
+        private void OnTryShowInterAd()
+        {
 #if UNITY_WEBGL && !UNITY_EDITOR
         PlayRegularAdIf(ShouldPlayAd());
 #endif
-    }
-
-    private void ShowInterstitialAd()
-    {
-        InterstitialAd.Show(OnPlayed, OnClosedInterstitialAd);
-    }
-
-    private void OnRewarded()
-    {
-        VideoAdPlayed?.Invoke();
-    }
-
-    private void OnClosed()
-    {
-        _audioResources.UnmuteAndResume();
-        _adIsPlaying = false;
-    }
-
-    private void OnPlayed()
-    {
-        _audioResources.MuteAndPause();
-        _adIsPlaying = true;
-    }
-
-    private void PlayRegularAdIf(bool value)
-    {
-        if (value)
-        {
-            _adWarningPanel.StartAdCountdown();
         }
-    }
 
-    private bool ShouldPlayAd()
-    {
-        return _waves.CurrentWave % _adLevelIndex == 0;
-    }
+        private void OnShowInterstitialAd()
+        {
+            InterstitialAd.Show(OnPlayed, OnClosedInterstitialAd);
+        }
 
-    private void OnClosedInterstitialAd(bool value)
-    {
-        _audioResources.UnmuteAndResume();
-        _adIsPlaying = false;
+        private void OnRewarded()
+        {
+            VideoAdPlayed?.Invoke();
+        }
+
+        private void OnClosed()
+        {
+            _audioResources.UnmuteAndResume();
+            _adIsPlaying = false;
+        }
+
+        private void OnPlayed()
+        {
+            _audioResources.MuteAndPause();
+            _adIsPlaying = true;
+        }
+
+        private void PlayRegularAdIf(bool value)
+        {
+            if (value)
+            {
+                _adWarningPanel.StartAdCountdown();
+            }
+        }
+
+        private bool ShouldPlayAd()
+        {
+            return _waves.CurrentWave % _adLevelIndex == 0;
+        }
+
+        private void OnClosedInterstitialAd(bool value)
+        {
+            _audioResources.UnmuteAndResume();
+            _adIsPlaying = false;
+        }
     }
 }

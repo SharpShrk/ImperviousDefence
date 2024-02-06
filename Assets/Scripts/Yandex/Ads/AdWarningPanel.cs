@@ -1,44 +1,47 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class AdWarningPanel : MonoBehaviour
+namespace Yandex
 {
-    [SerializeField] private GameObject _panel;
-    [SerializeField] private TMP_Text _timerText;
-    [SerializeField] private int _duration = 3;
-
-    public event UnityAction AdCountdownFinished;
-
-    private void Start()
+    public class AdWarningPanel : MonoBehaviour
     {
-        _panel.SetActive(false);
-    }
+        [SerializeField] private GameObject _panel;
+        [SerializeField] private TMP_Text _timerText;
+        [SerializeField] private int _duration = 3;
 
-    public void StartAdCountdown()
-    {
-        Time.timeScale = 0;
-        _panel.SetActive(true);
-        _timerText.text = _duration.ToString();
+        public event Action AdCountdownFinished;
 
-        StartCoroutine(CountdownCoroutine());
-    }
-
-    private IEnumerator CountdownCoroutine()
-    {
-        int remainingTime = _duration;
-
-        while (remainingTime > 0)
+        private void Start()
         {
-            _timerText.text = remainingTime.ToString();
-            yield return new WaitForSecondsRealtime(1f);
-            remainingTime--;
+            _panel.SetActive(false);
         }
 
-        AdCountdownFinished?.Invoke();
+        public void StartAdCountdown()
+        {
+            Time.timeScale = 0;
+            _panel.SetActive(true);
+            _timerText.text = _duration.ToString();
 
-        _panel.SetActive(false);
-        Time.timeScale = 1;
+            StartCoroutine(CountdownCoroutine());
+        }
+
+        private IEnumerator CountdownCoroutine()
+        {
+            int remainingTime = _duration;
+
+            while (remainingTime > 0)
+            {
+                _timerText.text = remainingTime.ToString();
+                yield return new WaitForSecondsRealtime(1f);
+                remainingTime--;
+            }
+
+            AdCountdownFinished?.Invoke();
+
+            _panel.SetActive(false);
+            Time.timeScale = 1;
+        }
     }
 }
