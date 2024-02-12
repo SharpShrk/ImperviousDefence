@@ -1,7 +1,7 @@
 using UnityEngine;
 using Walls;
 
-namespace BrickFactory
+namespace BrickFactories
 {
     public class ExportZone : MonoBehaviour
     {

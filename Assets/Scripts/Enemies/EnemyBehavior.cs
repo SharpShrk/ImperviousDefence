@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Walls;
 
@@ -8,11 +9,8 @@ namespace Enemies
         [SerializeField] private int _rewardMoney;
         [SerializeField] private int _rewardScore;
 
-        private bool _isDied;
         private EnemyMovement _enemyMovement;
         private EnemyAttack _enemyAttack;
-
-        public event System.Action<int, int, Enemy> OnEnemyDied;
 
         private void Awake()
         {

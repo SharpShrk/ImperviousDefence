@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Bullet
+namespace Bullets
 {
-    public class BulletPool : MonoBehaviour
+    public abstract class BulletPool : MonoBehaviour
     {
-        [SerializeField] private GameObject _bulletPrefab;
-        [SerializeField] private int _initialPoolSize = 10;
-        [SerializeField] private GameObject _bulletContainer;
+        [SerializeField] protected GameObject _bulletPrefab;
+        [SerializeField] protected int _initialPoolSize = 10;
+        [SerializeField] protected GameObject _bulletContainer;
 
-        private Queue<GameObject> _bulletPool;
+        protected Queue<GameObject> _bulletPool;
 
-        private void Awake()
+        protected void Awake()
         {
             InitializePool();
         }
@@ -37,19 +37,6 @@ namespace Bullet
             _bulletPool.Enqueue(bullet);
         }
 
-        private void InitializePool()
-        {
-            _bulletPool = new Queue<GameObject>();
-
-            for (int i = 0; i < _initialPoolSize; i++)
-            {
-                GameObject bullet = Instantiate(_bulletPrefab);
-                bullet.GetComponent<Bullet>().Init(this);
-
-                bullet.SetActive(false);
-                bullet.transform.SetParent(_bulletContainer.transform);
-                _bulletPool.Enqueue(bullet);
-            }
-        }
+        protected abstract void InitializePool();        
     }
 }

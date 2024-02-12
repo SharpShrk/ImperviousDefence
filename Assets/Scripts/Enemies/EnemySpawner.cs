@@ -22,7 +22,6 @@ namespace Enemies
         private bool _gameOver = false;
         private int _activeEnemies = 0;
         private Coroutine _enemySpawnCoroutine;
-        private FreeAttackPointChecker _attackPointChecker;
 
         public event Action WaveCleared;
 
@@ -32,7 +31,6 @@ namespace Enemies
         {
             _attackPointQueue = GetComponent<AttackPointQueue>();
             _waves = GetComponent<Waves>();
-            _attackPointChecker = GetComponent<FreeAttackPointChecker>();
         }
 
         private void Start()
@@ -84,9 +82,13 @@ namespace Enemies
                 if (enemy != null)
                 {
                     Enemy enemyScript = enemy.GetComponent<Enemy>();
-                    enemyScript.OnEnemyDied += OnEnemyDied;
+                    EnemyHealth enemyHealthScript = enemy.GetComponent<EnemyHealth>();
+
+                    enemyHealthScript.OnEnemyDied += OnEnemyDied;
+                    enemyHealthScript.HideHealthBar();
+
                     enemyScript.Initialize(enemyHealth, enemyAttack);
-                    enemyScript.HideHealthBar();
+
                     enemy.transform.position = GetRandomSpawnPoint();
                     enemy.SetActive(true);
                     _attackPointQueue.AddEnemyToQueue(enemyScript);
@@ -110,18 +112,13 @@ namespace Enemies
             return new Vector3(x, _spawnZoneCenter.y, z);
         }
 
-        private void GameOver()
-        {
-            _gameOver = true;
-        }
-
         private void OnDrawGizmos()
         {
             Gizmos.color = new Color(1, 0, 0, 0.5f);
             Gizmos.DrawCube(_spawnZoneCenter, new Vector3(_spawnZoneWidth, 0, _spawnZoneLength));
         }
 
-        private void OnEnemyDied(int rewardMoney, int rewardScore, Enemy enemy)
+        private void OnEnemyDied(int rewardMoney, int rewardScore, EnemyHealth enemy)
         {
             CheckSpawnedEnemy();
             _rewardCollector.TakeReward(rewardMoney, rewardScore);

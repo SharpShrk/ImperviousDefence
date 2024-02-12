@@ -2,28 +2,31 @@ using PlayerScripts;
 using TMPro;
 using UnityEngine;
 
-public class BagBricksUI : MonoBehaviour
+namespace UserInterface
 {
-    [SerializeField] private TMP_Text _bagUIText;
-    [SerializeField] private PlayerBricksBag _bag;
-
-    private int _maxBrickCapacity;
-
-    private void OnEnable()
+    public class BagBricksUI : MonoBehaviour
     {
-        _bag.OnBrickCountChanging += OnSetTextValue;
-        _maxBrickCapacity = _bag.MaxBrickCapacity;
-        OnSetTextValue(_bag.CurrentBrickCount);
-    }
+        [SerializeField] private TMP_Text _bagUIText;
+        [SerializeField] private PlayerBricksBag _bag;
 
-    private void OnDisable()
-    {
-        _bag.OnBrickCountChanging -= OnSetTextValue;
-    }
+        private int _maxBrickCapacity;
 
-    private void OnSetTextValue(int currentValue)
-    {
-        string formattedText = currentValue.ToString() + " / " + _maxBrickCapacity.ToString();
-        _bagUIText.text = formattedText;
+        private void OnEnable()
+        {
+            _bag.OnBrickCountChanging += OnSetTextValue;
+            _maxBrickCapacity = _bag.MaxBrickCapacity;
+            OnSetTextValue(_bag.CurrentBrickCount);
+        }
+
+        private void OnDisable()
+        {
+            _bag.OnBrickCountChanging -= OnSetTextValue;
+        }
+
+        private void OnSetTextValue(int currentValue)
+        {
+            string formattedText = currentValue.ToString() + " / " + _maxBrickCapacity.ToString();
+            _bagUIText.text = formattedText;
+        }
     }
 }

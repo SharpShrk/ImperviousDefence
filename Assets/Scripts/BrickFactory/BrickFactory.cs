@@ -3,28 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Walls;
 
-namespace BrickFactory
+namespace BrickFactories
 {
     public class BrickFactory : MonoBehaviour
     {
-        [SerializeField] private GameObject _brickPrefab;
-        [SerializeField] private BricksStorage _bricksStorage;
-        [SerializeField] private bool _hasResources = true;
-        [SerializeField] private float _productionTime;
-        [SerializeField] private GameObject _factoryObject;
-        [SerializeField] private AudioSource _audioSource;
-
-        private Animator _animator;
-        private Vector3 _brickSize;
+        private BrickFactoryConfiguration _configuration;
+        private bool _hasResourses;
         private Queue<int> _productionQueue = new Queue<int>();
 
-        public float ProductionTime => _productionTime;
-
-        private void Start()
+        public void Initialize(BrickFactoryConfiguration configuration)
         {
-            _brickSize = _brickPrefab.GetComponent<Brick>().BrickSize;
-            _animator = _factoryObject.GetComponent<Animator>();
-            _animator.speed = 0;
+            _configuration = configuration;
+            _hasResourses = true;
             StartCoroutine(ProduceBricks());
         }
 
@@ -35,17 +25,18 @@ namespace BrickFactory
 
         private IEnumerator ProduceBricks()
         {
-            while (_hasResources)
+            while (_hasResourses)
             {
-                if (_productionQueue.Count > 0 && _bricksStorage.IsStorageFull == false)
+                if (_productionQueue.Count > 0 && _configuration.BricksStorage.IsStorageFull == false)
                 {
                     int bricksToProduce = _productionQueue.Dequeue();
-                    _animator.speed = 1;
-                    _audioSource.Play();
+
+                    gameObject.GetComponent<AnimationBrickFactory>().PlayAnimation();
+                    gameObject.GetComponent<AudioBrickFactory>().PlayAudio();
 
                     for (int i = 0; i < bricksToProduce; i++)
                     {
-                        if (_bricksStorage.IsStorageFull)
+                        if (_configuration.BricksStorage.IsStorageFull)
                         {
                             _productionQueue.Enqueue(bricksToProduce - i + 1);
                             break;
@@ -53,18 +44,18 @@ namespace BrickFactory
 
                         float elapsedTime = 0f;
 
-                        while (elapsedTime < _productionTime)
+                        while (elapsedTime < _configuration.ProductionTime)
                         {
                             elapsedTime += Time.deltaTime;
                             yield return null;
                         }
 
-                        _bricksStorage.AddBrick(_brickPrefab, _brickSize);
+                        _configuration.BricksStorage.AddBrick(_configuration.BrickPrefab, _configuration.BrickSize);
                     }
                 }
 
-                _animator.speed = 0;
-                _audioSource.Stop();
+                gameObject.GetComponent<AnimationBrickFactory>().StopAnimation();
+                gameObject.GetComponent<AudioBrickFactory>().StopAudio();
 
                 yield return null;
             }

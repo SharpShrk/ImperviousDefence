@@ -23,7 +23,7 @@ namespace Yandex
 
         private void OnEnable()
         {
-            _audioResources = FindObjectOfType<VolumeHandler>();
+            _audioResources = gameObject.GetComponent<VolumeHandler>();
             _enemySpawner.WaveCleared += OnTryShowInterAd;
             _adWarningPanel.AdCountdownFinished += OnShowInterstitialAd;
         }

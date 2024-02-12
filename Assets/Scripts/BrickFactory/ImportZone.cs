@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BrickFactory
+namespace BrickFactories
 {
     public class ImportZone : MonoBehaviour
     {

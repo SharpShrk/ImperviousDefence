@@ -1,37 +1,39 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using UserInterface;
 
-public class ProductionPanel : MonoBehaviour
+namespace UserInterface
 {
-    [SerializeField] private Button _confirmButton;
-    [SerializeField] private Button _cancelButton;
-    [SerializeField] private GameObject _panel;
-    [SerializeField] private InfoMessagePanel _infoPanel;
-
-    public event UnityAction OnButtonConfirmProductionClick;
-
-    private void OnEnable()
+    public class ProductionPanel : MonoBehaviour
     {
-        _confirmButton.onClick.AddListener(OnButtonConfirmClick);
-        _cancelButton.onClick.AddListener(OnClosePanel);
-    }
+        [SerializeField] private Button _confirmButton;
+        [SerializeField] private Button _cancelButton;
+        [SerializeField] private GameObject _panel;
+        [SerializeField] private InfoMessagePanel _infoPanel;
 
-    private void OnDisable()
-    {
-        _confirmButton.onClick.RemoveListener(OnButtonConfirmClick);
-        _cancelButton.onClick.RemoveListener(OnClosePanel);
-    }
+        public event UnityAction OnButtonConfirmProductionClick;
 
-    private void OnClosePanel()
-    {
-        Time.timeScale = 1;
-        _panel.SetActive(false);
-    }
+        private void OnEnable()
+        {
+            _confirmButton.onClick.AddListener(OnButtonConfirmClick);
+            _cancelButton.onClick.AddListener(OnClosePanel);
+        }
 
-    private void OnButtonConfirmClick()
-    {
-        OnButtonConfirmProductionClick?.Invoke();
+        private void OnDisable()
+        {
+            _confirmButton.onClick.RemoveListener(OnButtonConfirmClick);
+            _cancelButton.onClick.RemoveListener(OnClosePanel);
+        }
+
+        private void OnClosePanel()
+        {
+            Time.timeScale = 1;
+            _panel.SetActive(false);
+        }
+
+        private void OnButtonConfirmClick()
+        {
+            OnButtonConfirmProductionClick?.Invoke();
+        }
     }
 }

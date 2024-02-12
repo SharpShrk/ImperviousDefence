@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Bullets
 {
-    public class BulletTurret : Bullet
+    public class BulletPlayer : Bullet
     {
-        private BulletTurretPool _bulletPool;
+        private BulletPlayerPool _bulletPool;
 
-        public void Init(BulletTurretPool bulletPool)
+        public void Init(BulletPlayerPool bulletPool)
         {
             _bulletPool = bulletPool;
         }

@@ -2,7 +2,7 @@ using PlayerScripts;
 using System;
 using UnityEngine;
 
-namespace BrickFactory
+namespace BrickFactories
 {
     public class ButtonControlProdaction : MonoBehaviour
     {

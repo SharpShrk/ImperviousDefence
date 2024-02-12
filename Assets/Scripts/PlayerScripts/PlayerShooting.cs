@@ -1,4 +1,4 @@
-using Bullet;
+using Bullets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +14,7 @@ namespace PlayerScripts
         [SerializeField] private Transform _gunTransform;
         [SerializeField] private CameraShake _cameraShake;
         [SerializeField] private float _fireRate = 0.2f;
-        [SerializeField] private BulletPool _bulletPool;
+        [SerializeField] private BulletPlayerPool _bulletPool;
         [SerializeField] private AudioSource _audioSource;
 
         private PlayerInputHandler _inputHandler;

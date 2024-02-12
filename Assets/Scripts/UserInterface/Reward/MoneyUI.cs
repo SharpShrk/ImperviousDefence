@@ -1,24 +1,20 @@
-using TMPro;
 using UnityEngine;
 using WalletAndScore;
 
-public class MoneyUI : MonoBehaviour
+namespace UserInterface
 {
-    [SerializeField] private TMP_Text _walletText;
-    [SerializeField] private Wallet _wallet;
-
-    private void OnEnable()
+    public class MoneyUI : RewardUI
     {
-        _wallet.OnMoneyChanged += SetValue;
-    }
+        [SerializeField] private Wallet _wallet;
 
-    private void OnDisable()
-    {
-        _wallet.OnMoneyChanged -= SetValue;
-    }
+        protected override void OnEnable()
+        {
+            _wallet.OnMoneyChanged += SetValue;
+        }
 
-    private void SetValue(int value)
-    {
-        _walletText.text = value.ToString();
+        protected override void OnDisable()
+        {
+            _wallet.OnMoneyChanged -= SetValue;
+        }
     }
 }

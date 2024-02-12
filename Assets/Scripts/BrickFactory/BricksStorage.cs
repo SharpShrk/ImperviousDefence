@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Walls;
 
-namespace BrickFactory
+namespace BrickFactories
 {
     public class BricksStorage : MonoBehaviour
     {

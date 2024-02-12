@@ -1,4 +1,4 @@
-using Bullet;
+using Bullets;
 using System.Collections.Generic;
 using UnityEngine;
 

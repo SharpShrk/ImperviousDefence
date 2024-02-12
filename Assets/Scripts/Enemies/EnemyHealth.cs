@@ -7,6 +7,7 @@ namespace Enemies
     public class EnemyHealth : MonoBehaviour, IDamageable
     {
         [SerializeField] private EnemyHealthBar _enemyHealthBar;
+        [SerializeField] private EnemyMovement _enemyMovement;
         [SerializeField] private float _deathDuration;
 
         private int _health;
@@ -14,7 +15,7 @@ namespace Enemies
         private bool _isDied;
 
         public event Action<int, int, EnemyHealth> OnEnemyDied;
-        public event Action OnEnemyDiedForAttackPoint;
+        public event Action OnEnemyDie;
 
         public int Health => _health;
 
@@ -37,8 +38,11 @@ namespace Enemies
                 {
                     _isDied = true;
 
+                    _enemyMovement.StopMoving();
+                    _enemyHealthBar.HideHealthBar();
+
                     OnEnemyDied?.Invoke(0, 0, this);
-                    OnEnemyDiedForAttackPoint?.Invoke();
+                    OnEnemyDie?.Invoke();
 
                     gameObject.GetComponent<Collider>().enabled = false;
 

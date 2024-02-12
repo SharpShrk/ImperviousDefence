@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UserInterface;
 using WalletAndScore;
 
-namespace BrickFactory
+namespace BrickFactories
 {
     public class BrickProductionOrder : MonoBehaviour
     {

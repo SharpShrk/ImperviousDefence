@@ -20,16 +20,13 @@ namespace Audio
         private float _minVolume = -80f;
         private bool _isPaused = false;
 
-        private AudioSource _audioSource;
         private AudioPlayer _audioPlayer;
 
         private void Awake()
         {
             _audioPlayer = gameObject.GetComponent<AudioPlayer>();
-            _audioSource = gameObject.GetComponent<AudioSource>();
-            DontDestroyOnLoad(gameObject);
 
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            OnSceneLoaded(SceneManager.GetActiveScene());
         }
 
         public void MuteAndPause()
@@ -60,10 +57,10 @@ namespace Audio
         public float GetVolume(string group)
         {
             _audioMixer.GetFloat(group, out float volume);
-            return Mathf.Pow(DecibelBase, volume / ReferenceDecibels);
+            return Mathf.Pow(DecibelBase, volume / ReferenceDecibels);   
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        private void OnSceneLoaded(Scene scene)
         {
             switch (scene.name)
             {

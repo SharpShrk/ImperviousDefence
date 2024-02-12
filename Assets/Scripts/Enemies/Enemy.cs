@@ -1,122 +1,56 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using Walls;
 
 namespace Enemies
 {
-    public class Enemy : MonoBehaviour, IDamageable
+    public class Enemy : MonoBehaviour
     {
-        [SerializeField] private int _rewardMoney;
-        [SerializeField] private int _rewardScore;
-        [SerializeField] private EnemyHealthBar _enemyHealthBar;
-        [SerializeField] private float _deathDuration;
+        [SerializeField] private int _damage;
 
-        private int _health;
-        private int _maxHealth;
-        private int _damage;
-        private bool _isDied;
-        private EnemyMovement _enemyMovement;
-        private EnemyAttack _enemyAttack;
-        private Animator _animator;
-
-        public event Action<int, int, Enemy> OnEnemyDied;
+        private EnemyHealth _enemyHealth;
+        private EnemyBehavior _enemyBehavior;
+        private EnemyAnimator _enemyAnimator;
 
         public event Action OnEnemyDiedForAttackPoint;
-
-        public int Health => _health;
 
         public int Damage => _damage;
 
         private void Awake()
         {
-            _enemyMovement = GetComponent<EnemyMovement>();
-            _enemyAttack = GetComponent<EnemyAttack>();
-            _animator = GetComponent<Animator>();
+            _enemyHealth = GetComponent<EnemyHealth>();
+            _enemyBehavior = GetComponent<EnemyBehavior>();
+            _enemyAnimator = GetComponent<EnemyAnimator>();
+
+            
+        }
+
+        private void OnEnable()
+        {
+            _enemyHealth.OnEnemyDie += Die;
+        }
+
+        private void OnDisable()
+        {
+            _enemyHealth.OnEnemyDie -= Die;
         }
 
         public void Initialize(int health, int damage)
         {
-            _health = health;
-            _maxHealth = health;
+            _enemyHealth.Initialize(health);
             _damage = damage;
-            _isDied = false;
-            gameObject.GetComponent<Collider>().enabled = true;
-        }
-
-        public void Activate()
-        {
-            Wall targetWall = FindClosestWall();
-            _enemyAttack.SetTargetWall(targetWall);
-        }
-
-        public void HideHealthBar()
-        {
-            _enemyHealthBar.HideHealthBar();
         }
 
         public void AssignAttackPoint(WallAttackPoint point)
         {
-            _enemyMovement.SetupAttackPoint(point);
-            _enemyAttack.SetTargetWall(point.GetComponentInParent<Wall>());
-        }
-
-        public void TakeDamage(int damage)
-        {
-            if (_isDied == false)
-            {
-                _health -= damage;
-                _enemyHealthBar.UpdateHealthBar(_health, _maxHealth);
-
-                if (_health <= 0)
-                {
-                    _isDied = true;
-
-                    _enemyMovement.StopMoving();
-                    _enemyHealthBar.HideHealthBar();
-
-                    OnEnemyDied?.Invoke(_rewardMoney, _rewardScore, this);
-                    OnEnemyDiedForAttackPoint?.Invoke();
-
-                    gameObject.GetComponent<Collider>().enabled = false;
-
-                    _animator.SetTrigger("isDied");
-                    StartCoroutine(WaitForDieAnimationEnd());
-                }
-            }
+            _enemyBehavior.AssignAttackPoint(point);
         }
 
         private void Die()
         {
-            gameObject.SetActive(false);
-        }
+            OnEnemyDiedForAttackPoint?.Invoke();
 
-        private Wall FindClosestWall()
-        {
-            Wall[] walls = FindObjectsOfType<Wall>();
-            print(walls.Length);
-            Wall closestWall = null;
-            float minDistance = float.MaxValue;
-
-            foreach (Wall wall in walls)
-            {
-                float distance = Vector3.Distance(transform.position, wall.transform.position);
-
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    closestWall = wall;
-                }
-            }
-
-            return closestWall;
-        }
-
-        private IEnumerator WaitForDieAnimationEnd()
-        {
-            yield return new WaitForSeconds(_deathDuration);
-
-            Die();
+            _enemyAnimator.Die();
         }
     }
 }

@@ -1,4 +1,4 @@
-using Bullet;
+using Bullets;
 using PlayerScripts;
 using System.Collections;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace Mobile
         [SerializeField] private Transform _gunTransform;
         [SerializeField] private CameraShake _cameraShake;
         [SerializeField] private float _fireRate = 0.2f;
-        [SerializeField] private BulletPool _bulletPool;
+        [SerializeField] private BulletPlayerPool _bulletPool;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private RightJoystick _rightJoystick;
         [SerializeField] private float _inputThreshold = 0.3f;

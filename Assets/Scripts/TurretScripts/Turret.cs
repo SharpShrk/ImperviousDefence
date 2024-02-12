@@ -1,4 +1,4 @@
-using Bullet;
+using Bullets;
 using Enemies;
 using System.Collections;
 using UnityEngine;

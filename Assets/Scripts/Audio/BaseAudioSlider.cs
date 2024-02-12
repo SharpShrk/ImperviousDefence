@@ -9,11 +9,7 @@ namespace Audio
         protected const string FxVolumeGroup = "FX_Sound";
 
         [SerializeField] protected Slider _slider;
-
-        protected virtual void Awake()
-        {
-            _slider.onValueChanged.AddListener(OnValueChanged);
-        }
+        [SerializeField] protected VolumeHandler _volumeHandler;
 
         protected abstract void OnValueChanged(float value);
     }

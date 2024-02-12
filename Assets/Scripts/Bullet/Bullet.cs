@@ -2,38 +2,37 @@ using Enemies;
 using System.Collections;
 using UnityEngine;
 
-namespace Bullet
+namespace Bullets
 {
-    public class Bullet : MonoBehaviour
+    public abstract class Bullet : MonoBehaviour
     {
-        [SerializeField] private float _speed = 10f;
-        [SerializeField] private float _lifetime = 3f;
-        [SerializeField] private int _defaultDamage = 10;
+        [SerializeField] protected float _speed = 10f;
+        [SerializeField] protected float _lifetime = 3f;
+        [SerializeField] protected int _defaultDamage = 10;
 
-        private int _damage;
-        private Rigidbody _rigidbody;
-        private BulletPool _bulletPool;
+        protected int _damage;
+        protected Rigidbody _rigidbody;
+        //private BulletPool _bulletPool;
 
-        private void Awake()
+        protected void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _damage = _defaultDamage;
         }
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             StartCoroutine(DisableBulletAfterTime());
         }
 
-        private void FixedUpdate()
+        protected void FixedUpdate()
         {
             Vector3 direction = transform.forward;
-            direction.y = 0;
             Vector3 movement = direction.normalized * _speed * Time.fixedDeltaTime;
             _rigidbody.MovePosition(transform.position + movement);
         }
 
-        private void OnCollisionEnter(Collision collision)
+        protected void OnCollisionEnter(Collision collision)
         {
             var damageable = collision.gameObject.GetComponent<IDamageable>();
 
@@ -45,10 +44,10 @@ namespace Bullet
             ReturnToPool();
         }
 
-        public void Init(BulletPool bulletPool)
+        /*public abstract void Init(BulletPool bulletPool);
         {
             _bulletPool = bulletPool;
-        }
+        }*/
 
         public void SetDamage(int damage)
         {
@@ -60,15 +59,12 @@ namespace Bullet
             return _defaultDamage;
         }
 
-        private IEnumerator DisableBulletAfterTime()
+        protected IEnumerator DisableBulletAfterTime()
         {
             yield return new WaitForSeconds(_lifetime);
             ReturnToPool();
         }
 
-        private void ReturnToPool()
-        {
-            _bulletPool.ReturnBullet(gameObject);
-        }
+        protected abstract void ReturnToPool();
     }
 }

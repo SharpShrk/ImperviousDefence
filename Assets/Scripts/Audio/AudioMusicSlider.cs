@@ -1,16 +1,16 @@
 using System;
+using UnityEngine;
 
 namespace Audio
 {
     public class AudioMusicSlider : BaseAudioSlider
     {
-        public static event Action<float> OnMusicVolumeChanging = volume => { };
+        public event Action<float> OnMusicVolumeChanging = volume => { };
 
-
-        private void Start()
+        protected void Start()
         {
-            VolumeHandler audioResources = FindObjectOfType<VolumeHandler>();
-            _slider.value = audioResources.GetVolume(MusicVolumeGroup);
+            _slider.onValueChanged.AddListener(OnValueChanged);
+            _slider.value = _volumeHandler.GetVolume(MusicVolumeGroup);
         }
 
         protected override void OnValueChanged(float value)

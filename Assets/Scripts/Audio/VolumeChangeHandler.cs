@@ -11,17 +11,19 @@ namespace Audio
         private const float MinVolume = -80f;
 
         [SerializeField] private AudioMixer _audioMixer;
+        [SerializeField] private AudioMusicSlider _musicSlider;
+        [SerializeField] private AudioSoundFXSlider _soundFXSlider;
 
         private void OnEnable()
         {
-            AudioSoundFXSlider.OnSFXVolumeChanged += ChangeSFXVolume;
-            AudioMusicSlider.OnMusicVolumeChanging += ChangeMusicVolume;
+            _soundFXSlider.OnSFXVolumeChanged += ChangeSFXVolume;
+            _musicSlider.OnMusicVolumeChanging += ChangeMusicVolume;
         }
 
         private void OnDisable()
         {
-            AudioSoundFXSlider.OnSFXVolumeChanged -= ChangeSFXVolume;
-            AudioMusicSlider.OnMusicVolumeChanging -= ChangeMusicVolume;
+            _soundFXSlider.OnSFXVolumeChanged -= ChangeSFXVolume;
+            _musicSlider.OnMusicVolumeChanging -= ChangeMusicVolume;
         }
 
         private void ChangeSFXVolume(float value)

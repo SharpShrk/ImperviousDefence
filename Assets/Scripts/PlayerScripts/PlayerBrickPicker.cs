@@ -1,4 +1,4 @@
-using BrickFactory;
+using BrickFactories;
 using UnityEngine;
 
 namespace PlayerScripts

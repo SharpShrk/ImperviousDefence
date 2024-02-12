@@ -3,85 +3,88 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class ColorChangeButtonUpgrade : MonoBehaviour
+namespace UserInterface
 {
-    [SerializeField] private GameObject _iconButton;
-
-    private SpriteRenderer _spriteButton;
-    private Color _startColor;
-    private Color _targetColor = Color.red;
-    private Color _currentColor;
-    private float _transitionDuration = 1.5f;
-    private Coroutine _changeColorCoroutine;
-
-    public event Action ButtonFullPressed;
-
-    private void Start()
+    public class ColorChangeButtonUpgrade : MonoBehaviour
     {
-        _spriteButton = _iconButton.GetComponent<SpriteRenderer>();
-        _startColor = _spriteButton.color;
-    }
+        [SerializeField] private GameObject _iconButton;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<Player>())
+        private SpriteRenderer _spriteButton;
+        private Color _startColor;
+        private Color _targetColor = Color.red;
+        private Color _currentColor;
+        private float _transitionDuration = 1.5f;
+        private Coroutine _changeColorCoroutine;
+
+        public event Action ButtonFullPressed;
+
+        private void Start()
         {
-            if (_changeColorCoroutine != null)
-            {
-                StopCoroutine(_changeColorCoroutine);
-            }
-
-            _currentColor = _spriteButton.color;
-            _changeColorCoroutine = StartCoroutine(FillColor(_currentColor));
+            _spriteButton = _iconButton.GetComponent<SpriteRenderer>();
+            _startColor = _spriteButton.color;
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<Player>())
+        private void OnTriggerEnter(Collider other)
         {
-            if (_changeColorCoroutine != null)
+            if (other.GetComponent<Player>())
             {
-                StopCoroutine(_changeColorCoroutine);
+                if (_changeColorCoroutine != null)
+                {
+                    StopCoroutine(_changeColorCoroutine);
+                }
+
+                _currentColor = _spriteButton.color;
+                _changeColorCoroutine = StartCoroutine(FillColor(_currentColor));
             }
-
-            _currentColor = _spriteButton.color;
-            _changeColorCoroutine = StartCoroutine(ReturnToOriginalColor(_currentColor));
         }
-    }
 
-    private IEnumerator FillColor(Color currentColor)
-    {
-        float elapsedTime = 0;
-
-        while (elapsedTime < _transitionDuration)
+        private void OnTriggerExit(Collider other)
         {
-            elapsedTime += Time.deltaTime;
-            float fillPercentage = elapsedTime / _transitionDuration;
-            _spriteButton.color = Color.Lerp(currentColor, _targetColor, fillPercentage);
-
-            if (Mathf.Approximately(_spriteButton.color.r, _targetColor.r) &&
-               Mathf.Approximately(_spriteButton.color.g, _targetColor.g) &&
-               Mathf.Approximately(_spriteButton.color.b, _targetColor.b) &&
-               Mathf.Approximately(_spriteButton.color.a, _targetColor.a))
+            if (other.GetComponent<Player>())
             {
-                ButtonFullPressed?.Invoke();
+                if (_changeColorCoroutine != null)
+                {
+                    StopCoroutine(_changeColorCoroutine);
+                }
+
+                _currentColor = _spriteButton.color;
+                _changeColorCoroutine = StartCoroutine(ReturnToOriginalColor(_currentColor));
             }
-
-            yield return null;
         }
-    }
 
-    private IEnumerator ReturnToOriginalColor(Color currentColor)
-    {
-        float elapsedTime = 0;
-
-        while (elapsedTime < _transitionDuration)
+        private IEnumerator FillColor(Color currentColor)
         {
-            elapsedTime += Time.deltaTime;
-            float fillPercentage = elapsedTime / _transitionDuration;
-            _spriteButton.color = Color.Lerp(currentColor, _startColor, fillPercentage);
-            yield return null;
+            float elapsedTime = 0;
+
+            while (elapsedTime < _transitionDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float fillPercentage = elapsedTime / _transitionDuration;
+                _spriteButton.color = Color.Lerp(currentColor, _targetColor, fillPercentage);
+
+                if (Mathf.Approximately(_spriteButton.color.r, _targetColor.r) &&
+                   Mathf.Approximately(_spriteButton.color.g, _targetColor.g) &&
+                   Mathf.Approximately(_spriteButton.color.b, _targetColor.b) &&
+                   Mathf.Approximately(_spriteButton.color.a, _targetColor.a))
+                {
+                    ButtonFullPressed?.Invoke();
+                }
+
+                yield return null;
+            }
+        }
+
+        private IEnumerator ReturnToOriginalColor(Color currentColor)
+        {
+            float elapsedTime = 0;
+
+            while (elapsedTime < _transitionDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float fillPercentage = elapsedTime / _transitionDuration;
+                _spriteButton.color = Color.Lerp(currentColor, _startColor, fillPercentage);
+                yield return null;
+            }
         }
     }
 }
