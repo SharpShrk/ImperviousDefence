@@ -1,20 +1,19 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Bullets
 {
-    public class BulletPlayerPool : BulletPool
+    public class BulletPlayerPool : BulletPool<BulletPlayer>
     {
         protected override void InitializePool()
         {
-            _bulletPool = new Queue<GameObject>();
+            _bulletPool = new Queue<BulletPlayer>();
 
             for (int i = 0; i < _initialPoolSize; i++)
             {
-                GameObject bullet = Instantiate(_bulletPrefab);
-                bullet.GetComponent<BulletPlayer>().Init(this);
+                BulletPlayer bullet = Instantiate(_bulletPrefab);
+                bullet.Init(this);
 
-                bullet.SetActive(false);
+                bullet.gameObject.SetActive(false);
                 bullet.transform.SetParent(_bulletContainer.transform);
                 _bulletPool.Enqueue(bullet);
             }

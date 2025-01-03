@@ -19,11 +19,6 @@ namespace TurretScripts
 
         public abstract void Upgrade();
 
-        public float GetValue()
-        {
-            return Value;
-        }
-
         public int GetLevel()
         {
             return Level;

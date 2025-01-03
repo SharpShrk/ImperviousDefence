@@ -10,8 +10,7 @@ namespace UserInterface
         [SerializeField] private TMP_Text _message;
         [SerializeField] private GameObject _panel;
         [SerializeField] private Canvas[] _guiCanvases;
-
-        private bool _isPaused = false;
+        [SerializeField] private GamePauseHandler _gamePauseHandler;
 
         private void OnEnable()
         {
@@ -31,13 +30,9 @@ namespace UserInterface
 
             HideGUICanvas();
 
-            if (Time.timeScale == 0)
+            if (_gamePauseHandler.IsPaused == false)
             {
-                _isPaused = true;
-            }
-            else
-            {
-                Time.timeScale = 0;
+                _gamePauseHandler.PauseGame();
             }
         }
 
@@ -47,12 +42,10 @@ namespace UserInterface
 
             OpenGUICanvas();
 
-            if (_isPaused == false)
+            if (_gamePauseHandler.IsPaused == false)
             {
-                Time.timeScale = 1;
+                _gamePauseHandler.ResumeGame();
             }
-
-            _isPaused = false;
         }
 
         private void HideGUICanvas()

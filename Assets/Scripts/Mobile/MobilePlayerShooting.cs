@@ -7,6 +7,8 @@ namespace Mobile
 {
     public class MobilePlayerShooting : MonoBehaviour
     {
+        private const string AnimatorTriggerShoot = "Shoot";
+
         [SerializeField] private Transform _gunTransform;
         [SerializeField] private CameraShake _cameraShake;
         [SerializeField] private float _fireRate = 0.2f;
@@ -19,11 +21,13 @@ namespace Mobile
         private bool _canShoot = true;
         private Coroutine _shootingCoroutine;
         private Player _player;
+        private WaitForSeconds _waitFireRate;
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
             _player = GetComponent<Player>();
+            _waitFireRate = new WaitForSeconds(_fireRate);
         }
 
         private void FixedUpdate()
@@ -66,18 +70,19 @@ namespace Mobile
                     Shoot();
                 }
 
-                yield return new WaitForSeconds(_fireRate);
+                yield return _waitFireRate;
             }
         }
 
         private void Shoot()
         {
-            GameObject bullet = _bulletPool.GetBullet();
+            BulletPlayer bullet = _bulletPool.GetBullet();
             bullet.transform.position = _gunTransform.position;
             bullet.transform.rotation = _gunTransform.rotation;
+
             _animator.SetLayerWeight(1, 1);
-            _animator.SetTrigger("Shoot");
-            _cameraShake.InitiateShake();
+            _animator.SetTrigger(AnimatorTriggerShoot);
+            _cameraShake.TryStartShake();
             _audioSource.Play();
 
             _canShoot = false;
@@ -86,7 +91,7 @@ namespace Mobile
 
         private IEnumerator ShootingDelay()
         {
-            yield return new WaitForSeconds(_fireRate);
+            yield return _waitFireRate;
             _animator.SetLayerWeight(1, 0);
             _canShoot = true;
         }

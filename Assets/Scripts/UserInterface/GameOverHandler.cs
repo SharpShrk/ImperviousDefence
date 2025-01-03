@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using VContainer;
 using WalletAndScore;
 using Wave;
 using Yandex;
@@ -30,10 +31,17 @@ namespace UserInterface
         [SerializeField] private Wallet _wallet;
         [SerializeField] private GameOverChecker _gameOver;
         [SerializeField] private AdPlayer _adPlayer;
+        [SerializeField] private GamePauseHandler _gamePauseHandler;
 
         private LeaderboardLoader _leaderboardLoader;
 
         public event Action<int> GameOvered;
+
+        [Inject]
+        public void Construct(LeaderboardLoader leaderboardLoader)
+        {
+            _leaderboardLoader = leaderboardLoader;
+        }
 
         private void OnEnable()
         {
@@ -55,7 +63,7 @@ namespace UserInterface
 
         private void OnInitGameOverPanel()
         {
-            Time.timeScale = 0;
+            _gamePauseHandler.PauseGame();
             _scorePanel.SetActive(true);
             _bagUI.SetActive(false);
             _upRightCornerUI.SetActive(false);
@@ -65,8 +73,7 @@ namespace UserInterface
             _wavesRecord.text = _waves.CurrentWave.ToString();
             _coinReward.text = _wallet.Money.ToString();
 
-            _leaderboardLoader = FindObjectOfType<LeaderboardLoader>();
-            _leaderboardLoader.TryRunToRegisterNewMaxScore();
+            _leaderboardLoader.TryRunToRegisterNewMaxScore();           
         }
 
         private void OnMenuButtonClick()

@@ -34,7 +34,7 @@ namespace TurretScripts
             _bulletPool = bulletPool;
         }
 
-        public void PlaceTurret()
+        public void Place()
         {
             IsPlaced = true;
             gameObject.SetActive(true);
@@ -101,7 +101,7 @@ namespace TurretScripts
         {
             while (IsPlaced)
             {
-                var attackCooldown = new WaitForSeconds(_currentAttackCooldown);
+                WaitForSeconds attackCooldown = new WaitForSeconds(_currentAttackCooldown);
                 GameObject target = SearchAttackTarget();
 
                 if (target != null)
@@ -116,12 +116,11 @@ namespace TurretScripts
 
         private void Shoot()
         {
-            GameObject bullet = _bulletPool.GetBullet();
+            BulletTurret bullet = _bulletPool.GetBullet();
             bullet.transform.position = _shootPoint.position;
             bullet.transform.rotation = _shootPoint.rotation;
 
-            BulletTurret bulletScript = bullet.GetComponent<BulletTurret>();
-            bulletScript.SetDamage((int)_damage);
+            bullet.SetDamage((int)_damage);
         }
     }
 }

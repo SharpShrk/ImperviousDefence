@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace UserInterface
+namespace TurretsUI
 {
     public class PlaceTurretView : MonoBehaviour
     {

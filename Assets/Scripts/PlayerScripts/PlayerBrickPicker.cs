@@ -18,26 +18,16 @@ namespace PlayerScripts
 
         private void PickBrick()
         {
-            if (_bricksStorage.BrickCount == 0)
-            {
-                return;
-            }
+            if (_bricksStorage.BrickCount == 0) return;
 
             int bricksNeeded = _brickBag.AvailableCapacity;
-
             int actualBricksToPick = Mathf.Min(_bricksStorage.BrickCount, bricksNeeded);
 
-            if (actualBricksToPick == 0)
-            {
-                return;
-            }
+            if (actualBricksToPick == 0) return;
 
             _bricksStorage.RemoveBricks(actualBricksToPick);
 
-            if (!_brickBag.AddBricks(actualBricksToPick))
-            {
-                return;
-            }
+            _brickBag.AddBricks(actualBricksToPick);
         }
     }
 }

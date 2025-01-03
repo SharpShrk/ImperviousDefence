@@ -1,7 +1,3 @@
-using Enemies;
-using System.Collections;
-using UnityEngine;
-
 namespace Bullets
 {
     public class BulletTurret : Bullet
@@ -15,7 +11,7 @@ namespace Bullets
 
         protected override void ReturnToPool()
         {
-            _bulletPool.ReturnBullet(gameObject);
+            _bulletPool.ReturnBullet(this);
         }
     }
 }

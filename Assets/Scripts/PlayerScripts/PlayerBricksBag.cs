@@ -19,30 +19,28 @@ namespace PlayerScripts
 
         public bool AddBricks(int count)
         {
-            if (_currentBrickCount + count <= _maxBrickCapacity)
+            bool canAddBricks = _currentBrickCount + count <= _maxBrickCapacity;
+
+            if (canAddBricks)
             {
                 _currentBrickCount += count;
                 OnBrickCountChanging?.Invoke(_currentBrickCount);
-                return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return canAddBricks;
         }
 
         public bool RemoveBricks(int count)
         {
-            if (_currentBrickCount - count >= 0)
+            bool canRemoveBricks = _currentBrickCount - count >= 0;
+
+            if (canRemoveBricks)
             {
                 _currentBrickCount -= count;
                 OnBrickCountChanging?.Invoke(_currentBrickCount);
-                return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return canRemoveBricks;
         }
     }
 }

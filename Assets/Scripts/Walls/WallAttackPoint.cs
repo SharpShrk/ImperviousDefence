@@ -38,7 +38,7 @@ namespace Walls
         {
             if (_occupyingEnemy != null)
             {
-                _occupyingEnemy.OnEnemyDiedForAttackPoint += ReleasePoint;
+                _occupyingEnemy.OnEnemyDeath += ReleasePoint;
             }
         }
 
@@ -46,7 +46,7 @@ namespace Walls
         {
             if (_occupyingEnemy != null)
             {
-                _occupyingEnemy.OnEnemyDiedForAttackPoint -= ReleasePoint;
+                _occupyingEnemy.OnEnemyDeath -= ReleasePoint;
             }
         }
 

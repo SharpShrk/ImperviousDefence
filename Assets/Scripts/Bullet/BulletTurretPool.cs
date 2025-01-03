@@ -1,20 +1,19 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Bullets
 {
-    public class BulletTurretPool : BulletPool
+    public class BulletTurretPool : BulletPool<BulletTurret>
     {
         protected override void InitializePool()
         {
-            _bulletPool = new Queue<GameObject>();
+            _bulletPool = new Queue<BulletTurret>();
 
             for (int i = 0; i < _initialPoolSize; i++)
             {
-                GameObject bullet = Instantiate(_bulletPrefab);
-                bullet.GetComponent<BulletTurret>().Init(this);
+                BulletTurret bullet = Instantiate(_bulletPrefab);
+                bullet.Init(this);
 
-                bullet.SetActive(false);
+                bullet.gameObject.SetActive(false);
                 bullet.transform.SetParent(_bulletContainer.transform);
                 _bulletPool.Enqueue(bullet);
             }

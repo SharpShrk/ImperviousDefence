@@ -7,7 +7,6 @@ using Wave;
 namespace Enemies
 {
     [RequireComponent(typeof(Waves))]
-
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private float _waveDelay = 3.0f;
@@ -22,20 +21,20 @@ namespace Enemies
         private bool _gameOver = false;
         private int _activeEnemies = 0;
         private Coroutine _enemySpawnCoroutine;
+        private WaitForSeconds _waitWaveDelay;
 
         public event Action WaveCleared;
-
-        public int ActiveEnemies => _activeEnemies;
 
         private void Awake()
         {
             _attackPointQueue = GetComponent<AttackPointQueue>();
             _waves = GetComponent<Waves>();
+            _waitWaveDelay = new WaitForSeconds(_waveDelay);
         }
 
         private void Start()
         {
-            _enemyPool.InitializeEnemyPool();
+            _enemyPool.Initialize();
             _enemySpawnCoroutine = StartCoroutine(SpawnWaves());
             _activeEnemies = _enemyPool.GetCountActiveEnemies();
         }
@@ -60,11 +59,8 @@ namespace Enemies
 
         private IEnumerator SpawnWaves()
         {
-            yield return new WaitForSeconds(_waveDelay);
-
+            yield return _waitWaveDelay;
             SpawnEnemyWave();
-
-            yield break;
         }
 
         private void SpawnEnemyWave()
@@ -77,14 +73,14 @@ namespace Enemies
 
             for (int i = 0; i < enemyCount; i++)
             {
-                GameObject enemy = _enemyPool.GetEnemyFromPool();
+                GameObject enemy = _enemyPool.GetEnemy();
 
                 if (enemy != null)
                 {
                     Enemy enemyScript = enemy.GetComponent<Enemy>();
                     EnemyHealth enemyHealthScript = enemy.GetComponent<EnemyHealth>();
 
-                    enemyHealthScript.OnEnemyDied += OnEnemyDied;
+                    enemyHealthScript.OnEnemyDying += OnEnemyDied;
                     enemyHealthScript.HideHealthBar();
 
                     enemyScript.Initialize(enemyHealth, enemyAttack);
@@ -123,7 +119,7 @@ namespace Enemies
             CheckSpawnedEnemy();
             _rewardCollector.TakeReward(rewardMoney, rewardScore);
 
-            enemy.OnEnemyDied -= OnEnemyDied;
+            enemy.OnEnemyDying -= OnEnemyDied;
         }
     }
 }

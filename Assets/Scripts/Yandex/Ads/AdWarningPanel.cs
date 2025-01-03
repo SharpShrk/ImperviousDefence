@@ -10,17 +10,22 @@ namespace Yandex
         [SerializeField] private GameObject _panel;
         [SerializeField] private TMP_Text _timerText;
         [SerializeField] private int _duration = 3;
+        [SerializeField] private GamePauseHandler _pauseHandler;
+
+        private float _countdownInterval = 1f;
+        private WaitForSecondsRealtime _waitCountdownInterval;
 
         public event Action AdCountdownFinished;
 
         private void Start()
         {
             _panel.SetActive(false);
+            _waitCountdownInterval = new WaitForSecondsRealtime(_countdownInterval);
         }
 
         public void StartAdCountdown()
         {
-            Time.timeScale = 0;
+            _pauseHandler.PauseGame();
             _panel.SetActive(true);
             _timerText.text = _duration.ToString();
 
@@ -34,14 +39,14 @@ namespace Yandex
             while (remainingTime > 0)
             {
                 _timerText.text = remainingTime.ToString();
-                yield return new WaitForSecondsRealtime(1f);
+                yield return _waitCountdownInterval;
                 remainingTime--;
             }
 
             AdCountdownFinished?.Invoke();
 
             _panel.SetActive(false);
-            Time.timeScale = 1;
+            _pauseHandler.ResumeGame();
         }
     }
 }

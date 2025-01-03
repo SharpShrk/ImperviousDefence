@@ -3,6 +3,7 @@ using Walls;
 
 namespace BrickFactories
 {
+    [RequireComponent(typeof(BrickFactory))]
     public class BrickFactoryConfiguration : MonoBehaviour
     {
         [SerializeField] private GameObject _brickPrefab;

@@ -15,7 +15,7 @@ public class CameraShake : MonoBehaviour
         _originalLocalEulerAngles = _cameraTransform.localEulerAngles;
     }
 
-    public void InitiateShake()
+    public void TryStartShake()
     {
         if (Time.timeScale == 1)
         {

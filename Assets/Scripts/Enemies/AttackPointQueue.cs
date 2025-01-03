@@ -7,6 +7,7 @@ namespace Enemies
 {
     public class AttackPointQueue : MonoBehaviour
     {
+        [SerializeField] private WallContainer _wallContainer;
         private Queue<Enemy> _waitingEnemies = new Queue<Enemy>();
         private List<WallAttackPoint> _availableAttackPoints = new List<WallAttackPoint>();
 
@@ -18,7 +19,7 @@ namespace Enemies
         public void AddEnemyToQueue(Enemy enemy)
         {
             _waitingEnemies.Enqueue(enemy);
-            TryAssignAttackPoint();
+            AssignAttackPoint();
         }
 
         public void ReleaseAttackPoint(WallAttackPoint point)
@@ -52,7 +53,7 @@ namespace Enemies
             return Vector3.Distance(enemy.transform.position, point.transform.position);
         }
 
-        private void TryAssignAttackPoint()
+        private void AssignAttackPoint()
         {
             while (_waitingEnemies.Count > 0 && _availableAttackPoints.Count > 0)
             {
@@ -76,7 +77,7 @@ namespace Enemies
 
                 if (closestEnemy != null && closestPoint != null)
                 {
-                    _waitingEnemies = new Queue<Enemy>(_waitingEnemies.Where(e => e != closestEnemy));
+                    _waitingEnemies = new Queue<Enemy>(_waitingEnemies.Where(waitingEnemy => waitingEnemy != closestEnemy));
                     closestEnemy.AssignAttackPoint(closestPoint);
                     closestPoint.SetOccupied(closestEnemy);
                     _availableAttackPoints.Remove(closestPoint);
@@ -86,7 +87,7 @@ namespace Enemies
 
         private List<WallAttackPoint> GetAllAvailableAttackPoints()
         {
-            Wall[] walls = FindObjectsOfType<Wall>();
+            Wall[] walls = _wallContainer.Walls;
             List<WallAttackPoint> availableAttackPoints = new();
 
             foreach (var wall in walls)

@@ -10,6 +10,7 @@ namespace UserInterface
         [SerializeField] private Button _cancelButton;
         [SerializeField] private GameObject _panel;
         [SerializeField] private InfoMessagePanel _infoPanel;
+        [SerializeField] private GamePauseHandler _pauseHandler;
 
         public event UnityAction OnButtonConfirmProductionClick;
 
@@ -27,7 +28,7 @@ namespace UserInterface
 
         private void OnClosePanel()
         {
-            Time.timeScale = 1;
+            _pauseHandler.ResumeGame();
             _panel.SetActive(false);
         }
 

@@ -13,19 +13,25 @@ namespace LeaderBoard
         private const string EnglishCode = "en";
         private const string RussianCode = "ru";
         private const string TurkishCode = "tr";
-        private const string _leaderboardName = "IDLeaderboard";
+        private const string LeaderboardNameText = "IDLeaderboard";
 
         [SerializeField] private Record[] _records;
         [SerializeField] private PlayerRecord _playerRecord;
-
+        
         private Score _score;
 
-        public string LeaderboardName => _leaderboardName;
+        public string LeaderboardName => LeaderboardNameText;
+
+        private void OnDestroy()
+        {
+            Score.OnObjectLoaded -= HandleScoreLoaded;
+        }
 
         private void Start()
         {
             DisableAllRecords();
             DontDestroyOnLoad(gameObject);
+            Score.OnObjectLoaded += HandleScoreLoaded;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         LoadYandexLeaderboard();
@@ -42,16 +48,19 @@ namespace LeaderBoard
 #endif
         }
 
+        private void HandleScoreLoaded(Score score)
+        {
+            _score = score;
+        }
+
         private void TryRegisterNewMaxScore()
         {
-            _score = FindObjectOfType<Score>();
-
-            Leaderboard.GetPlayerEntry(_leaderboardName,
+            Leaderboard.GetPlayerEntry(LeaderboardNameText,
                 result =>
                 {
                     if (_score.ScorePoints > result.score)
                     {
-                        Leaderboard.SetScore(_leaderboardName, _score.ScorePoints);
+                        Leaderboard.SetScore(LeaderboardNameText, _score.ScorePoints);
                     }
                 });
         }
@@ -72,7 +81,7 @@ namespace LeaderBoard
             {
                 PlayerAccount.RequestPersonalProfileDataPermission();
 
-                Leaderboard.GetEntries(_leaderboardName, (result) =>
+                Leaderboard.GetEntries(LeaderboardNameText, (result) =>
                 {
                     int recordsToShow =
                         result.entries.Length <= MaxRecordsToShow ? result.entries.Length : MaxRecordsToShow;
@@ -116,7 +125,7 @@ namespace LeaderBoard
         {
             if (YandexGamesSdk.IsInitialized)
             {
-                Leaderboard.GetPlayerEntry(_leaderboardName, OnSuccessCallback);
+                Leaderboard.GetPlayerEntry(LeaderboardNameText, OnSuccessCallback);
             }
         }
 

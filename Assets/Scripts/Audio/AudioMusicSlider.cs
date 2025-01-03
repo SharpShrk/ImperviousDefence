@@ -1,11 +1,15 @@
 using System;
-using UnityEngine;
 
 namespace Audio
 {
     public class AudioMusicSlider : BaseAudioSlider
     {
-        public event Action<float> OnMusicVolumeChanging = volume => { };
+        public event Action<float> MusicVolumeChanged;
+
+        private void OnDisable()
+        {
+            _slider.onValueChanged.RemoveListener(OnValueChanged);
+        }
 
         protected void Start()
         {
@@ -15,7 +19,7 @@ namespace Audio
 
         protected override void OnValueChanged(float value)
         {
-            OnMusicVolumeChanging.Invoke(value);
+            MusicVolumeChanged?.Invoke(value);
         }
     }
 }

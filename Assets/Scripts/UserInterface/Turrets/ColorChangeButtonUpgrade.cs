@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace UserInterface
+namespace TurretsUI
 {
     public class ColorChangeButtonUpgrade : MonoBehaviour
     {
@@ -52,6 +52,14 @@ namespace UserInterface
             }
         }
 
+        private bool IsColorApproximatelyEqual(Color colorA, Color colorB)
+        {
+            return Mathf.Approximately(colorA.r, colorB.r) &&
+                   Mathf.Approximately(colorA.g, colorB.g) &&
+                   Mathf.Approximately(colorA.b, colorB.b) &&
+                   Mathf.Approximately(colorA.a, colorB.a);
+        }
+
         private IEnumerator FillColor(Color currentColor)
         {
             float elapsedTime = 0;
@@ -62,10 +70,7 @@ namespace UserInterface
                 float fillPercentage = elapsedTime / _transitionDuration;
                 _spriteButton.color = Color.Lerp(currentColor, _targetColor, fillPercentage);
 
-                if (Mathf.Approximately(_spriteButton.color.r, _targetColor.r) &&
-                   Mathf.Approximately(_spriteButton.color.g, _targetColor.g) &&
-                   Mathf.Approximately(_spriteButton.color.b, _targetColor.b) &&
-                   Mathf.Approximately(_spriteButton.color.a, _targetColor.a))
+                if (IsColorApproximatelyEqual(_spriteButton.color, _targetColor))
                 {
                     ButtonFullPressed?.Invoke();
                 }

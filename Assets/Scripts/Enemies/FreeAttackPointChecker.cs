@@ -6,35 +6,18 @@ namespace Enemies
 {
     public class FreeAttackPointChecker : MonoBehaviour
     {
-        private Wall[] _walls;
+        [SerializeField] private WallContainer _wallContainer;
+
         private List<WallAttackPoint> _attackPoints = new();
-        private bool _isAllAttackPointsOccupied;
 
         private void Start()
         {
-            _isAllAttackPointsOccupied = false;
             FindWallsAndAttackPoints();
-        }
-
-        public bool CheckAttackPoints(int countAliveEnemies)
-        {
-            if (_attackPoints.Count == countAliveEnemies)
-            {
-                _isAllAttackPointsOccupied = true;
-            }
-            else
-            {
-                _isAllAttackPointsOccupied = false;
-            }
-
-            return _isAllAttackPointsOccupied;
         }
 
         private void FindWallsAndAttackPoints()
         {
-            _walls = FindObjectsOfType<Wall>();
-
-            foreach (var wall in _walls)
+            foreach (var wall in _wallContainer.Walls)
             {
                 for (int i = 0; i < wall.AttackPoints.Count; i++)
                 {

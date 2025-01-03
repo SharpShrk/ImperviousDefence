@@ -1,5 +1,5 @@
+using TurretsUI;
 using UnityEngine;
-using UserInterface;
 
 namespace TurretScripts
 {
@@ -27,7 +27,7 @@ namespace TurretScripts
             if (_turret.IsPlaced == true)
                 return;
 
-            _turret.PlaceTurret();
+            _turret.Place();
         }
 
         public int GetLevelAttackSpeed()

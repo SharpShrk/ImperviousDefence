@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Walls;
 
 namespace Enemies
 {
@@ -8,11 +9,12 @@ namespace Enemies
         [SerializeField] private int _initialPoolSize = 20;
         [SerializeField] private GameObject _enemyPrefab;
         [SerializeField] private GameObject _enemyContainer;
+        [SerializeField] private Wall[] _walls;
 
         private List<GameObject> _enemiesPool;
         private List<Enemy> _enemies;
 
-        public void InitializeEnemyPool()
+        public void Initialize()
         {
             _enemiesPool = new List<GameObject>();
             _enemies = new List<Enemy>();
@@ -22,6 +24,7 @@ namespace Enemies
                 GameObject enemy = Instantiate(_enemyPrefab);
 
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
+                EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
 
                 _enemies.Add(enemyScript);
 
@@ -31,7 +34,7 @@ namespace Enemies
             }
         }
 
-        public GameObject GetEnemyFromPool()
+        public GameObject GetEnemy()
         {
             foreach (GameObject enemy in _enemiesPool)
             {
@@ -42,6 +45,8 @@ namespace Enemies
             }
 
             GameObject newEnemy = Instantiate(_enemyPrefab);
+            EnemyBehavior enemyBehavior = newEnemy.GetComponent<EnemyBehavior>();
+
             newEnemy.gameObject.SetActive(false);
             newEnemy.transform.SetParent(_enemyContainer.transform);
             _enemiesPool.Add(newEnemy);

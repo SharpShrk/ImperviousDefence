@@ -9,8 +9,7 @@ namespace UserInterface
         [SerializeField] private Button _closeButton;
         [SerializeField] private GameObject _menuPausePanel;
         [SerializeField] private Canvas[] _guiCanvases;
-
-        private bool _isPaused = false;
+        [SerializeField] private GamePauseHandler _gamePauseHandler;
 
         private void OnEnable()
         {
@@ -32,13 +31,9 @@ namespace UserInterface
 
             HideGUICanvas();
 
-            if (Time.timeScale == 0)
+            if (_gamePauseHandler.IsPaused == false)
             {
-                _isPaused = true;
-            }
-            else
-            {
-                Time.timeScale = 0;
+                _gamePauseHandler.PauseGame();
             }
         }
 
@@ -49,12 +44,10 @@ namespace UserInterface
 
             OpenGUICanvas();
 
-            if (_isPaused == false)
+            if (_gamePauseHandler.IsPaused)
             {
-                Time.timeScale = 1;
+                _gamePauseHandler.ResumeGame();
             }
-
-            _isPaused = false;
         }
 
         private void HideGUICanvas()

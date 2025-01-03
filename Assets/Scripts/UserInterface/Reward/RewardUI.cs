@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace UserInterface
+namespace UIReward
 {
     public abstract class RewardUI : MonoBehaviour
     {

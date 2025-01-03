@@ -6,6 +6,10 @@ namespace Mobile
 {
     public class MobilePlayerMovement : MonoBehaviour
     {
+        private const string AnimatorTriggerRunningForward = "isRunningForward";
+        private const string AnimatorTriggerRunningBackward = "isRunningBackward";
+        private const string AnimatorTriggerRunningRight = "isRunningRight";
+        private const string AnimatorTriggerRunningLeft = "isRunningLeft";
         private const float MovementThreshold = 0.1f;
         private const float ForwardAngleThreshold = 45f;
         private const float BackwardAngleThreshold = 135f;
@@ -45,10 +49,10 @@ namespace Mobile
 
         private void SetRunningAnimations(Vector3 direction, Vector3 lookDirection)
         {
-            _animator.SetBool("isRunningForward", false);
-            _animator.SetBool("isRunningBackward", false);
-            _animator.SetBool("isRunningRight", false);
-            _animator.SetBool("isRunningLeft", false);
+            _animator.SetBool(AnimatorTriggerRunningForward, false);
+            _animator.SetBool(AnimatorTriggerRunningBackward, false);
+            _animator.SetBool(AnimatorTriggerRunningRight, false);
+            _animator.SetBool(AnimatorTriggerRunningLeft, false);
 
             float angle = Vector3.Angle(direction, lookDirection);
             float crossProduct = Vector3.Cross(direction, lookDirection).y;
@@ -57,21 +61,21 @@ namespace Mobile
             {
                 if (angle < ForwardAngleThreshold)
                 {
-                    _animator.SetBool("isRunningForward", true);
+                    _animator.SetBool(AnimatorTriggerRunningForward, true);
                 }
                 else if (angle > BackwardAngleThreshold)
                 {
-                    _animator.SetBool("isRunningBackward", true);
+                    _animator.SetBool(AnimatorTriggerRunningBackward, true);
                 }
                 else
                 {
                     if (crossProduct > DirectionThreshold)
                     {
-                        _animator.SetBool("isRunningRight", true);
+                        _animator.SetBool(AnimatorTriggerRunningRight, true);
                     }
                     else
                     {
-                        _animator.SetBool("isRunningLeft", true);
+                        _animator.SetBool(AnimatorTriggerRunningLeft, true);
                     }
                 }
             }

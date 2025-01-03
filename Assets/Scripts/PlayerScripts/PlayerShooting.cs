@@ -11,6 +11,8 @@ namespace PlayerScripts
 
     public class PlayerShooting : MonoBehaviour
     {
+        private const string AnimatorTriggerShoot = "Shoot";
+
         [SerializeField] private Transform _gunTransform;
         [SerializeField] private CameraShake _cameraShake;
         [SerializeField] private float _fireRate = 0.2f;
@@ -21,14 +23,14 @@ namespace PlayerScripts
         private Animator _animator;
         private bool _canShoot = true;
         private Coroutine _shootingCoroutine;
-        private Player _player;
+        private WaitForSeconds _waitFireRate;
 
         private void Start()
         {
             _inputHandler = new PlayerInputHandler(Camera.main);
             _inputHandler.Enable();
             _animator = GetComponent<Animator>();
-            _player = GetComponent<Player>();
+            _waitFireRate = new WaitForSeconds(_fireRate);
 
             _inputHandler.InputActions.Player.Shoot.performed += ctx => StartShooting();
             _inputHandler.InputActions.Player.Shoot.canceled += ctx => StopShooting();
@@ -65,7 +67,7 @@ namespace PlayerScripts
                     Shoot();
                 }
 
-                yield return new WaitForSeconds(_fireRate);
+                yield return _waitFireRate;
             }
         }
 
@@ -76,12 +78,12 @@ namespace PlayerScripts
                 return;
             }
 
-            GameObject bullet = _bulletPool.GetBullet();
+            BulletPlayer bullet = _bulletPool.GetBullet();
             bullet.transform.position = _gunTransform.position;
             bullet.transform.rotation = _gunTransform.rotation;
             _animator.SetLayerWeight(1, 1);
-            _animator.SetTrigger("Shoot");
-            _cameraShake.InitiateShake();
+            _animator.SetTrigger(AnimatorTriggerShoot);
+            _cameraShake.TryStartShake();
             _audioSource.Play();
 
             _canShoot = false;
@@ -111,7 +113,7 @@ namespace PlayerScripts
 
         private IEnumerator ShootingDelay()
         {
-            yield return new WaitForSeconds(_fireRate);
+            yield return _waitFireRate;
             _animator.SetLayerWeight(1, 0);
             _canShoot = true;
         }

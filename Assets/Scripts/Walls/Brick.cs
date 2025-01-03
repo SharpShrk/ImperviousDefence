@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -15,11 +14,11 @@ namespace Walls
 
         private int _currentHealthPoints;
         private Wall _wall;
+        private int _brickIndex;
+        private Vector3 _initialPosition;
 
-        public int BrickIndex { get; private set; }
-
-        public Vector3 InitialPosition { get; private set; }
-
+        public int BrickIndex => _brickIndex;
+        public Vector3 InitialPosition => _initialPosition;
         public Vector3 BrickSize => _size;
 
         private void Start()
@@ -29,12 +28,12 @@ namespace Walls
 
         public void SetBrickIndex(int index)
         {
-            BrickIndex = index;
+            _brickIndex = index;
         }
 
         public void SetInitialPosition(Vector3 position)
         {
-            InitialPosition = position;
+            _initialPosition = position;
         }
 
         public void SetInitWall(Wall wall)

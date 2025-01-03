@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Bullets
 {
+    [RequireComponent(typeof(Rigidbody))]
     public abstract class Bullet : MonoBehaviour
     {
         [SerializeField] protected float _speed = 10f;
@@ -12,12 +13,13 @@ namespace Bullets
 
         protected int _damage;
         protected Rigidbody _rigidbody;
-        //private BulletPool _bulletPool;
+        protected WaitForSeconds _waitLifetime;
 
         protected void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _damage = _defaultDamage;
+            _waitLifetime = new WaitForSeconds(_lifetime);
         }
 
         protected void OnEnable()
@@ -44,24 +46,14 @@ namespace Bullets
             ReturnToPool();
         }
 
-        /*public abstract void Init(BulletPool bulletPool);
-        {
-            _bulletPool = bulletPool;
-        }*/
-
         public void SetDamage(int damage)
         {
             _damage = damage;
         }
 
-        public int GetDefaultDamage()
-        {
-            return _defaultDamage;
-        }
-
         protected IEnumerator DisableBulletAfterTime()
         {
-            yield return new WaitForSeconds(_lifetime);
+            yield return _waitLifetime;
             ReturnToPool();
         }
 

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UserInterface
+namespace TurretsUI
 {
     public abstract class TurretButtonUpgrade : MonoBehaviour
     {

@@ -13,11 +13,15 @@ namespace Enemies
         private int _health;
         private int _maxHealth;
         private bool _isDied;
+        private WaitForSeconds _deathWait;
 
-        public event Action<int, int, EnemyHealth> OnEnemyDied;
-        public event Action OnEnemyDie;
+        public event Action<int, int, EnemyHealth> OnEnemyDying;
+        public event Action OnEnemyDyingNoParams;
 
-        public int Health => _health;
+        private void Awake()
+        {
+            _deathWait = new WaitForSeconds(_deathDuration);
+        }
 
         public void Initialize(int health)
         {
@@ -37,15 +41,13 @@ namespace Enemies
                 if (_health <= 0)
                 {
                     _isDied = true;
-
                     _enemyMovement.StopMoving();
                     _enemyHealthBar.HideHealthBar();
 
-                    OnEnemyDied?.Invoke(0, 0, this);
-                    OnEnemyDie?.Invoke();
+                    OnEnemyDying?.Invoke(0, 0, this);
+                    OnEnemyDyingNoParams?.Invoke();
 
                     gameObject.GetComponent<Collider>().enabled = false;
-
                     StartCoroutine(WaitForDieAnimationEnd());
                 }
             }
@@ -58,8 +60,7 @@ namespace Enemies
 
         private IEnumerator WaitForDieAnimationEnd()
         {
-            yield return new WaitForSeconds(_deathDuration);
-
+            yield return _deathWait;
             gameObject.SetActive(false);
         }
     }

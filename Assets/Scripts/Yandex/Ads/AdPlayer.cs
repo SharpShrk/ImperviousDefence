@@ -15,7 +15,8 @@ namespace Yandex
         [SerializeField] private AdWarningPanel _adWarningPanel;
 
         private bool _adIsPlaying;
-        private VolumeHandler _audioResources;
+        private AudioHandler _audioResources;
+        private GamePauseHandler _gamePauseHandler;
 
         public event Action VideoAdPlayed;
 
@@ -23,7 +24,8 @@ namespace Yandex
 
         private void OnEnable()
         {
-            _audioResources = gameObject.GetComponent<VolumeHandler>();
+            _audioResources = gameObject.GetComponent<AudioHandler>();
+            _gamePauseHandler = gameObject.GetComponent<GamePauseHandler>();
             _enemySpawner.WaveCleared += OnTryShowInterAd;
             _adWarningPanel.AdCountdownFinished += OnShowInterstitialAd;
         }
@@ -60,13 +62,15 @@ namespace Yandex
 
         private void OnClosed()
         {
-            _audioResources.UnmuteAndResume();
+            _audioResources.UnmuteAudio();
+            _gamePauseHandler.ResumeGame();
             _adIsPlaying = false;
         }
 
         private void OnPlayed()
         {
-            _audioResources.MuteAndPause();
+            _audioResources.MuteAudio();
+            _gamePauseHandler.PauseGame();
             _adIsPlaying = true;
         }
 
@@ -85,7 +89,8 @@ namespace Yandex
 
         private void OnClosedInterstitialAd(bool value)
         {
-            _audioResources.UnmuteAndResume();
+            _audioResources.UnmuteAudio();
+            _gamePauseHandler.ResumeGame();
             _adIsPlaying = false;
         }
     }

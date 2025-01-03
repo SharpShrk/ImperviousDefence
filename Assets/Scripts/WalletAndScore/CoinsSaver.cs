@@ -12,7 +12,6 @@ namespace WalletAndScore
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private GameOverHandler _gameOverPanel;
 
-
         private int _minStartMoneyValue = 100;
 
         private void OnEnable()

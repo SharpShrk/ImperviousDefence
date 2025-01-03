@@ -28,10 +28,10 @@ namespace MainMenuScene
 
         private void Start()
         {
-            foreach (Transform t in _panelTransform)
+            foreach (Transform tutorialPanel in _panelTransform)
             {
-                _panels.Add(t.gameObject);
-                t.gameObject.SetActive(false);
+                _panels.Add(tutorialPanel.gameObject);
+                tutorialPanel.gameObject.SetActive(false);
             }
 
             _panels[_page].SetActive(true);

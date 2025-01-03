@@ -4,5 +4,4 @@ namespace Enemies
     {
         void TakeDamage(int damage);
     }
-
 }

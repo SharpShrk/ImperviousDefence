@@ -10,11 +10,11 @@ namespace Walls
 
         private BrickPool _brickPool;
         private List<GameObject> _wallBlocks = new();
+        private List<GameObject> _destroyedBricks = new();
 
         public event UnityAction WallDestroed;
 
-        public List<GameObject> DestroyedBricks { get; private set; } = new();
-
+        public List<GameObject> DestroyedBricks => _destroyedBricks;
         public int RequiredBrickCount => _wallBlocks.Count;
 
         public List<Transform> AttackPoints
@@ -59,7 +59,7 @@ namespace Walls
         public void BrickDestroy(Brick brick)
         {
             _wallBlocks.Remove(brick.gameObject);
-            DestroyedBricks.Add(brick.gameObject);
+            _destroyedBricks.Add(brick.gameObject);
 
             EjectionDuplicateBrick(brick);
         }

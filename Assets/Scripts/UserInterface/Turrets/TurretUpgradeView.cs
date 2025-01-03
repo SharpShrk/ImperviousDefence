@@ -2,9 +2,10 @@ using Lean.Localization;
 using TurretScripts;
 using UnityEngine;
 using UnityEngine.UI;
+using UserInterface;
 using WalletAndScore;
 
-namespace UserInterface
+namespace TurretsUI
 {
     public class TurretUpgradeView : MonoBehaviour
     {

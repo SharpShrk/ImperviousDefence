@@ -1,7 +1,7 @@
 using UnityEngine;
 using WalletAndScore;
 
-namespace UserInterface
+namespace UIReward
 {
     public class ScoreUI : RewardUI
     {

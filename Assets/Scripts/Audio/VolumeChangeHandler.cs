@@ -9,6 +9,7 @@ namespace Audio
         private const string FxVolumeGroup = "FX_Sound";
         private const float ReferenceDecibels = 20f;
         private const float MinVolume = -80f;
+        private const float VolumeMuteThreshold = 0.0001f;
 
         [SerializeField] private AudioMixer _audioMixer;
         [SerializeField] private AudioMusicSlider _musicSlider;
@@ -17,13 +18,13 @@ namespace Audio
         private void OnEnable()
         {
             _soundFXSlider.OnSFXVolumeChanged += ChangeSFXVolume;
-            _musicSlider.OnMusicVolumeChanging += ChangeMusicVolume;
+            _musicSlider.MusicVolumeChanged += ChangeMusicVolume;
         }
 
         private void OnDisable()
         {
             _soundFXSlider.OnSFXVolumeChanged -= ChangeSFXVolume;
-            _musicSlider.OnMusicVolumeChanging -= ChangeMusicVolume;
+            _musicSlider.MusicVolumeChanged -= ChangeMusicVolume;
         }
 
         private void ChangeSFXVolume(float value)
@@ -38,7 +39,7 @@ namespace Audio
 
         private void SetVolume(string group, float value)
         {
-            if (value <= 0.0001f)
+            if (value <= VolumeMuteThreshold)
             {
                 _audioMixer.SetFloat(group, MinVolume);
             }

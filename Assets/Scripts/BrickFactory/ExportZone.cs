@@ -9,8 +9,12 @@ namespace BrickFactories
 
         public WallRepair GetWallRepairComponent()
         {
-            WallRepair wallRepair = _wall.GetComponent<WallRepair>();
-            return wallRepair;
+            if (_wall.TryGetComponent(out WallRepair wallRepair))
+            {
+                return wallRepair;
+            }
+
+            return null;
         }
     }
 }

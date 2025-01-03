@@ -4,7 +4,12 @@ namespace Audio
 {
     public class AudioSoundFXSlider : BaseAudioSlider
     {
-        public event Action<float> OnSFXVolumeChanged = volume => { };
+        public event Action<float> OnSFXVolumeChanged;
+
+        private void OnDisable()
+        {
+            _slider.onValueChanged.RemoveListener(OnValueChanged);
+        }
 
         protected void Start()
         {
@@ -14,7 +19,7 @@ namespace Audio
 
         protected override void OnValueChanged(float value)
         {
-            OnSFXVolumeChanged.Invoke(value);
+            OnSFXVolumeChanged?.Invoke(value);
         }
     }
 }

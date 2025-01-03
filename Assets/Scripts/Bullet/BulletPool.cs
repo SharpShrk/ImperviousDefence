@@ -3,40 +3,40 @@ using UnityEngine;
 
 namespace Bullets
 {
-    public abstract class BulletPool : MonoBehaviour
+    public abstract class BulletPool<T> : MonoBehaviour where T : Component
     {
-        [SerializeField] protected GameObject _bulletPrefab;
+        [SerializeField] protected T _bulletPrefab;
         [SerializeField] protected int _initialPoolSize = 10;
         [SerializeField] protected GameObject _bulletContainer;
 
-        protected Queue<GameObject> _bulletPool;
+        protected Queue<T> _bulletPool;
 
         protected void Awake()
         {
             InitializePool();
         }
 
-        public GameObject GetBullet()
+        public T GetBullet()
         {
             if (_bulletPool.Count > 0)
             {
-                GameObject bullet = _bulletPool.Dequeue();
-                bullet.SetActive(true);
+                T bullet = _bulletPool.Dequeue();
+                bullet.gameObject.SetActive(true);
                 bullet.transform.SetParent(_bulletContainer.transform);
 
                 return bullet;
             }
 
-            GameObject newBullet = Instantiate(_bulletPrefab);
+            T newBullet = Instantiate(_bulletPrefab);
             return newBullet;
         }
 
-        public void ReturnBullet(GameObject bullet)
+        public void ReturnBullet(T bullet)
         {
-            bullet.SetActive(false);
+            bullet.gameObject.SetActive(false);
             _bulletPool.Enqueue(bullet);
         }
 
-        protected abstract void InitializePool();        
+        protected abstract void InitializePool();
     }
 }

@@ -6,9 +6,10 @@ namespace Enemies
 {
     [RequireComponent(typeof(Enemy))]
     [RequireComponent(typeof(Rigidbody))]
-
     public class EnemyMovement : MonoBehaviour
     {
+        private const string AnimatorTriggerRunning = "isRunning";
+
         [SerializeField] private float _moveSpeed = 5.0f;
         [SerializeField] private LayerMask _obstacleLayer;
 
@@ -23,15 +24,21 @@ namespace Enemies
 
         public Transform TargetAttackPoint => _targetAttackPoint;
 
-        public bool IsMoving => _isMoving;
-
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _enemyAttack = GetComponent<EnemyAttack>();
             _animator = GetComponent<Animator>();
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-            _animator.SetBool("isRunning", true);
+            _animator.SetBool(AnimatorTriggerRunning, true);
+        }
+
+        private void FixedUpdate()
+        {
+            if (_isMoving && _isEnougthAttackPoint)
+            {
+                MoveTowardsTargetWall();
+            }
         }
 
         public void SetupAttackPoint(WallAttackPoint target)
@@ -56,17 +63,9 @@ namespace Enemies
         public void StopMoving()
         {
             _isMoving = false;
-            _animator.SetBool("isRunning", false);
+            _animator.SetBool(AnimatorTriggerRunning, false);
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.isKinematic = true;
-        }
-
-        private void FixedUpdate()
-        {
-            if (_isMoving && _isEnougthAttackPoint)
-            {
-                MoveTowardsTargetWall();
-            }
         }
 
         private void MoveTowardsTargetWall()

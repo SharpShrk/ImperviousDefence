@@ -22,12 +22,14 @@ namespace Walls
         private int _maxBricksInWall;
         private List<GameObject> _wallBlocks = new List<GameObject>();
         private Wall _wall;
+        private WaitForSeconds _waitSpawnDelay;
 
         public int MaxBricksInWall => _maxBricksInWall;
 
         private void Start()
         {
             _wall = GetComponent<Wall>();
+            _waitSpawnDelay = new WaitForSeconds(_spawnDelay);
             StartCoroutine(GenerateWallCoroutine());
         }
 
@@ -57,7 +59,7 @@ namespace Walls
 
                     StartCoroutine(DropBlock(block, startPosition, new Vector3(xPos, yPos, 0), _dropDuration));
 
-                    yield return new WaitForSeconds(_spawnDelay);
+                    yield return _waitSpawnDelay;
                 }
             }
 

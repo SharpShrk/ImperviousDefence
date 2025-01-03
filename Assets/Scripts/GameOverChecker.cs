@@ -5,6 +5,7 @@ using Walls;
 public class GameOverChecker : MonoBehaviour
 {
     [SerializeField] private Wall[] _walls;
+    [SerializeField] private GamePauseHandler _pauseHandler;
 
     public event Action GameOvered;
 
@@ -27,6 +28,6 @@ public class GameOverChecker : MonoBehaviour
     private void OnGameOver()
     {
         GameOvered?.Invoke();
-        Time.timeScale = 0;
+        _pauseHandler.PauseGame();
     }
 }

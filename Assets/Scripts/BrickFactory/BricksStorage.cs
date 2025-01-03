@@ -16,8 +16,7 @@ namespace BrickFactories
         private bool _isStorageFull = false;
         private List<GameObject> _bricks = new List<GameObject>();
 
-        public int BrickCount { get => _currentBrickIndex; }
-
+        public int BrickCount => _currentBrickIndex;
         public bool IsStorageFull => _isStorageFull;
 
         public void AddBrick(GameObject brickPrefab, Vector3 brickSize)

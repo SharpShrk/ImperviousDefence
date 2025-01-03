@@ -15,6 +15,11 @@ namespace Localization
 
         private string _currentLanguage;
 
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);

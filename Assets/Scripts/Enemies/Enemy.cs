@@ -12,7 +12,7 @@ namespace Enemies
         private EnemyBehavior _enemyBehavior;
         private EnemyAnimator _enemyAnimator;
 
-        public event Action OnEnemyDiedForAttackPoint;
+        public event Action OnEnemyDeath;
 
         public int Damage => _damage;
 
@@ -20,19 +20,17 @@ namespace Enemies
         {
             _enemyHealth = GetComponent<EnemyHealth>();
             _enemyBehavior = GetComponent<EnemyBehavior>();
-            _enemyAnimator = GetComponent<EnemyAnimator>();
-
-            
+            _enemyAnimator = GetComponent<EnemyAnimator>();          
         }
 
         private void OnEnable()
         {
-            _enemyHealth.OnEnemyDie += Die;
+            _enemyHealth.OnEnemyDyingNoParams += Die;
         }
 
         private void OnDisable()
         {
-            _enemyHealth.OnEnemyDie -= Die;
+            _enemyHealth.OnEnemyDyingNoParams -= Die;
         }
 
         public void Initialize(int health, int damage)
@@ -48,7 +46,7 @@ namespace Enemies
 
         private void Die()
         {
-            OnEnemyDiedForAttackPoint?.Invoke();
+            OnEnemyDeath?.Invoke();
 
             _enemyAnimator.Die();
         }

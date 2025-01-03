@@ -1,5 +1,5 @@
-using Agava.YandexGames;
 using Lean.Localization;
+using TurretsUI;
 using UnityEngine;
 using UnityEngine.Events;
 using UserInterface;
@@ -9,6 +9,9 @@ namespace TurretScripts
 {
     public class UpgradeService : MonoBehaviour
     {
+        private const string MessageTurretLevelMax = "Turret_level_max";
+        private const string MessageNotEnoughMoney = "Not_enough_money_to_upgrade";
+
         [SerializeField] private int _startCost;
         [SerializeField] private int _costForLevel;
         [SerializeField] private int _maxLevelUpgrade;
@@ -50,7 +53,7 @@ namespace TurretScripts
         {
             if (_currentTurretPresenter.GetLevelDamage() >= _maxLevelUpgrade)
             {
-                string message = LeanLocalization.GetTranslationText("Turret_level_max");
+                string message = LeanLocalization.GetTranslationText(MessageTurretLevelMax);
 
                 _infoMessagePanel.OpenMessagePanel(message);
 
@@ -67,7 +70,7 @@ namespace TurretScripts
             }
             else
             {
-                string message = LeanLocalization.GetTranslationText("Not_enough_money_to_upgrade");
+                string message = LeanLocalization.GetTranslationText(MessageNotEnoughMoney);
                 _infoMessagePanel.OpenMessagePanel(message);
             }
         }
@@ -76,7 +79,7 @@ namespace TurretScripts
         {
             if (_currentTurretPresenter.GetLevelAttackSpeed() >= _maxLevelUpgrade)
             {
-                string message = LeanLocalization.GetTranslationText("Turret_level_max");
+                string message = LeanLocalization.GetTranslationText(MessageTurretLevelMax);
                 _infoMessagePanel.OpenMessagePanel(message);
 
                 return;
@@ -92,7 +95,7 @@ namespace TurretScripts
             }
             else
             {
-                string message = LeanLocalization.GetTranslationText("Not_enough_money_to_upgrade");
+                string message = LeanLocalization.GetTranslationText(MessageNotEnoughMoney);
                 _infoMessagePanel.OpenMessagePanel(message);
             }
         }

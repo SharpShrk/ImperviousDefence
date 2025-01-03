@@ -8,6 +8,8 @@ namespace Enemies
 
     public class EnemyAttack : MonoBehaviour
     {
+        private const string AttackAnimatorTrigger = "attack";
+
         [SerializeField] private float _attackDelay = 1.5f;
         [SerializeField] private float _attackRange = 1.5f;
         [SerializeField] private AudioSource _audioSource;
@@ -20,6 +22,7 @@ namespace Enemies
         private Coroutine _attackCoroutine;
         private Animator _animator;
         private bool _isAttack;
+        private WaitForSeconds _waitAttackDelay;
 
         public float AttackRange => _attackRange;
 
@@ -29,18 +32,19 @@ namespace Enemies
             _health = GetComponent<EnemyHealth>();
             _movement = GetComponent<EnemyMovement>();
             _animator = GetComponent<Animator>();
+            _waitAttackDelay = new WaitForSeconds(_attackDelay);
         }
 
         private void OnEnable()
         {
-            _movement.MovementStoppedAction += OnStartAttackCoroutine;
-            _health.OnEnemyDie += StopAttack;
+            _movement.MovementStoppedAction += TryStartWallAttack;
+            _health.OnEnemyDyingNoParams += StopAttack;
         }
 
         private void OnDisable()
         {
-            _movement.MovementStoppedAction -= OnStartAttackCoroutine;
-            _health.OnEnemyDie -= StopAttack;
+            _movement.MovementStoppedAction -= TryStartWallAttack;
+            _health.OnEnemyDyingNoParams -= StopAttack;
         }
 
         public void SetTargetWall(Wall targetWall)
@@ -64,14 +68,15 @@ namespace Enemies
         {
             while (_isAttack)
             {
-                _animator.SetTrigger("attack");
-                yield return new WaitForSeconds(_attackDelay);
+                _animator.SetTrigger(AttackAnimatorTrigger);
+                PlayRandomPunchSound();
+                yield return _waitAttackDelay;
 
                 wall.TakeDamage(enemy.Damage);
             }
         }
 
-        private void OnStartAttackCoroutine()
+        private void TryStartWallAttack()
         {
             _isAttack = true;
 

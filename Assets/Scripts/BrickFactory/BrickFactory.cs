@@ -1,20 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Walls;
 
 namespace BrickFactories
 {
+    [RequireComponent(typeof(AnimationBrickFactory))]
+    [RequireComponent(typeof(AudioBrickFactory))]
     public class BrickFactory : MonoBehaviour
     {
         private BrickFactoryConfiguration _configuration;
-        private bool _hasResourses;
+        private bool _hasResources;
         private Queue<int> _productionQueue = new Queue<int>();
 
         public void Initialize(BrickFactoryConfiguration configuration)
         {
             _configuration = configuration;
-            _hasResourses = true;
+            _hasResources = true;
             StartCoroutine(ProduceBricks());
         }
 
@@ -25,7 +26,7 @@ namespace BrickFactories
 
         private IEnumerator ProduceBricks()
         {
-            while (_hasResourses)
+            while (_hasResources)
             {
                 if (_productionQueue.Count > 0 && _configuration.BricksStorage.IsStorageFull == false)
                 {

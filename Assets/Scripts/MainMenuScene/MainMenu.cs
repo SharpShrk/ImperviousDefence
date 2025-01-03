@@ -13,7 +13,6 @@ namespace MainMenuScene
         [SerializeField] private GameObject _optionPanel;
         [SerializeField] private Button _optionButton;
         [SerializeField] private Button _startButton;
-        [SerializeField] private Button _leaderboardButton;
         [SerializeField] private SceneSwitcher _sceneSwitcher;
 
         private void OnEnable()
