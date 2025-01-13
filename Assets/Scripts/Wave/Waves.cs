@@ -5,6 +5,10 @@ namespace Wave
 {
     public class Waves : MonoBehaviour
     {
+        private const int WaveHealthIncrease = 3;
+        private const int WaveAttackIncrease = 6;
+        private const int WaveEnemyCountIncrease = 5;
+
         [SerializeField] private int _initialHealth = 100;
         [SerializeField] private int _initialAttack = 1;
         [SerializeField] private int _initialEnemyCount = 4;
@@ -34,17 +38,17 @@ namespace Wave
             CurrentWave++;
             OnWaveChanged?.Invoke(CurrentWave);
 
-            if (CurrentWave % 3 == 0)
+            if (CurrentWave % WaveHealthIncrease == 0)
             {
                 _currentHealth += _healthIncrease;
             }
 
-            if (CurrentWave % 6 == 0)
+            if (CurrentWave % WaveAttackIncrease == 0)
             {
                 _currentAttack += _attackIncrease;
             }
 
-            if (CurrentWave % 5 == 0)
+            if (CurrentWave % WaveEnemyCountIncrease == 0)
             {
                 _currentEnemyCount += _countIncrease;
             }

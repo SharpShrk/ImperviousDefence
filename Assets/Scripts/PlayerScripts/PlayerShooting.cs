@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UserInterface;
+using Utilities;
 
 namespace PlayerScripts
 {
@@ -18,6 +20,7 @@ namespace PlayerScripts
         [SerializeField] private float _fireRate = 0.2f;
         [SerializeField] private BulletPlayerPool _bulletPool;
         [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private GameOverChecker _gameOverChecker;
 
         private PlayerInputHandler _inputHandler;
         private Animator _animator;
@@ -60,7 +63,7 @@ namespace PlayerScripts
 
         private IEnumerator ShootingRoutine()
         {
-            while (true)
+            while (_gameOverChecker.IsGameOver == false)
             {
                 if (_canShoot && Time.timeScale != 0)
                 {

@@ -3,6 +3,7 @@ using Audio;
 using Enemies;
 using System;
 using UnityEngine;
+using Utilities;
 using Wave;
 
 namespace Yandex
@@ -14,13 +15,10 @@ namespace Yandex
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private AdWarningPanel _adWarningPanel;
 
-        private bool _adIsPlaying;
         private AudioHandler _audioResources;
         private GamePauseHandler _gamePauseHandler;
 
         public event Action VideoAdPlayed;
-
-        public bool AdIsPlaying => _adIsPlaying;
 
         private void OnEnable()
         {
@@ -64,14 +62,12 @@ namespace Yandex
         {
             _audioResources.UnmuteAudio();
             _gamePauseHandler.ResumeGame();
-            _adIsPlaying = false;
         }
 
         private void OnPlayed()
         {
             _audioResources.MuteAudio();
             _gamePauseHandler.PauseGame();
-            _adIsPlaying = true;
         }
 
         private void PlayRegularAdIf(bool value)
@@ -91,7 +87,6 @@ namespace Yandex
         {
             _audioResources.UnmuteAudio();
             _gamePauseHandler.ResumeGame();
-            _adIsPlaying = false;
         }
     }
 }

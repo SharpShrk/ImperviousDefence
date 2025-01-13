@@ -20,8 +20,6 @@ namespace LeaderBoard
         
         private Score _score;
 
-        public string LeaderboardName => LeaderboardNameText;
-
         private void OnDestroy()
         {
             Score.OnObjectLoaded -= HandleScoreLoaded;

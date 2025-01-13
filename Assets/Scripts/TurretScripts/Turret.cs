@@ -19,6 +19,7 @@ namespace TurretScripts
         private float _currentAttackCooldown;
         private float _damage;
         private float _rotationSpeed = 500f;
+        private WaitForSeconds _waitAttackCooldown;
 
         public bool IsPlaced { get; private set; }
 
@@ -27,6 +28,7 @@ namespace TurretScripts
             IsPlaced = false;
             _damage = _startDamage;
             _currentAttackCooldown = _attackCooldown;
+            _waitAttackCooldown = new WaitForSeconds(_currentAttackCooldown);
         }
 
         public void Init(BulletTurretPool bulletPool)
@@ -44,6 +46,7 @@ namespace TurretScripts
         public void SetAttackSpeed(float attackSpeedMultiplier)
         {
             _currentAttackCooldown = _attackCooldown * attackSpeedMultiplier;
+            _waitAttackCooldown = new WaitForSeconds(_currentAttackCooldown);
         }
 
         public void SetUpgradeDamage(float damage)
@@ -101,7 +104,6 @@ namespace TurretScripts
         {
             while (IsPlaced)
             {
-                WaitForSeconds attackCooldown = new WaitForSeconds(_currentAttackCooldown);
                 GameObject target = SearchAttackTarget();
 
                 if (target != null)
@@ -110,7 +112,7 @@ namespace TurretScripts
                     Shoot();
                 }
 
-                yield return attackCooldown;
+                yield return _waitAttackCooldown;
             }
         }
 

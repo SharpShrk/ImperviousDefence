@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UserInterface;
 
 namespace BrickFactories
 {
@@ -8,14 +9,14 @@ namespace BrickFactories
     [RequireComponent(typeof(AudioBrickFactory))]
     public class BrickFactory : MonoBehaviour
     {
+        [SerializeField] private GameOverChecker _gameOverChecker;
+
         private BrickFactoryConfiguration _configuration;
-        private bool _hasResources;
         private Queue<int> _productionQueue = new Queue<int>();
 
         public void Initialize(BrickFactoryConfiguration configuration)
         {
             _configuration = configuration;
-            _hasResources = true;
             StartCoroutine(ProduceBricks());
         }
 
@@ -26,7 +27,7 @@ namespace BrickFactories
 
         private IEnumerator ProduceBricks()
         {
-            while (_hasResources)
+            while (_gameOverChecker.IsGameOver == false)
             {
                 if (_productionQueue.Count > 0 && _configuration.BricksStorage.IsStorageFull == false)
                 {

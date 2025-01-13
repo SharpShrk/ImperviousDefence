@@ -6,16 +6,16 @@ namespace Bullets
     {
         protected override void InitializePool()
         {
-            _bulletPool = new Queue<BulletPlayer>();
+            QueueBulletPool = new Queue<BulletPlayer>();
 
-            for (int i = 0; i < _initialPoolSize; i++)
+            for (int i = 0; i < InitialPoolSize; i++)
             {
-                BulletPlayer bullet = Instantiate(_bulletPrefab);
+                BulletPlayer bullet = Instantiate(BulletPrefab);
                 bullet.Init(this);
 
                 bullet.gameObject.SetActive(false);
-                bullet.transform.SetParent(_bulletContainer.transform);
-                _bulletPool.Enqueue(bullet);
+                bullet.transform.SetParent(BulletContainer.transform);
+                QueueBulletPool.Enqueue(bullet);
             }
         }
     }

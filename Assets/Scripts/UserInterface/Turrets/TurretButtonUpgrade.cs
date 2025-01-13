@@ -31,11 +31,6 @@ namespace TurretsUI
             LevelText.text = value.ToString();
         }
 
-        private void DeactivateUpgradeMenu()
-        {
-            UpgradePanel.SetActive(false);
-        }
-
         protected abstract void OnButtonClick();
 
         protected void ActivateUpgradeMenu()

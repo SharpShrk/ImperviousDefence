@@ -7,19 +7,19 @@ namespace Bullets
     [RequireComponent(typeof(Rigidbody))]
     public abstract class Bullet : MonoBehaviour
     {
-        [SerializeField] protected float _speed = 10f;
-        [SerializeField] protected float _lifetime = 3f;
-        [SerializeField] protected int _defaultDamage = 10;
+        [SerializeField] protected float Speed = 10f;
+        [SerializeField] protected float Lifetime = 3f;
+        [SerializeField] protected int DefaultDamage = 10;
 
-        protected int _damage;
-        protected Rigidbody _rigidbody;
-        protected WaitForSeconds _waitLifetime;
+        protected int Damage;
+        protected Rigidbody Rigidbody;
+        protected WaitForSeconds WaitLifetime;
 
         protected void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
-            _damage = _defaultDamage;
-            _waitLifetime = new WaitForSeconds(_lifetime);
+            Rigidbody = GetComponent<Rigidbody>();
+            Damage = DefaultDamage;
+            WaitLifetime = new WaitForSeconds(Lifetime);
         }
 
         protected void OnEnable()
@@ -30,8 +30,8 @@ namespace Bullets
         protected void FixedUpdate()
         {
             Vector3 direction = transform.forward;
-            Vector3 movement = direction.normalized * _speed * Time.fixedDeltaTime;
-            _rigidbody.MovePosition(transform.position + movement);
+            Vector3 movement = direction.normalized * Speed * Time.fixedDeltaTime;
+            Rigidbody.MovePosition(transform.position + movement);
         }
 
         protected void OnCollisionEnter(Collision collision)
@@ -40,7 +40,7 @@ namespace Bullets
 
             if (damageable != null)
             {
-                damageable.TakeDamage(_damage);
+                damageable.TakeDamage(Damage);
             }
 
             ReturnToPool();
@@ -48,12 +48,12 @@ namespace Bullets
 
         public void SetDamage(int damage)
         {
-            _damage = damage;
+            Damage = damage;
         }
 
         protected IEnumerator DisableBulletAfterTime()
         {
-            yield return _waitLifetime;
+            yield return WaitLifetime;
             ReturnToPool();
         }
 

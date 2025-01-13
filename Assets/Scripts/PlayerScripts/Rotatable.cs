@@ -15,7 +15,8 @@ namespace PlayerScripts
         private readonly float _rotationSpeed;
         private readonly float _ikRotationSpeed;
 
-        public Rotatable(Transform transform, MultiAimConstraint multiAimConstraint, float rotationSpeed, float ikRotationSpeed)
+        public Rotatable(Transform transform, MultiAimConstraint multiAimConstraint,
+            float rotationSpeed, float ikRotationSpeed)
         {
             _transform = transform;
             _multiAimConstraint = multiAimConstraint;
@@ -38,12 +39,15 @@ namespace PlayerScripts
 
             if (Mathf.Abs(angleDifference) < MaxAimAngleThreshold)
             {
-                _multiAimConstraint.weight = Mathf.Lerp(_multiAimConstraint.weight, MaxConstraintWeight, Time.deltaTime * _ikRotationSpeed);
+                _multiAimConstraint.weight = Mathf.Lerp(_multiAimConstraint.weight, MaxConstraintWeight, 
+                    Time.deltaTime * _ikRotationSpeed);
             }
             else
             {
-                _multiAimConstraint.weight = Mathf.Lerp(_multiAimConstraint.weight, MinConstraintWeight, Time.deltaTime * _ikRotationSpeed);
-                _transform.rotation = Quaternion.RotateTowards(_transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+                _multiAimConstraint.weight = Mathf.Lerp(_multiAimConstraint.weight, MinConstraintWeight, 
+                    Time.deltaTime * _ikRotationSpeed);
+                _transform.rotation = Quaternion.RotateTowards(_transform.rotation, targetRotation,
+                    _rotationSpeed * Time.deltaTime);
             }
         }
     }

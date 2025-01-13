@@ -5,11 +5,11 @@ namespace Bullets
 {
     public abstract class BulletPool<T> : MonoBehaviour where T : Component
     {
-        [SerializeField] protected T _bulletPrefab;
-        [SerializeField] protected int _initialPoolSize = 10;
-        [SerializeField] protected GameObject _bulletContainer;
+        [SerializeField] protected T BulletPrefab;
+        [SerializeField] protected int InitialPoolSize = 10;
+        [SerializeField] protected GameObject BulletContainer;
 
-        protected Queue<T> _bulletPool;
+        protected Queue<T> QueueBulletPool;
 
         protected void Awake()
         {
@@ -18,23 +18,23 @@ namespace Bullets
 
         public T GetBullet()
         {
-            if (_bulletPool.Count > 0)
+            if (QueueBulletPool.Count > 0)
             {
-                T bullet = _bulletPool.Dequeue();
+                T bullet = QueueBulletPool.Dequeue();
                 bullet.gameObject.SetActive(true);
-                bullet.transform.SetParent(_bulletContainer.transform);
+                bullet.transform.SetParent(BulletContainer.transform);
 
                 return bullet;
             }
 
-            T newBullet = Instantiate(_bulletPrefab);
+            T newBullet = Instantiate(BulletPrefab);
             return newBullet;
         }
 
         public void ReturnBullet(T bullet)
         {
             bullet.gameObject.SetActive(false);
-            _bulletPool.Enqueue(bullet);
+            QueueBulletPool.Enqueue(bullet);
         }
 
         protected abstract void InitializePool();

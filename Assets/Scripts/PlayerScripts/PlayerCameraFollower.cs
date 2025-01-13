@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public class PlayerCameraFollower : MonoBehaviour
+namespace PlayerScripts
 {
-    [SerializeField] private Transform _playerTransform;
-    [SerializeField] private Vector3 _offset;
-    [SerializeField] private float _lerpSpeed;
-
-    private void LateUpdate()
+    public class PlayerCameraFollower : MonoBehaviour
     {
-        Vector3 targetPosition = _playerTransform.position + _offset;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, _lerpSpeed);
+        [SerializeField] private Transform _playerTransform;
+        [SerializeField] private Vector3 _offset;
+        [SerializeField] private float _lerpSpeed;
+
+        private void LateUpdate()
+        {
+            Vector3 targetPosition = _playerTransform.position + _offset;
+            transform.position = Vector3.Lerp(transform.position, targetPosition, _lerpSpeed);
+        }
     }
 }

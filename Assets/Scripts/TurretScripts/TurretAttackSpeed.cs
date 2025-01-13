@@ -3,13 +3,9 @@ namespace TurretScripts
     public class TurretAttackSpeed : TurretStats
     {
         private Turret _turret;
-        private bool _isMaxLevel;
-
-        public bool IsMaxLevel => _isMaxLevel;
 
         private void OnEnable()
         {
-            _isMaxLevel = false;
             _turret = GetComponent<Turret>();
         }
 
@@ -19,11 +15,6 @@ namespace TurretScripts
             Level++;
 
             _turret.SetAttackSpeed(Value);
-
-            if (Level == MaxLevel)
-            {
-                _isMaxLevel = true;
-            }
         }
     }
 }

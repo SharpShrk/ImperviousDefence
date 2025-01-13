@@ -6,10 +6,7 @@ namespace Walls
     public class WallAttackPoint : MonoBehaviour
     {
         private AttackPointQueue _attackPointQueue;
-        private bool _isOccupied = false;
         private Enemy _occupyingEnemy;
-
-        public bool IsOccupied => _isOccupied;
 
         private void Start()
         {
@@ -29,7 +26,6 @@ namespace Walls
         public void SetOccupied(Enemy enemy)
         {
             UnsubscribeFromEvents();
-            _isOccupied = true;
             _occupyingEnemy = enemy;
             SubscribeToEvents();
         }
@@ -52,7 +48,6 @@ namespace Walls
 
         private void ReleasePoint()
         {
-            _isOccupied = false;
             UnsubscribeFromEvents();
             _attackPointQueue.ReleaseAttackPoint(this);
             _occupyingEnemy = null;

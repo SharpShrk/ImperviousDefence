@@ -30,12 +30,6 @@ namespace Walls
             return newBrick;
         }
 
-        public void ReturnBrick(GameObject brick)
-        {
-            brick.SetActive(false);
-            _brickPool.Enqueue(brick);
-        }
-
         private void InitializePool()
         {
             _brickPool = new Queue<GameObject>();

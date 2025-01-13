@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Utilities;
 using VContainer;
 using WalletAndScore;
 using Wave;
@@ -13,7 +14,7 @@ namespace UserInterface
 {
     public class GameOverHandler : MonoBehaviour
     {
-        private const string _menuSceneName = "Menu";
+        private const string MenuSceneName = "Menu";
 
         [SerializeField] private GameObject _scorePanel;
         [SerializeField] private GameObject _bagUI;
@@ -79,7 +80,7 @@ namespace UserInterface
         private void OnMenuButtonClick()
         {
             GameOvered?.Invoke(_wallet.Money);
-            SceneManager.LoadScene(_menuSceneName);
+            SceneManager.LoadScene(MenuSceneName);
         }
 
         private void OnRewardButtonClick()

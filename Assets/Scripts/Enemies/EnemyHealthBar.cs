@@ -22,7 +22,8 @@ namespace Enemies
         private void Update()
         {
             _healthCanvas.transform.LookAt(
-                _healthCanvas.transform.position + (Camera.main.transform.rotation * Vector3.forward), Camera.main.transform.rotation * Vector3.up);
+                _healthCanvas.transform.position + (Camera.main.transform.rotation * Vector3.forward),
+                Camera.main.transform.rotation * Vector3.up);
         }
 
         public void HideHealthBar()
