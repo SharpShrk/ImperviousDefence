@@ -20,7 +20,7 @@ namespace Enemies
         private Animator _animator;
         private bool _isEnougthAttackPoint = false;
 
-        public event Action MovementStoppedAction;
+        public event Action MovementStopped;
 
         public Transform TargetAttackPoint => _targetAttackPoint;
 
@@ -86,7 +86,7 @@ namespace Enemies
             if (distance <= _enemyAttack.AttackRange)
             {
                 StopMoving();
-                MovementStoppedAction?.Invoke();
+                MovementStopped?.Invoke();
             }
         }
     }

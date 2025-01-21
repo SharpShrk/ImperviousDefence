@@ -29,14 +29,14 @@ namespace BrickFactories
             _buttonControlProduction.ButtonPressed += OnButtonPressedOpenProductionPanel;
             _toggle.isOn = false;
             _toggle.onValueChanged.AddListener(OnToggleValueChanged);
-            _productionPanelScript.OnButtonConfirmProductionClick += OnButtonConfirmProductionClicked;
+            _productionPanelScript.ButtonConfirmProductionClick += OnButtonConfirmProductionClicked;
         }
 
         private void OnDisable()
         {
             _buttonControlProduction.ButtonPressed -= OnButtonPressedOpenProductionPanel;
             _toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
-            _productionPanelScript.OnButtonConfirmProductionClick -= OnButtonConfirmProductionClicked;
+            _productionPanelScript.ButtonConfirmProductionClick -= OnButtonConfirmProductionClicked;
         }
 
         private void OnButtonPressedOpenProductionPanel()

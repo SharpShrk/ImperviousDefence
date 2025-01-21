@@ -9,7 +9,7 @@ namespace PlayerScripts
 
         private int _currentBrickCount = 0;
 
-        public event Action<int> OnBrickCountChanging;
+        public event Action<int> BrickCountChanging;
 
         public int AvailableCapacity => _maxBrickCapacity - _currentBrickCount;
 
@@ -24,7 +24,7 @@ namespace PlayerScripts
             if (canAddBricks)
             {
                 _currentBrickCount += count;
-                OnBrickCountChanging?.Invoke(_currentBrickCount);
+                BrickCountChanging?.Invoke(_currentBrickCount);
             }
 
             return canAddBricks;
@@ -37,7 +37,7 @@ namespace PlayerScripts
             if (canRemoveBricks)
             {
                 _currentBrickCount -= count;
-                OnBrickCountChanging?.Invoke(_currentBrickCount);
+                BrickCountChanging?.Invoke(_currentBrickCount);
             }
 
             return canRemoveBricks;

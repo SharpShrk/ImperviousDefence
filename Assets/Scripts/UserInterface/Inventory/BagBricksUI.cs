@@ -13,14 +13,14 @@ namespace UserInterface
 
         private void OnEnable()
         {
-            _bag.OnBrickCountChanging += OnSetTextValue;
+            _bag.BrickCountChanging += OnSetTextValue;
             _maxBrickCapacity = _bag.MaxBrickCapacity;
             OnSetTextValue(_bag.CurrentBrickCount);
         }
 
         private void OnDisable()
         {
-            _bag.OnBrickCountChanging -= OnSetTextValue;
+            _bag.BrickCountChanging -= OnSetTextValue;
         }
 
         private void OnSetTextValue(int currentValue)

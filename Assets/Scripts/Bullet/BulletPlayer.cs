@@ -1,17 +1,8 @@
+using UnityEngine;
+
 namespace Bullets
 {
-    public class BulletPlayer : Bullet
+    public class BulletPlayer : PooledBullet<BulletPool<BulletPlayer>, BulletPlayer>
     {
-        private BulletPlayerPool _bulletPool;
-
-        public void Init(BulletPlayerPool bulletPool)
-        {
-            _bulletPool = bulletPool;
-        }
-
-        protected override void ReturnToPool()
-        {
-            _bulletPool.ReturnBullet(this);
-        }
     }
 }

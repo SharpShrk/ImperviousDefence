@@ -80,7 +80,7 @@ namespace Enemies
                     Enemy enemyScript = enemy.GetComponent<Enemy>();
                     EnemyHealth enemyHealthScript = enemy.GetComponent<EnemyHealth>();
 
-                    enemyHealthScript.OnEnemyDying += OnEnemyDied;
+                    enemyHealthScript.EnemyDying += OnEnemyDied;
                     enemyHealthScript.HideHealthBar();
 
                     enemyScript.Initialize(enemyHealth, enemyAttack);
@@ -119,7 +119,7 @@ namespace Enemies
             CheckSpawnedEnemy();
             _rewardCollector.TakeReward(rewardMoney, rewardScore);
 
-            enemy.OnEnemyDying -= OnEnemyDied;
+            enemy.EnemyDying -= OnEnemyDied;
         }
     }
 }

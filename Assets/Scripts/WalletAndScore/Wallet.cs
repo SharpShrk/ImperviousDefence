@@ -1,29 +1,30 @@
 using System;
+using UIReward;
 using UnityEngine;
 
 namespace WalletAndScore
 {
-    public class Wallet : MonoBehaviour
+    public class Wallet : MonoBehaviour, IReward
     {
         [SerializeField] private int _startMoney;
         [SerializeField] private CoinsSaver _coinsSaver;
 
         private int _money;
 
-        public event Action<int> OnMoneyChanged;
+        public event Action<int> ValueChanged;
 
         public int Money => _money;
 
         public void SetStartValue(int value)
         {
             _money = value;
-            OnMoneyChanged?.Invoke(_money);
+            ValueChanged?.Invoke(_money);
         }
 
         public void AddMoney(int amount)
         {
             _money += amount;
-            OnMoneyChanged?.Invoke(_money);
+            ValueChanged?.Invoke(_money);
             _coinsSaver.OnSaveCoins();
         }
 
@@ -35,7 +36,7 @@ namespace WalletAndScore
             }
 
             _money -= amount;
-            OnMoneyChanged?.Invoke(_money);
+            ValueChanged?.Invoke(_money);
             _coinsSaver.OnSaveCoins();
 
             return true;

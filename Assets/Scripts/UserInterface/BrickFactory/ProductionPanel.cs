@@ -13,7 +13,7 @@ namespace UserInterface
         [SerializeField] private InfoMessagePanel _infoPanel;
         [SerializeField] private GamePauseHandler _pauseHandler;
 
-        public event UnityAction OnButtonConfirmProductionClick;
+        public event UnityAction ButtonConfirmProductionClick;
 
         private void OnEnable()
         {
@@ -35,7 +35,7 @@ namespace UserInterface
 
         private void OnButtonConfirmClick()
         {
-            OnButtonConfirmProductionClick?.Invoke();
+            ButtonConfirmProductionClick?.Invoke();
         }
     }
 }

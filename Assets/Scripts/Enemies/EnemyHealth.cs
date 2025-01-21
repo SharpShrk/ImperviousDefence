@@ -15,8 +15,8 @@ namespace Enemies
         private bool _isDied;
         private WaitForSeconds _deathWait;
 
-        public event Action<int, int, EnemyHealth> OnEnemyDying;
-        public event Action OnEnemyDyingNoParams;
+        public event Action<int, int, EnemyHealth> EnemyDying;
+        public event Action EnemyDyingNoParams;
 
         private void Awake()
         {
@@ -44,8 +44,8 @@ namespace Enemies
                     _enemyMovement.StopMoving();
                     _enemyHealthBar.HideHealthBar();
 
-                    OnEnemyDying?.Invoke(0, 0, this);
-                    OnEnemyDyingNoParams?.Invoke();
+                    EnemyDying?.Invoke(0, 0, this);
+                    EnemyDyingNoParams?.Invoke();
 
                     gameObject.GetComponent<Collider>().enabled = false;
                     StartCoroutine(WaitForDieAnimationEnd());

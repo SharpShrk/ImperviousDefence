@@ -37,14 +37,14 @@ namespace Enemies
 
         private void OnEnable()
         {
-            _movement.MovementStoppedAction += TryStartWallAttack;
-            _health.OnEnemyDyingNoParams += StopAttack;
+            _movement.MovementStopped += OnTryStartWallAttack;
+            _health.EnemyDyingNoParams += OnStopAttack;
         }
 
         private void OnDisable()
         {
-            _movement.MovementStoppedAction -= TryStartWallAttack;
-            _health.OnEnemyDyingNoParams -= StopAttack;
+            _movement.MovementStopped -= OnTryStartWallAttack;
+            _health.EnemyDyingNoParams -= OnStopAttack;
         }
 
         public void SetTargetWall(Wall targetWall)
@@ -76,7 +76,7 @@ namespace Enemies
             }
         }
 
-        private void TryStartWallAttack()
+        private void OnTryStartWallAttack()
         {
             _isAttack = true;
 
@@ -93,7 +93,7 @@ namespace Enemies
             }
         }
 
-        private void StopAttack()
+        private void OnStopAttack()
         {
             _isAttack = false;
 

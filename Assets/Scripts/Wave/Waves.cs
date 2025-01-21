@@ -20,7 +20,7 @@ namespace Wave
         private int _currentAttack;
         private int _currentEnemyCount;
 
-        public event UnityAction<int> OnWaveChanged;
+        public event UnityAction<int> WaveChanged;
 
         public int CurrentWave { get; private set; } = 0;
 
@@ -36,7 +36,7 @@ namespace Wave
         public void AdvanceToNextWave()
         {
             CurrentWave++;
-            OnWaveChanged?.Invoke(CurrentWave);
+            WaveChanged?.Invoke(CurrentWave);
 
             if (CurrentWave % WaveHealthIncrease == 0)
             {

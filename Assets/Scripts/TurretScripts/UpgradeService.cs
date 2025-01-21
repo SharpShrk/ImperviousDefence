@@ -28,14 +28,14 @@ namespace TurretScripts
 
         private void OnEnable()
         {
-            _buttonUpgradeAttackSpeed.ButtonUpgradeAttackSpeedPressed += OnTryUpdgradeAttackSpeed;
-            _buttonUpgradeDamage.ButtonUpgradeDamagePressed += OnTryUpdgradeDamage;
+            _buttonUpgradeAttackSpeed.ButtonUpgradePressed += OnTryUpdgradeAttackSpeed;
+            _buttonUpgradeDamage.ButtonUpgradePressed += OnTryUpdgradeDamage;
         }
 
         private void OnDisable()
         {
-            _buttonUpgradeAttackSpeed.ButtonUpgradeAttackSpeedPressed -= OnTryUpdgradeAttackSpeed;
-            _buttonUpgradeDamage.ButtonUpgradeDamagePressed -= OnTryUpdgradeDamage;
+            _buttonUpgradeAttackSpeed.ButtonUpgradePressed -= OnTryUpdgradeAttackSpeed;
+            _buttonUpgradeDamage.ButtonUpgradePressed -= OnTryUpdgradeDamage;
         }
 
         public void SetCurrentTurretUpdates(TurretPresenter turretPresenter)

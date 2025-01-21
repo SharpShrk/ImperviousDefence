@@ -11,15 +11,15 @@ namespace UserInterface
 
         private void OnEnable()
         {
-            _waves.OnWaveChanged += SetValue;
+            _waves.WaveChanged += OnSetValue;
         }
 
         private void OnDisable()
         {
-            _waves.OnWaveChanged -= SetValue;
+            _waves.WaveChanged -= OnSetValue;
         }
 
-        private void SetValue(int value)
+        private void OnSetValue(int value)
         {
             _waveText.text = value.ToString();
         }

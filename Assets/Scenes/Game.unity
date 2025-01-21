@@ -642,14 +642,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92094b9a5862040479b232bab0871701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _closeButton: {fileID: 1474443209}
-  _message: {fileID: 105135507}
-  _panel: {fileID: 625814073}
   _guiCanvases:
   - {fileID: 782628379}
   - {fileID: 434940322}
   - {fileID: 1132428633}
   _gamePauseHandler: {fileID: 1075850678}
+  _closeButton: {fileID: 1474443209}
+  _message: {fileID: 105135507}
+  _panel: {fileID: 625814073}
 --- !u!1 &51670975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +1213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 162749399}
-  _wallet: {fileID: 1593055919}
+  _reward: {fileID: 0}
 --- !u!114 &99051076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4106,6 +4106,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1445992710}
     m_Modifications:
+    - target: {fileID: 1429297424, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
+    - target: {fileID: 1528384469, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
+    - target: {fileID: 1844127591, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
     - target: {fileID: 8359941283196273688, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -9990,7 +10002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1135567923}
-  _score: {fileID: 1457281079}
+  _reward: {fileID: 0}
 --- !u!1001 &624452849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12335,6 +12347,7 @@ MonoBehaviour:
   _fireRate: 0.2
   _bulletPool: {fileID: 1941449353}
   _audioSource: {fileID: 802560578}
+  _gameOverChecker: {fileID: 1403543439}
 --- !u!114 &851100502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14315,8 +14328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153929f048086b4449f815cca99d4d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeDuration: 0.01
-  shakeAngle: 0.2
+  _shakeDuration: 0.2
+  _shakeAngle: 1
 --- !u!1001 &964205906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16012,6 +16025,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1445992710}
     m_Modifications:
+    - target: {fileID: 1429297424, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
+    - target: {fileID: 1528384469, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
+    - target: {fileID: 1844127591, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
     - target: {fileID: 8359941283196273688, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -19223,6 +19248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7239a50562c491c44abc7d7fa567377e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameOverChecker: {fileID: 1403543439}
 --- !u!4 &1320816698
 Transform:
   m_ObjectHideFlags: 0
@@ -20915,6 +20941,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1445992710}
     m_Modifications:
+    - target: {fileID: 1429297424, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
+    - target: {fileID: 1528384469, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
+    - target: {fileID: 1844127591, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
     - target: {fileID: 8359941283196273688, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -27674,9 +27712,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361f1e6499c072d46883e76e23ab851a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: -2098437196887518989, guid: 12ea0a574b594264685afffd52fff036, type: 3}
-  _initialPoolSize: 15
-  _bulletContainer: {fileID: 1813143072}
+  BulletPrefab: {fileID: -2098437196887518989, guid: 12ea0a574b594264685afffd52fff036, type: 3}
+  InitialPoolSize: 10
+  BulletContainer: {fileID: 1813143072}
 --- !u!1001 &1824315946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28604,9 +28642,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cccbe6be764eb6f4188290fbea4460e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 6986212026560778251, guid: 8d2844a62ae532a4997168b89da4ed6e, type: 3}
-  _initialPoolSize: 15
-  _bulletContainer: {fileID: 1941449352}
+  BulletPrefab: {fileID: 6986212026560778251, guid: 8d2844a62ae532a4997168b89da4ed6e, type: 3}
+  InitialPoolSize: 10
+  BulletContainer: {fileID: 1941449352}
 --- !u!4 &1941449354
 Transform:
   m_ObjectHideFlags: 0
@@ -30489,14 +30527,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f85298d34aefec46bb708b3c574b9c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pauseButton: {fileID: 95058541}
-  _closeButton: {fileID: 444169735}
-  _menuPausePanel: {fileID: 1484633767}
   _guiCanvases:
   - {fileID: 782628379}
   - {fileID: 408322839}
   - {fileID: 434940322}
   _gamePauseHandler: {fileID: 1075850678}
+  _pauseButton: {fileID: 95058541}
+  _closeButton: {fileID: 444169735}
+  _menuPausePanel: {fileID: 1484633767}
 --- !u!1 &2065581893
 GameObject:
   m_ObjectHideFlags: 0
@@ -32965,10 +33003,10 @@ RectTransform:
   - {fileID: 876444642367182733}
   m_Father: {fileID: 876444643254359215}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 385, y: -69}
-  m_SizeDelta: {x: 130, y: 138}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &876444642891676448
 CanvasRenderer:
@@ -38393,6 +38431,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1445992710}
     m_Modifications:
+    - target: {fileID: 1429297424, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
+    - target: {fileID: 1528384469, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
+    - target: {fileID: 1844127591, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
+      propertyPath: _attackPointQueue
+      value: 
+      objectReference: {fileID: 126079854}
     - target: {fileID: 8359941283196273688, guid: e3849f6bd2635574ab49fbfa4edc7015, type: 3}
       propertyPath: m_RootOrder
       value: 0

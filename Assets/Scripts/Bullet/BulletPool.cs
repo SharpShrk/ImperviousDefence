@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Bullets
 {
-    public abstract class BulletPool<T> : MonoBehaviour where T : Component
+    public abstract class BulletPool<T> : MonoBehaviour where T : Component, IBullet
     {
         [SerializeField] protected T BulletPrefab;
         [SerializeField] protected int InitialPoolSize = 10;
@@ -28,6 +28,7 @@ namespace Bullets
             }
 
             T newBullet = Instantiate(BulletPrefab);
+            newBullet.Init(this);
             return newBullet;
         }
 
@@ -37,6 +38,18 @@ namespace Bullets
             QueueBulletPool.Enqueue(bullet);
         }
 
-        protected abstract void InitializePool();
+        protected virtual void InitializePool()
+        {
+            QueueBulletPool = new Queue<T>();
+
+            for (int i = 0; i < InitialPoolSize; i++)
+            {
+                T bullet = Instantiate(BulletPrefab);
+                bullet.Init(this);
+                bullet.gameObject.SetActive(false);
+                bullet.transform.SetParent(BulletContainer.transform);
+                QueueBulletPool.Enqueue(bullet);
+            }
+        }
     }
 }

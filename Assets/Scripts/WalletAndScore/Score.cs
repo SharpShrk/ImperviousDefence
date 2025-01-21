@@ -1,28 +1,30 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UIReward;
+using System;
 
 namespace WalletAndScore
 {
-    public class Score : MonoBehaviour
+    public class Score : MonoBehaviour, IReward
     {
         private int _score;
 
-        public static event UnityAction<Score> OnObjectLoaded;
-        public event UnityAction<int> OnScoreChanged;
+        public static event UnityAction<Score> ObjectLoaded;
+        public event Action<int> ValueChanged;
 
         public int ScorePoints => _score;
 
         private void Start()
         {
             _score = 0;
-            OnScoreChanged?.Invoke(_score);
-            OnObjectLoaded?.Invoke(this);
+            ValueChanged?.Invoke(_score);
+            ObjectLoaded?.Invoke(this);
         }
 
         public void AddScore(int amount)
         {
             _score += amount;
-            OnScoreChanged?.Invoke(_score);
+            ValueChanged?.Invoke(_score);
         }
     }
 }

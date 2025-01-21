@@ -1,20 +1,8 @@
-using UnityEngine;
 using WalletAndScore;
 
 namespace UIReward
 {
-    public class ScoreUI : RewardUI
+    public class ScoreUI : RewardUI<Score>
     {
-        [SerializeField] private Score _score;
-
-        protected override void OnEnable()
-        {
-            _score.OnScoreChanged += SetValue;
-        }
-
-        protected override void OnDisable()
-        {
-            _score.OnScoreChanged -= SetValue;
-        }
     }
 }

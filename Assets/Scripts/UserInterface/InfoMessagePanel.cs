@@ -5,13 +5,11 @@ using Utilities;
 
 namespace UserInterface
 {
-    public class InfoMessagePanel : MonoBehaviour
+    public class InfoMessagePanel : BasePauseCanvas
     {
         [SerializeField] private Button _closeButton;
         [SerializeField] private TMP_Text _message;
         [SerializeField] private GameObject _panel;
-        [SerializeField] private Canvas[] _guiCanvases;
-        [SerializeField] private GamePauseHandler _gamePauseHandler;
 
         private void OnEnable()
         {
@@ -28,41 +26,15 @@ namespace UserInterface
         {
             _message.text = message;
             _panel.SetActive(true);
-
             HideGUICanvas();
-
-            if (_gamePauseHandler.IsPaused == false)
-            {
-                _gamePauseHandler.PauseGame();
-            }
+            PauseGameIfNotPaused();
         }
 
         private void OnCloseButtonClick()
         {
             _panel.SetActive(false);
-
             OpenGUICanvas();
-
-            if (_gamePauseHandler.IsPaused == false)
-            {
-                _gamePauseHandler.ResumeGame();
-            }
-        }
-
-        private void HideGUICanvas()
-        {
-            foreach (var canvas in _guiCanvases)
-            {
-                canvas.enabled = false;
-            }
-        }
-
-        private void OpenGUICanvas()
-        {
-            foreach (var canvas in _guiCanvases)
-            {
-                canvas.enabled = true;
-            }
+            ResumeGameIfPaused();
         }
     }
 }

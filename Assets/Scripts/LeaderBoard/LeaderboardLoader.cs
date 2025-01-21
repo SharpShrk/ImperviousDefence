@@ -22,14 +22,14 @@ namespace LeaderBoard
 
         private void OnDestroy()
         {
-            Score.OnObjectLoaded -= HandleScoreLoaded;
+            Score.ObjectLoaded -= OnHandleScoreLoaded;
         }
 
         private void Start()
         {
             DisableAllRecords();
             DontDestroyOnLoad(gameObject);
-            Score.OnObjectLoaded += HandleScoreLoaded;
+            Score.ObjectLoaded += OnHandleScoreLoaded;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         LoadYandexLeaderboard();
@@ -46,7 +46,7 @@ namespace LeaderBoard
 #endif
         }
 
-        private void HandleScoreLoaded(Score score)
+        private void OnHandleScoreLoaded(Score score)
         {
             _score = score;
         }

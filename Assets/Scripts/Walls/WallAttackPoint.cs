@@ -5,13 +5,9 @@ namespace Walls
 {
     public class WallAttackPoint : MonoBehaviour
     {
-        private AttackPointQueue _attackPointQueue;
-        private Enemy _occupyingEnemy;
+        [SerializeField] private AttackPointQueue _attackPointQueue;
 
-        private void Start()
-        {
-            _attackPointQueue = FindObjectOfType<AttackPointQueue>();
-        }
+        private Enemy _occupyingEnemy;
 
         private void OnEnable()
         {
@@ -34,7 +30,7 @@ namespace Walls
         {
             if (_occupyingEnemy != null)
             {
-                _occupyingEnemy.OnEnemyDeath += ReleasePoint;
+                _occupyingEnemy.EnemyDeath += OnReleasePoint;
             }
         }
 
@@ -42,11 +38,11 @@ namespace Walls
         {
             if (_occupyingEnemy != null)
             {
-                _occupyingEnemy.OnEnemyDeath -= ReleasePoint;
+                _occupyingEnemy.EnemyDeath -= OnReleasePoint;
             }
         }
 
-        private void ReleasePoint()
+        private void OnReleasePoint()
         {
             UnsubscribeFromEvents();
             _attackPointQueue.ReleaseAttackPoint(this);

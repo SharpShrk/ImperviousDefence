@@ -24,12 +24,7 @@ namespace Utilities
         {
             if (other.GetComponent<Player>())
             {
-                if (_currentCoroutine != null)
-                {
-                    StopCoroutine(_currentCoroutine);
-                }
-
-                _currentCoroutine = StartCoroutine(MoveGate(_gateTransform.position, _targetPosition));
+                MoveGateTo(_targetPosition);
             }
         }
 
@@ -37,13 +32,18 @@ namespace Utilities
         {
             if (other.GetComponent<Player>())
             {
-                if (_currentCoroutine != null)
-                {
-                    StopCoroutine(_currentCoroutine);
-                }
-
-                _currentCoroutine = StartCoroutine(MoveGate(_gateTransform.position, _initialPosition));
+                MoveGateTo(_initialPosition);
             }
+        }
+
+        private void MoveGateTo(Vector3 targetPosition)
+        {
+            if (_currentCoroutine != null)
+            {
+                StopCoroutine(_currentCoroutine);
+            }
+
+            _currentCoroutine = StartCoroutine(MoveGate(_gateTransform.position, targetPosition));
         }
 
         private IEnumerator MoveGate(Vector3 startPosition, Vector3 endPosition)

@@ -28,13 +28,7 @@ namespace TurretsUI
         {
             if (other.GetComponent<Player>())
             {
-                if (_changeColorCoroutine != null)
-                {
-                    StopCoroutine(_changeColorCoroutine);
-                }
-
-                _currentColor = _spriteButton.color;
-                _changeColorCoroutine = StartCoroutine(FillColor(_currentColor));
+                StartColorChangeCoroutine(FillColor);
             }
         }
 
@@ -42,14 +36,19 @@ namespace TurretsUI
         {
             if (other.GetComponent<Player>())
             {
-                if (_changeColorCoroutine != null)
-                {
-                    StopCoroutine(_changeColorCoroutine);
-                }
-
-                _currentColor = _spriteButton.color;
-                _changeColorCoroutine = StartCoroutine(ReturnToOriginalColor(_currentColor));
+                StartColorChangeCoroutine(ReturnToOriginalColor);
             }
+        }
+
+        private void StartColorChangeCoroutine(Func<Color, IEnumerator> colorChangeMethod)
+        {
+            if (_changeColorCoroutine != null)
+            {
+                StopCoroutine(_changeColorCoroutine);
+            }
+
+            Color currentColor = _spriteButton.color;
+            _changeColorCoroutine = StartCoroutine(colorChangeMethod(currentColor));
         }
 
         private bool IsColorApproximatelyEqual(Color colorA, Color colorB)

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace TurretsUI
 {
@@ -10,6 +11,8 @@ namespace TurretsUI
         [SerializeField] protected TMP_Text CostText;
         [SerializeField] protected TMP_Text LevelText;
         [SerializeField] protected GameObject UpgradePanel;
+
+        public event UnityAction ButtonUpgradePressed;
 
         protected void OnEnable()
         {
@@ -31,7 +34,10 @@ namespace TurretsUI
             LevelText.text = value.ToString();
         }
 
-        protected abstract void OnButtonClick();
+        protected virtual void OnButtonClick()
+        {
+            ButtonUpgradePressed?.Invoke();
+        }
 
         protected void ActivateUpgradeMenu()
         {

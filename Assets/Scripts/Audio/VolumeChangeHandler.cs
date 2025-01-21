@@ -17,22 +17,22 @@ namespace Audio
 
         private void OnEnable()
         {
-            _soundFXSlider.OnSFXVolumeChanged += ChangeSFXVolume;
-            _musicSlider.MusicVolumeChanged += ChangeMusicVolume;
+            _soundFXSlider.SFXVolumeChanged += OnChangeSFXVolume;
+            _musicSlider.MusicVolumeChanged += OnChangeMusicVolume;
         }
 
         private void OnDisable()
         {
-            _soundFXSlider.OnSFXVolumeChanged -= ChangeSFXVolume;
-            _musicSlider.MusicVolumeChanged -= ChangeMusicVolume;
+            _soundFXSlider.SFXVolumeChanged -= OnChangeSFXVolume;
+            _musicSlider.MusicVolumeChanged -= OnChangeMusicVolume;
         }
 
-        private void ChangeSFXVolume(float value)
+        private void OnChangeSFXVolume(float value)
         {
             SetVolume(FxVolumeGroup, value);
         }
 
-        private void ChangeMusicVolume(float value)
+        private void OnChangeMusicVolume(float value)
         {
             SetVolume(MusicVolumeGroup, value);
         }

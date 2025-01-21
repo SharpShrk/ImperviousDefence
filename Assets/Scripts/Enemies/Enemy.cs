@@ -12,7 +12,7 @@ namespace Enemies
         private EnemyBehavior _enemyBehavior;
         private EnemyAnimator _enemyAnimator;
 
-        public event Action OnEnemyDeath;
+        public event Action EnemyDeath;
 
         public int Damage => _damage;
 
@@ -25,12 +25,12 @@ namespace Enemies
 
         private void OnEnable()
         {
-            _enemyHealth.OnEnemyDyingNoParams += Die;
+            _enemyHealth.EnemyDyingNoParams += Die;
         }
 
         private void OnDisable()
         {
-            _enemyHealth.OnEnemyDyingNoParams -= Die;
+            _enemyHealth.EnemyDyingNoParams -= Die;
         }
 
         public void Initialize(int health, int damage)
@@ -46,7 +46,7 @@ namespace Enemies
 
         private void Die()
         {
-            OnEnemyDeath?.Invoke();
+            EnemyDeath?.Invoke();
 
             _enemyAnimator.Die();
         }

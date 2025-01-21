@@ -4,7 +4,7 @@ namespace Audio
 {
     public class AudioSoundFXSlider : BaseAudioSlider
     {
-        public event Action<float> OnSFXVolumeChanged;
+        public event Action<float> SFXVolumeChanged;
 
         private void OnDisable()
         {
@@ -19,7 +19,7 @@ namespace Audio
 
         protected override void OnValueChanged(float value)
         {
-            OnSFXVolumeChanged?.Invoke(value);
+            SFXVolumeChanged?.Invoke(value);
         }
     }
 }
