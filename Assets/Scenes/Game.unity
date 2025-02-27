@@ -1213,7 +1213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 162749399}
-  _reward: {fileID: 0}
+  _reward: {fileID: 1593055919}
 --- !u!114 &99051076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10002,7 +10002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1135567923}
-  _reward: {fileID: 0}
+  _reward: {fileID: 1457281079}
 --- !u!1001 &624452849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14329,7 +14329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shakeDuration: 0.2
-  _shakeAngle: 1
+  _shakeAngle: 0.1
 --- !u!1001 &964205906
 PrefabInstance:
   m_ObjectHideFlags: 0

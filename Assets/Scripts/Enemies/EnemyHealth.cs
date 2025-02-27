@@ -12,6 +12,8 @@ namespace Enemies
 
         private int _health;
         private int _maxHealth;
+        private int _moneyReward = 10;
+        private int _scoreReward = 10;
         private bool _isDied;
         private WaitForSeconds _deathWait;
 
@@ -44,7 +46,7 @@ namespace Enemies
                     _enemyMovement.StopMoving();
                     _enemyHealthBar.HideHealthBar();
 
-                    EnemyDying?.Invoke(0, 0, this);
+                    EnemyDying?.Invoke(_moneyReward, _scoreReward, this);
                     EnemyDyingNoParams?.Invoke();
 
                     gameObject.GetComponent<Collider>().enabled = false;
